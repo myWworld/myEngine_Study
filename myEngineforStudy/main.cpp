@@ -3,6 +3,12 @@
 
 #include "framework.h"
 #include "myEngineforStudy.h"
+#include "..//MyEngine_Source/MEApplication.h"
+
+
+
+Application app;
+
 
 #define MAX_LOADSTRING 100
 
@@ -26,6 +32,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(lpCmdLine);
 
     // TODO: 여기에 코드를 입력합니다.
+    app.test();
 
     // 전역 문자열을 초기화합니다.
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
@@ -42,20 +49,44 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     MSG msg;
 
-    // 기본 메시지 루프입니다:
-    while (GetMessage(&msg, nullptr, 0, 0))
+    while (true)
     {
-        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+        if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
+            if (msg.message == WM_QUIT)
+            {
+                break;
+            }
+            
+
+            if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+            {
+                TranslateMessage(&msg);
+                DispatchMessage(&msg);
+            }
+        }
+        else
+        {
+            int a = 0;
+            //메시지가 없을 경우
+            //게임 로직이 들어가면 된다.
         }
     }
+
+    // 기본 메시지 루프입니다:
+   // while (GetMessage(&msg, nullptr, 0, 0))
+   // {
+      //  if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+     //   {
+  //          TranslateMessage(&msg);
+///DispatchMessage(&msg);
+  //      }
+   // }
 
     return (int) msg.wParam;
 }
 
-
+//daa
 
 //
 //  함수: MyRegisterClass()
@@ -98,7 +129,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+      CW_USEDEFAULT, 0, 1600, 900, nullptr, nullptr, hInstance, nullptr);
 
    if (!hWnd)
    {
@@ -147,6 +178,30 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
             // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
+            //DC란 화면에 출력에 필요한 모든 정보를 가지는 데이터 구조체
+            //GDI모듈에 의해서 관리된다.
+            //어떤 폰트를 사용할 건가, 어떤 선의 굵기를 정해줄건가 어떤 색상으로 그려줄껀가
+            //화면 출력에 필요한 모든 경우는 WINAPI에서는 DC를 통해서 작업을 진행할 수 있다,
+
+            HBRUSH brush = CreateSolidBrush(RGB(0, 0, 255));
+            HBRUSH oldBrush = (HBRUSH)SelectObject(hdc, brush);
+
+            SelectObject(hdc, brush);
+
+            Rectangle(hdc, 100, 100, 200, 200);
+
+            SelectObject(hdc, oldBrush);
+            DeleteObject(brush);
+
+            HPEN redPen = CreatePen(PS_SOLID, 2, RGB(255, 0, 0));
+
+            HPEN oldPen = (HPEN)SelectObject(hdc, redPen);
+
+            Ellipse(hdc, 200, 200, 300, 300);
+
+            SelectObject(hdc, oldPen);
+            DeleteObject(redPen);
+
             EndPaint(hWnd, &ps);
         }
         break;

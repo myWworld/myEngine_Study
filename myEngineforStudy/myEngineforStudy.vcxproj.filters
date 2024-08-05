@@ -21,11 +21,6 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
     <ResourceCompile Include="myEngineforStudy.rc">
       <Filter>리소스 파일</Filter>
     </ResourceCompile>
@@ -37,5 +32,8 @@
     <Image Include="myEngineforStudy.ico">
       <Filter>리소스 파일</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
 </Project>
