@@ -7,7 +7,7 @@
 
 
 
-Application app;
+ME::Application application;
 
 
 #define MAX_LOADSTRING 100
@@ -32,7 +32,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(lpCmdLine);
 
     // TODO: 여기에 코드를 입력합니다.
-    app.test();
 
     // 전역 문자열을 초기화합니다.
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
@@ -67,9 +66,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
         else
         {
-            int a = 0;
+
             //메시지가 없을 경우
-            //게임 로직이 들어가면 된다.
+              //게임 로직이 들어가면 된다.
+          
+            application.Run();
         }
     }
 
@@ -136,6 +137,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
       return FALSE;
    }
 
+   application.Initialize(hWnd);
+
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
 
@@ -183,24 +186,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             //어떤 폰트를 사용할 건가, 어떤 선의 굵기를 정해줄건가 어떤 색상으로 그려줄껀가
             //화면 출력에 필요한 모든 경우는 WINAPI에서는 DC를 통해서 작업을 진행할 수 있다,
 
-            HBRUSH brush = CreateSolidBrush(RGB(0, 0, 255));
-            HBRUSH oldBrush = (HBRUSH)SelectObject(hdc, brush);
-
-            SelectObject(hdc, brush);
-
-            Rectangle(hdc, 100, 100, 200, 200);
-
-            SelectObject(hdc, oldBrush);
-            DeleteObject(brush);
-
-            HPEN redPen = CreatePen(PS_SOLID, 2, RGB(255, 0, 0));
-
-            HPEN oldPen = (HPEN)SelectObject(hdc, redPen);
-
-            Ellipse(hdc, 200, 200, 300, 300);
-
-            SelectObject(hdc, oldPen);
-            DeleteObject(redPen);
+         
 
             EndPaint(hWnd, &ps);
         }
