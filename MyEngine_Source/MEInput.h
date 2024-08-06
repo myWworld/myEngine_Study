@@ -18,7 +18,7 @@ namespace ME {
 	{
 		Q,W,E,R,T,Y,U,I,O,P
 		,A,S,D,F,G,H,J,K,L
-		,Z,X,C,V,B,N,M,
+		,Z,X,C,V,B,N,M,Left,Right,Down,Up,
 		End,
 	};
 
@@ -37,14 +37,17 @@ namespace ME {
 		static void Initialize();
 		static void Update();
 
-		static bool GetKeyDown(eKeyCode code) { return mKeys[(UINT)code].state == eKeystate::Down; }
-		static bool GetKeyUp(eKeyCode code){ return mKeys[(UINT)code].state == eKeystate::Up; }
+		static bool GetKeyDown(eKeyCode code) { return Keys[(UINT)code].state == eKeystate::Down; }
+		static bool GetKeyUp(eKeyCode code){ return Keys[(UINT)code].state == eKeystate::Up; }
 		static bool GetKey(eKeyCode code) {
-			return mKeys[(UINT)code].state == eKeystate::Pressed;
+			return Keys[(UINT)code].state == eKeystate::Pressed;
 		}
 
 	private:
 
-		static vector<Key> mKeys;
+		static void CreateKeys();
+		static void UpdateKeys();
+
+		static vector<Key> Keys;
 	};
 }
