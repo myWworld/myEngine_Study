@@ -1,5 +1,5 @@
 #include "MEApplication.h"
-
+#include "MEInput.h"
 
 namespace ME {
 
@@ -21,6 +21,9 @@ namespace ME {
 		mHwnd = hwnd;
 		mHdc = GetDC(hwnd);
 
+		Input::Initialize();
+	
+
 	}
 
 	void Application::Run()
@@ -32,7 +35,9 @@ namespace ME {
 
 	void Application::Update()
 	{
+		Input::Update();
 		mPlayer.Update();
+	
 	}
 
 	void Application::LateUpdate()
@@ -43,6 +48,6 @@ namespace ME {
 	void Application::Render()
 	{
 		mPlayer.Render(mHdc);
-	
+		
 	}
 }

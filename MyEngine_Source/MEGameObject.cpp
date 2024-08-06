@@ -1,5 +1,5 @@
 #include "MEGameObject.h"
-
+#include "MEInput.h"
 
 namespace ME {
 
@@ -14,20 +14,20 @@ namespace ME {
 	{
 
 
-		if (GetAsyncKeyState(VK_LEFT) & 0x8000)
+		if (Input::GetKey(eKeyCode::A))
 		{
 			mX -= 0.01f;
 		}
 
-		if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
+		if (Input::GetKey(eKeyCode::D))
 		{
 			mX += 0.01f;
 		}
-		if (GetAsyncKeyState(VK_UP) & 0x8000)
+		if (Input::GetKey(eKeyCode::W))
 		{
 			mY -= 0.01f;
 		}
-		if (GetAsyncKeyState(VK_DOWN) & 0x8000)
+		if (Input::GetKey(eKeyCode::S))
 		{
 			mY += 0.01f;
 		}
@@ -37,22 +37,18 @@ namespace ME {
 	{
 
 	}
+
 	void GameObject::Render(HDC hdc)
 	{
-
 		HBRUSH brush = CreateSolidBrush(RGB(0, 0, 255));
 		HBRUSH oldBrush = (HBRUSH)SelectObject(hdc, brush);
 
-
-
-
 		SelectObject(hdc, brush);
 
-		Rectangle(hdc, 100 + mX, 100 +mY, 200 + mX, 200 + mY);
+		Rectangle(hdc, 100 + mX, 100 + mY, 200 + mX, 200 + mY);
 
 		SelectObject(hdc, oldBrush);
 		DeleteObject(brush);
-
 	}
 
 

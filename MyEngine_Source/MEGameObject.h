@@ -17,9 +17,11 @@ namespace ME {
 
 
 	private:
+
 		float mX;
 		float mY;
 
 	};
-}
 
+}
+	

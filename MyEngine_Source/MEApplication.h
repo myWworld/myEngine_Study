@@ -3,10 +3,11 @@
 #include "CommonInclude.h"
 #include "MEGameObject.h"
 
-namespace ME {
+namespace ME
+{
 	class Application
 	{
-		
+
 	public:
 
 		Application();
@@ -20,14 +21,16 @@ namespace ME {
 		void Render();
 
 	private:
-		
+
 		HWND mHwnd;
 		HDC mHdc;
 
+
 		float mSpeed;
-		
-		
+
+
 		GameObject mPlayer;
 	};
+
 }
 
