@@ -36,13 +36,5 @@ namespace ME {
 
 		float fps = 1.0f / DeltaTimeValue;
 
-		wchar_t str[50] = L"";
-		swprintf_s(str, 50, L"Time : %f", fps);
-
-		int len = wcsnlen_s(str,50);
-		
-	
-
-		TextOut(hdc, 0, 0, str, len);
 	}
 }

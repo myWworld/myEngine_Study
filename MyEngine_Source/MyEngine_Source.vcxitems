@@ -17,9 +17,14 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)CommonInclude.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MEComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MEEntity.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MEEnums.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MEGameObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MEApplication.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MEInput.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MELayer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MEMath.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MEResource.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MEResources.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MESceneManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MEScenes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MESpriteRenderer.h" />
@@ -32,6 +37,10 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)MEGameObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MEApplication.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MEInput.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MELayer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MEMath.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MEResource.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MEResources.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MESceneManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MEScenes.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MESpriteRenderer.cpp" />

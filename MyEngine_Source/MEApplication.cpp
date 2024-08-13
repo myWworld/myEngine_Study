@@ -53,7 +53,7 @@ namespace ME
 
 	void Application::LateUpdate()
 	{
-
+		SceneManager::LateUpdate();
 	}
 
 	void Application::Render()
@@ -67,7 +67,6 @@ namespace ME
 
 		CopyRenderTarget(mBackHdc, mHdc);
 		
-
 	
 	}
 
@@ -92,15 +91,12 @@ namespace ME
 
 		RECT rect = { 0,0,width,height };
 
+		AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, false);
 
 		mWidth = rect.right - rect.left;
 		mHeight = rect.bottom - rect.top;
 
-		AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, false);
-
-		SetWindowPos(mHwnd, nullptr, 0, 0
-			, rect.right - rect.left,
-			rect.bottom - rect.top, 0);
+		SetWindowPos(mHwnd, nullptr, 0, 0, mWidth,mHeight, 0);
 		ShowWindow(mHwnd, true);
 
 	}

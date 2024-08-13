@@ -3,6 +3,10 @@
 #include "MEPlayer.h"
 #include "METransform.h"
 #include "MESpriteRenderer.h"
+#include "MEInput.h"
+#include "METitleScene.h"
+#include "MESceneManager.h"
+
 
 namespace ME
 {
@@ -19,51 +23,22 @@ namespace ME
 	{
 	
 		{
-			Player* p1 = new Player();
-			Transform* tr = p1->AddComponent<Transform>();
+			bg = new Player();
 
-			tr->SetPos(800, 450);
-
-			tr->SetName(L"TR");
-
-			SpriteRenderer* sr =
-				p1->AddComponent<SpriteRenderer>();
-
-			sr->SetName(L"SR");
-
-			AddGameObject(p1);
-
-
-		}
-
-		{
-			Player* pl = new Player();
 			Transform* tr
-				= pl->AddComponent<Transform>();
-			tr->SetPos(300, 450);
+				= bg->AddComponent<Transform>();
+			
+			tr->SetPos(Vector2(0,0));
 
 			tr->SetName(L"TR");
 
 			SpriteRenderer* sr
-				= pl->AddComponent<SpriteRenderer>();
+				= bg->AddComponent<SpriteRenderer>();
+
 			sr->SetName(L"SR");
+			sr->ImageLoad(L"C:\\Users\\SAMSUNG\\Desktop\\MyEngine\\myEngineforStudy\\Resources\\CloudOcean.png");
 
-			AddGameObject(pl);
-		}
-		
-		{
-			Player* pl = new Player();
-			Transform* tr
-				= pl->AddComponent<Transform>();
-			tr->SetPos(100, 650);
-
-			tr->SetName(L"TR");
-
-			SpriteRenderer* sr
-				= pl->AddComponent<SpriteRenderer>();
-			sr->SetName(L"SR");
-
-			AddGameObject(pl);
+			AddGameObject(bg, eLayerType::BackGround);
 		}
 	}
 
@@ -77,11 +52,26 @@ namespace ME
 	void PlayScene::LateUpdate()
 	{
 		Scene::LateUpdate();
+
+		if (Input::GetKeyDown(eKeyCode::N))
+		{
+			SceneManager::LoadScreen(L"TitleScreen");
+		}
 	}
 
 	void PlayScene::Render(HDC mHdc)
 	{
 		Scene::Render(mHdc);
+		wchar_t str[50] = L"PlayScene";
+		TextOut(mHdc, 0, 0, str, 9);
 	}
 
+	void PlayScene::OnEnter()
+	{
+	}
+	void PlayScene::OnExit()
+	{
+		Transform* tr = bg->GetComponent<Transform>();
+		tr->SetPos(Vector2(0, 0));
+	}
 }

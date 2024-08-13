@@ -1,19 +1,44 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="MEPlayScene.h" />
     <ClInclude Include="MELoadScene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="MEPlayer.h" />
+    <ClInclude Include="MEPlayScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="MEPlayer.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="MEEndScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="MEScoreScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="METitleScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <Filter Include="Contents">
+      <UniqueIdentifier>{945fd437-f4f2-463d-bfe2-86c567d82a8f}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Scenes">
       <UniqueIdentifier>{0539cc36-b4d1-4691-a517-4f5fc77bd770}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MEPlayScene.cpp" />
-    <ClCompile Include="MEPlayer.cpp" />
+    <ClCompile Include="MEPlayScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="MEPlayer.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="MEEndScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="MEScoreScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="METitleScene.cpp" />
   </ItemGroup>
 </Project>

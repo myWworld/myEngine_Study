@@ -22,6 +22,9 @@ namespace ME
 
 		static Scene* LoadScreen(const std::wstring& name)
 		{
+			if (mActiveScene)
+				mActiveScene->OnExit();
+
 			std::map<std::wstring, Scene*> ::iterator iter
 			 = mScene.find(name);
 		
@@ -31,6 +34,8 @@ namespace ME
 			}
 			
 			mActiveScene = iter->second;
+			if (mActiveScene)
+				mActiveScene->OnEnter();
 
 			return iter->second;
 		}

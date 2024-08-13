@@ -10,6 +10,9 @@
 
 ME::Application application;
 
+ULONG_PTR gpToken;
+Gdiplus::GdiplusStartupInput gpsi;
+
 
 #define MAX_LOADSTRING 100
 
@@ -73,6 +76,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
           
             application.Run();
         }
+
     }
 
     // 기본 메시지 루프입니다:
@@ -84,6 +88,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 ///DispatchMessage(&msg);
   //      }
    // }
+    Gdiplus::GdiplusShutdown(gpToken);
 
     return (int) msg.wParam;
 }
@@ -146,6 +151,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
+
+   Gdiplus::GdiplusStartup(&gpToken, &gpsi, NULL);
 
    ME::LoadScenes();    
 
