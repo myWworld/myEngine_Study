@@ -1,56 +1,63 @@
 #include "MEGameObject.h"
 #include "MEInput.h"
 #include "METime.h"
+#include "MEApplication.h"
+
+using namespace std;
 
 namespace ME {
 
-	GameObject::GameObject() {
+
+	GameObject::GameObject()
+	{
 
 	}
 
 	GameObject::~GameObject() {
 
+		for (Component* comp : mComponents)
+		{
+			delete comp;
+			comp = nullptr;
+		}
 	}
+
+
+	void GameObject::Initialize()
+	{
+		for (Component* comp : mComponents)
+		{
+			comp->Initialize();
+		}
+	}
+
 	void GameObject::Update()
 	{
-		const int speed = 100.0f;
-
-		if (Input::GetKey(eKeyCode::A) || Input::GetKey(eKeyCode::Left))
+		for (Component* comp : mComponents)
 		{
-			mX -= speed * Time::DeltaTime();
+			comp->Update();
 		}
-
-		if (Input::GetKey(eKeyCode::D))
-		{
-			mX += speed * Time::DeltaTime();
-		}
-		if (Input::GetKey(eKeyCode::W))
-		{
-			mY -= speed * Time::DeltaTime();
-		}
-		if (Input::GetKey(eKeyCode::S))
-		{
-			mY += speed * Time::DeltaTime();
-		}
-
 	}
+
 	void GameObject::LateUpdate()
 	{
-
+		for (Component* comp : mComponents)
+		{
+			comp->LateUpdate();
+		}
 	}
+	
 
 	void GameObject::Render(HDC hdc)
 	{
-		HBRUSH brush = CreateSolidBrush(RGB(0, 0, 255));
-		HBRUSH oldBrush = (HBRUSH)SelectObject(hdc, brush);
 
-		SelectObject(hdc, brush);
+		for (Component* comp : mComponents)
+		{
+			comp->Render(hdc);
+		} 
 
-		Rectangle(hdc, 100 + mX, 100 + mY, 200 + mX, 200 + mY);
-
-		SelectObject(hdc, oldBrush);
-		DeleteObject(brush);
 	}
+	
 
 
 }

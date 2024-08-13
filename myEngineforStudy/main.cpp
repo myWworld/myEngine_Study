@@ -4,6 +4,7 @@
 #include "framework.h"
 #include "myEngineforStudy.h"
 #include "..//MyEngine_Source/MEApplication.h"
+#include "..//MyEngine_W/MELoadScene.h"
 
 
 
@@ -145,6 +146,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
+
+   ME::LoadScenes();    
 
    return TRUE;
 }

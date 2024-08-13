@@ -18,6 +18,15 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MELoadScene.h" />
+    <ClInclude Include="MEPlayer.h" />
+    <ClInclude Include="MEPlayScene.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="MEPlayer.cpp" />
+    <ClCompile Include="MEPlayScene.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

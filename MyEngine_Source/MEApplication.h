@@ -2,9 +2,14 @@
 
 #include "CommonInclude.h"
 #include "MEGameObject.h"
+#include "MEScenes.h"
+
+
 
 namespace ME
 {
+	
+
 	class Application
 	{
 
@@ -15,12 +20,17 @@ namespace ME
 
 		void Initialize(HWND hwnd, UINT width, UINT height);
 		void Run();
-
 		void Update();
 		void LateUpdate();
 		void Render();
 
 	private:
+		
+		void ClearRenderTarget();
+		void CopyRenderTarget(HDC source, HDC dest);
+		void adjustWindowRect(HWND hwnd, UINT width, UINT height);
+		void createBuffer(UINT width, UINT height);
+		void initializeEtc();
 
 		HWND mHwnd;
 		HDC mHdc;
@@ -33,8 +43,9 @@ namespace ME
 
 		float mSpeed;
 
+		
 
-		GameObject mPlayer;
+		std::vector <Scene*> mScenes;
 	};
 
 }

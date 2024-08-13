@@ -1,8 +1,10 @@
 #include "MEApplication.h"
 #include "MEInput.h"
 #include "METime.h"
+#include "MESceneManager.h"
 
-namespace ME {
+namespace ME 
+{
 
 	Application::Application()
 		:mHwnd(nullptr)
@@ -23,34 +25,13 @@ namespace ME {
 
 	void Application::Initialize(HWND hwnd, UINT width, UINT height)
 	{
-		mHwnd = hwnd;
-		mHdc = GetDC(hwnd);
-
-
-		RECT rect = {0,0,width,height};
-
-
-		mWidth = rect.right - rect.left;
-		mHeight = rect.bottom - rect.top;
-
-		AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, false);
-
-		SetWindowPos(mHwnd, nullptr, 0, 0
-			, rect.right - rect.left, 
-			rect.bottom - rect.top, 0);
-		ShowWindow(mHwnd, true);
-
-		//윈도우 해상도에 맞ㄴ느 백퍼버(도화지)생성
-		mBackBuffer = CreateCompatibleBitmap(mHdc, width, height);
-
-		mBackHdc = CreateCompatibleDC(mHdc);
-
-		HBITMAP oldBitmap = (HBITMAP)SelectObject(mBackHdc, mBackBuffer);
-		DeleteObject(oldBitmap);
-
-		Input::Initialize();
-		Time::Intialize();
-
+	
+		 adjustWindowRect(hwnd, width, height);
+		 createBuffer(width, height);
+		 initializeEtc();
+		
+		 SceneManager::Initialize();
+		 
 	}
 
 	void Application::Run()
@@ -65,8 +46,9 @@ namespace ME {
 		Input::Update();
 		Time::Update();
 
-		mPlayer.Update();
-	
+		SceneManager::Update();
+
+		
 	}
 
 	void Application::LateUpdate()
@@ -77,14 +59,66 @@ namespace ME {
 	void Application::Render()
 	{
 	
-		Rectangle(mBackHdc, 0, 0, 1600, 900);
+		ClearRenderTarget();
 
 		Time::Render(mBackHdc);
-		mPlayer.Render(mBackHdc);
-	
-		//백버퍼에 있는 것을 원본 버퍼에 복사
-		BitBlt(mHdc, 0, 0, mWidth, mHeight,
-			mBackHdc, 0, 0, SRCCOPY);
 		
+		SceneManager::Render(mHdc);
+
+		CopyRenderTarget(mBackHdc, mHdc);
+		
+
+	
 	}
+
+	void Application::ClearRenderTarget()
+	{
+		Rectangle(mBackHdc, -1, -1, 1601, 901);
+	}
+
+	void Application::CopyRenderTarget(HDC source, HDC dest)
+	{
+		//백버퍼에 있는 것을 원본 버퍼에 복사
+		BitBlt(dest, 0, 0, mWidth, mHeight,
+			source, 0, 0, SRCCOPY);
+
+	}
+
+	void Application::adjustWindowRect(HWND hwnd, UINT width, UINT height)
+	{
+		mHwnd = hwnd;
+		mHdc = GetDC(hwnd);
+
+
+		RECT rect = { 0,0,width,height };
+
+
+		mWidth = rect.right - rect.left;
+		mHeight = rect.bottom - rect.top;
+
+		AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, false);
+
+		SetWindowPos(mHwnd, nullptr, 0, 0
+			, rect.right - rect.left,
+			rect.bottom - rect.top, 0);
+		ShowWindow(mHwnd, true);
+
+	}
+	void Application::createBuffer(UINT width, UINT height)		//윈도우 해상도에 맞ㄴ느 백퍼버(도화지)생성
+	{
+		mBackBuffer = CreateCompatibleBitmap(mHdc, width, height);
+
+		mBackHdc = CreateCompatibleDC(mHdc);
+
+		HBITMAP oldBitmap = (HBITMAP)SelectObject(mBackHdc, mBackBuffer);
+		DeleteObject(oldBitmap);
+
+	}
+	void Application::initializeEtc()
+	{
+		Input::Initialize();
+		Time::Intialize();
+
+	}
+
 }
