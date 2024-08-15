@@ -22,7 +22,8 @@ namespace ME
 
 	private:
 
-		class Player* bg;
+		class Player* mPlayer;
+		
 
 	};
 }

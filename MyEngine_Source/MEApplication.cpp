@@ -63,7 +63,7 @@ namespace ME
 
 		Time::Render(mBackHdc);
 		
-		SceneManager::Render(mHdc);
+		SceneManager::Render(mBackHdc);
 
 		CopyRenderTarget(mBackHdc, mHdc);
 		

@@ -5,24 +5,30 @@
 #include "MEEndScene.h"
 #include "MEScoreScene.h"
 #include "METitleScene.h"
+#include "MEGameOverScene.h"
 
 
 namespace ME
 {
 	void LoadScenes()
 	{
-		SceneManager::CreateScene<PlayScene>(L"PlayScene");
-	//	SceneManager::CreateScene<EndScene>(L"EndScene");
-		//SceneManager::CreateScene<ScoreScene>(L"ScoreScene");
+		
+		
 		SceneManager::CreateScene<TitleScene>(L"TitleScene");
+		SceneManager::CreateScene<PlayScene>(L"PlayScene");
+		SceneManager::CreateScene<GameOverScene>(L"GameOverScene");
+	//SceneManager::CreateScene<EndScene>(L"EndScene");
+		//SceneManager::CreateScene<ScoreScene>(L"ScoreScene");
 		
-		SceneManager::LoadScreen(L"PlayScene");
-		SceneManager::LoadScreen(L"TitleScene");
-
 		
-		//SceneManager::LoadScreen(L"ScoreScene");
+		//SceneManager::LoadScene(L"PlayScene");
 
-		//SceneManager::LoadScreen(L"EndScene");
+		SceneManager::LoadScene(L"TitleScene");
+		//SceneManager::LoadScene(L"GameOverScene");
+		
+		//SceneManager::LoadScene(L"ScoreScene");
+
+		//SceneManager::LoadScene(L"EndScene");
 
 
 	}

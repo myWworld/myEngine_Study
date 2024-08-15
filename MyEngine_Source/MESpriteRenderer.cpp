@@ -2,13 +2,16 @@
 #include "MEGameObject.h"
 #include "METransform.h"
 #include "CommonInclude.h"
+#include "METexture.h"
+#include "MERenderer.h"
+#include "MECamera.h"
 
 namespace ME {
 
-	ME::SpriteRenderer::SpriteRenderer() :
-		mImage(nullptr)
-		, mWidth(0)
-		, mHeight(0)
+	ME::SpriteRenderer::SpriteRenderer() 
+		:mSize(Vector2::One)
+		,mTexture(nullptr)
+		,Component(enums::eComponentType::SpriteRenderer)
 	{
 	}
 
@@ -30,20 +33,32 @@ namespace ME {
 
 	void ME::SpriteRenderer::Render(HDC hdc)
 	{
+		if (mTexture == nullptr)
+			assert(false);
+
+
 		Transform* tr = GetOwner()->GetComponent<Transform>();
-
 		Vector2 pos = tr->GetPosition();
+		pos = renderer::mainCamera->CalculatePosition(pos);
+
+		if (mTexture->GetTextureType() == graphics::Texture::eTextureType::Png)
+		{
+			Gdiplus::Graphics graphics(hdc);
+			graphics.DrawImage(mTexture->GetImage()
+				, Gdiplus::Rect(pos.x, pos.y, mTexture->GedWidth()*mSize.x, mTexture->GetHeight() * mSize.y));
+			
+		}
+		else if (mTexture->GetTextureType() == graphics::Texture::eTextureType::Bmp)
+		{
 		
-		Gdiplus::Graphics graphics(hdc);
-		graphics.DrawImage(mImage, Gdiplus::Rect(pos.x, pos.y, mWidth, mHeight));
+			TransparentBlt(hdc, pos.x, pos.y,
+				mTexture->GedWidth(), mTexture->GetHeight()
+				, mTexture->GedHdc(), 0, 0
+				, mTexture->GedWidth()*mSize.x , mTexture->GetHeight()* mSize.y, RGB(255, 0, 255));
+		}
+		
+	
 	}
 
-	void SpriteRenderer::ImageLoad(const std::wstring& path)
-	{
-		mImage = Gdiplus::Image::FromFile(path.c_str());
-		mWidth = mImage->GetWidth();
-		mHeight = mImage->GetHeight();
-
-	}
-
+	
 }

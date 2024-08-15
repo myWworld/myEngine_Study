@@ -3,7 +3,8 @@
 
 namespace ME
 {
-	ME::Component::Component()
+	ME::Component::Component(enums::eComponentType type)
+		:mType(type)
 	{
 	}
 

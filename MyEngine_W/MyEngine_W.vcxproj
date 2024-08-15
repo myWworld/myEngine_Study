@@ -19,16 +19,21 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="LoadResources.h" />
     <ClInclude Include="MEEndScene.h" />
+    <ClInclude Include="MEGameOverScene.h" />
     <ClInclude Include="MELoadScene.h" />
     <ClInclude Include="MEPlayer.h" />
+    <ClInclude Include="MEPlayerScript.h" />
     <ClInclude Include="MEPlayScene.h" />
     <ClInclude Include="MEScoreScene.h" />
     <ClInclude Include="METitleScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MEEndScene.cpp" />
+    <ClCompile Include="MEGameOverScene.cpp" />
     <ClCompile Include="MEPlayer.cpp" />
+    <ClCompile Include="MEPlayerScript.cpp" />
     <ClCompile Include="MEPlayScene.cpp" />
     <ClCompile Include="MEScoreScene.cpp" />
     <ClCompile Include="METitleScene.cpp" />

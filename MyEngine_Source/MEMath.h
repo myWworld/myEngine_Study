@@ -4,6 +4,10 @@ namespace ME::math
 {
 	struct Vector2
 	{
+
+		static Vector2 One;
+		static Vector2 Zero;
+
 		float x;
 		float y;
 
@@ -22,6 +26,32 @@ namespace ME::math
 		}
 
 
+		Vector2 operator-(Vector2 other)
+		{
+			Vector2 rst;
+			rst.x = x - other.x;
+			rst.y = y - other.y;
+
+			return rst;
+		}
+
+		Vector2 operator+(Vector2 other)
+		{
+			Vector2 rst;
+			rst.x = x + other.x;
+			rst.y = y + other.y;
+
+			return rst;
+		}
+		Vector2 operator/(float value)
+		{
+			Vector2 rst;
+			rst.x = x / value;
+			rst.y = y / value;
+
+			return rst;
+
+		}
 	};
 
 }

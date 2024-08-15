@@ -1,0 +1,26 @@
+#pragma once
+#include "../MyEngine_Source/CommonInclude.h"
+#include "../MyEngine_Source/MESceneManager.h"
+#include "../MyEngine_Source/MEScenes.h"
+
+
+namespace ME
+{
+
+
+	class GameOverScene: public Scene
+	{
+	public:
+		GameOverScene();
+		~GameOverScene();
+
+		void Initialize()override;
+		void Update()override;
+		void LateUpdate()override;
+		void Render(HDC mHdc)override;
+
+	private:
+
+	};
+
+}

@@ -4,6 +4,7 @@ namespace ME
 {
 
 	ME::Transform::Transform()
+		:Component(enums::eComponentType::Trasnform)
 	{
 	}
 

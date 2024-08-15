@@ -9,7 +9,6 @@ namespace ME
 	public:
 		EndScene();
 		~EndScene();
-
 		void Initialize() override;
 		void Update() override;
 		void LateUpdate() override;

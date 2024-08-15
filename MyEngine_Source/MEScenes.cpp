@@ -6,7 +6,7 @@ namespace ME
 	Scene::Scene()
 		:mLayers{}
 	{
-		Scene::CreateLayers();
+		Scene::createLayers();
 	}
 	Scene::~Scene()
 	{
@@ -66,15 +66,16 @@ namespace ME
 
 	 }
 
-	void Scene::AddGameObject(GameObject* gameObject, const eLayerType type)
+	void Scene::AddGameObject(GameObject* gameObject, const enums::eLayerType type)
 	{
 		mLayers[(UINT)type]->AddGameObject(gameObject);
 	}
-	void Scene::CreateLayers()
-	{
-		mLayers.resize((UINT)eLayerType::Max);
 
-		for (size_t i = 0; i < (UINT)eLayerType::Max; i++)
+	void Scene::createLayers()
+	{
+		mLayers.resize((UINT)enums::eLayerType::Max);
+
+		for (size_t i = 0; i < (UINT)enums::eLayerType::Max; i++)
 		{
 			mLayers[i] = new Layer();
 		}

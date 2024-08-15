@@ -19,15 +19,14 @@ void ME::EndScene::Initialize()
 
 	Transform* tr = bg->AddComponent<Transform>();
 
-	tr->SetPos(Vector2(0, 0));
+	tr->SetPosition(Vector2(0, 0));
 	tr->SetName(L"TR");
 
 	SpriteRenderer* sr = bg->AddComponent<SpriteRenderer>();
 
 	sr->SetName(L"SR");
-	sr->ImageLoad(L"C:\\Users\\SAMSUNG\\Desktop\\MyEngine\\myEngineforStudy\\Resources\\EndingCredit.png");
 
-	AddGameObject(bg,eLayerType::BackGround);
+	AddGameObject(bg, enums::eLayerType::BackGround);
 
 }
 

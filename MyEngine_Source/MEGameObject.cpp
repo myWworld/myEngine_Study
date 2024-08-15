@@ -2,6 +2,7 @@
 #include "MEInput.h"
 #include "METime.h"
 #include "MEApplication.h"
+#include "METransform.h"
 
 using namespace std;
 
@@ -10,7 +11,8 @@ namespace ME {
 
 	GameObject::GameObject()
 	{
-
+		mComponents.resize((UINT)enums::eComponentType::End);
+		initializeTransform();
 	}
 
 	GameObject::~GameObject() {
@@ -27,6 +29,10 @@ namespace ME {
 	{
 		for (Component* comp : mComponents)
 		{
+
+			if (comp == nullptr)
+				continue;
+
 			comp->Initialize();
 		}
 	}
@@ -35,6 +41,11 @@ namespace ME {
 	{
 		for (Component* comp : mComponents)
 		{
+			if (comp == nullptr)
+				continue;
+
+
+
 			comp->Update();
 		}
 	}
@@ -43,6 +54,10 @@ namespace ME {
 	{
 		for (Component* comp : mComponents)
 		{
+			if (comp == nullptr)
+				continue;
+
+
 			comp->LateUpdate();
 		}
 	}
@@ -53,11 +68,19 @@ namespace ME {
 
 		for (Component* comp : mComponents)
 		{
+			if (comp == nullptr)
+				continue;
+
+
 			comp->Render(hdc);
 		} 
 
 	}
 	
+	void GameObject::initializeTransform()
+	{
+		AddComponent<Transform>();
+	}
 
 
 }

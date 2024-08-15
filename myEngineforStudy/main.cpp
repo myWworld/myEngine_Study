@@ -5,6 +5,7 @@
 #include "myEngineforStudy.h"
 #include "..//MyEngine_Source/MEApplication.h"
 #include "..//MyEngine_W/MELoadScene.h"
+#include "../MyEngine_W/LoadResources.h"
 
 
 
@@ -54,7 +55,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     while (true)
     {
-        if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+            if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
             if (msg.message == WM_QUIT)
             {
@@ -134,26 +135,26 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
-   const UINT width = 1600;
-   const UINT height = 900;
+   const UINT width = 1008;
+   const UINT height = 432;
 
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
       CW_USEDEFAULT, 0, width,height, nullptr, nullptr, hInstance, nullptr);
 
-
+   application.Initialize(hWnd, width, height);
 
    if (!hWnd)
    {
       return FALSE;
    }
 
-   application.Initialize(hWnd,width,height);
 
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
 
    Gdiplus::GdiplusStartup(&gpToken, &gpsi, NULL);
 
+   ME::LoadResources();
    ME::LoadScenes();    
 
    return TRUE;

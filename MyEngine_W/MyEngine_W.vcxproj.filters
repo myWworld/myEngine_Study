@@ -16,7 +16,16 @@
     <ClInclude Include="MEScoreScene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="METitleScene.h" />
+    <ClInclude Include="LoadResources.h" />
+    <ClInclude Include="MEPlayerScript.h">
+      <Filter>Script</Filter>
+    </ClInclude>
+    <ClInclude Include="MEGameOverScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="METitleScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Contents">
@@ -24,6 +33,9 @@
     </Filter>
     <Filter Include="Scenes">
       <UniqueIdentifier>{0539cc36-b4d1-4691-a517-4f5fc77bd770}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Script">
+      <UniqueIdentifier>{2487e8b0-7a9a-4989-b70f-ed09f8743489}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -39,6 +51,14 @@
     <ClCompile Include="MEScoreScene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="METitleScene.cpp" />
+    <ClCompile Include="MEPlayerScript.cpp">
+      <Filter>Script</Filter>
+    </ClCompile>
+    <ClCompile Include="MEGameOverScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="METitleScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
