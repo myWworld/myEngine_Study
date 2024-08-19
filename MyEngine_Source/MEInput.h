@@ -3,8 +3,6 @@
 
 namespace ME {
 
-	using namespace std;
-
 	enum class eKeystate
 	{
 		Down,
@@ -19,7 +17,7 @@ namespace ME {
 		Q,W,E,R,T,Y,U,I,O,P
 		,A,S,D,F,G,H,J,K,L
 		,Z,X,C,V,B,N,M,Left,Right,Down,Up
-		,Space,Shift
+		,Space,Shift,LeftMous,RightMouse
 		,End,
 	};
 
@@ -43,12 +41,24 @@ namespace ME {
 		static bool GetKey(eKeyCode code) {
 			return Keys[(UINT)code].state == eKeystate::Pressed;
 		}
+		static math::Vector2 GetMousePos() { return mMousePosition; }
 
 	private:
 
 		static void CreateKeys();
 		static void UpdateKeys();
+		static void UpdateKey(Key& key);
+		static bool isKeyDown(eKeyCode code);
 
-		static vector<Key> Keys;
+		static void UpdateKeyDown(Key& key);
+		static void UpdateKeyUp(Key& key);
+
+		static void clearKeys();
+		static void getMousePositionByWindow();
+
+	private:
+
+		static std::vector<Key> Keys;
+		static math::Vector2 mMousePosition; 
 	};
 }

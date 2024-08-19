@@ -3,8 +3,9 @@
 #include<vector>
 #include<list>
 #include<string>
-
+#include<algorithm>
 #include <map>
+#include<functional>
 
 #include "MEMath.h"
 #include "MEEnums.h"

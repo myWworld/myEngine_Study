@@ -25,6 +25,7 @@ namespace ME
 		void Render();
 
 		HDC GetHdc() { return mHdc; }
+		HWND GetHwnd() { return mHwnd; }
 		UINT GetWidth() { return mWidth; }
 		UINT GetHeight() { return mHeight; }
 

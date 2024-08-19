@@ -1,9 +1,13 @@
 
 #include "MEInput.h"
+#include "MEApplication.h"
+
+extern ME::Application application;
 
 namespace ME{
 
 	std::vector <Input::Key> Input::Keys = {};
+	math::Vector2 Input::mMousePosition = math::Vector2::One;
 
 	int ASCII[(UINT)eKeyCode::End] =
 	{
@@ -11,7 +15,8 @@ namespace ME{
 		,'A','S','D','F','G','H','J','K','L'
 		,'Z','X','C','V','B','N','M',
 		VK_LEFT,VK_RIGHT,VK_DOWN,VK_UP
-		,VK_SPACE,VK_SHIFT,
+		,VK_SPACE,VK_SHIFT,VK_LBUTTON,VK_RBUTTON
+
 	};
 
 	void Input::CreateKeys()
@@ -28,36 +33,94 @@ namespace ME{
 	}
 	void Input::UpdateKeys()
 	{
-		for (size_t i = 0; i < Keys.size(); i++)
-		{
-			if (GetAsyncKeyState(ASCII[i]) & 0x8000)
+		std::for_each(Keys.begin(), Keys.end(),
+			[](Key& key) -> void
 			{
-				if (Keys[i].bPressed == true)
-				{
-					Keys[i].state = eKeystate::Pressed;
-				}
-				else
-				{
-					Keys[i].state = eKeystate::Down;
-				}
-				Keys[i].bPressed = true;
+				UpdateKey(key);
+			}
+		);
+	}
+
+	void Input::UpdateKey(Key& key)
+	{
+
+		if (GetFocus())
+		{
+			if (isKeyDown(key.keyCode))
+			{
+				UpdateKeyDown(key);
 			}
 			else
 			{
-				if (Keys[i].bPressed == true)
-				{
-					Keys[i].state = eKeystate::Up;
-				}
-				else
-				{
-					Keys[i].state = eKeystate::None;
-				}
-				Keys[i].bPressed = false;
+				UpdateKeyUp(key);
 			}
 
+
+			getMousePositionByWindow();
+		}
+		else
+		{
+			clearKeys();
 		}
 	}
+
+
+
+	bool Input::isKeyDown(eKeyCode code)
+	{
+		return GetAsyncKeyState(ASCII[(UINT)code]) & 0x8000;
+	}
+
+	void Input::UpdateKeyDown(Key& key)
+	{
+		if (key.bPressed == true)
+		{
+			key.state = eKeystate::Pressed;
+		}
+		else
+		{
+			key.state = eKeystate::Down;
+		}
+		key.bPressed = true;
+	}
+
+	void Input::UpdateKeyUp(Key& key)
+	{
+		if (key.bPressed == true)
+		{
+			key.state = eKeystate::Up;
+		}
+		else
+		{
+			key.state = eKeystate::None;
+		}
+		key.bPressed = false;
+	}
 	
+	void Input::clearKeys()
+	{
+		for (Key& key : Keys)
+		{
+			if (key.state == eKeystate::Pressed || key.state == eKeystate::Down)
+				key.state = eKeystate::Up;
+			else if (key.state == eKeystate::Up)
+				key.state = eKeystate::None;
+
+			key.bPressed = false;
+		}
+	}
+
+	void Input::getMousePositionByWindow()
+	{
+		POINT mousePos = {};
+		GetCursorPos(&mousePos);
+
+		ScreenToClient(application.GetHwnd(), &mousePos);
+
+		mMousePosition.x = mousePos.x;
+		mMousePosition.y = mousePos.y;
+	}
+
 	void Input::Initialize()
 	{
 		CreateKeys();

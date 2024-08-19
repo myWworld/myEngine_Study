@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -28,6 +28,8 @@
     <ClInclude Include="MEPlayScene.h" />
     <ClInclude Include="MEScoreScene.h" />
     <ClInclude Include="METitleScene.h" />
+    <ClInclude Include="METurtle.h" />
+    <ClInclude Include="METurtleScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MEEndScene.cpp" />
@@ -37,6 +39,8 @@
     <ClCompile Include="MEPlayScene.cpp" />
     <ClCompile Include="MEScoreScene.cpp" />
     <ClCompile Include="METitleScene.cpp" />
+    <ClCompile Include="METurtle.cpp" />
+    <ClCompile Include="METurtleScript.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

@@ -26,6 +26,12 @@
     <ClInclude Include="METitleScene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="METurtle.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="METurtleScript.h">
+      <Filter>Script</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Contents">
@@ -59,6 +65,12 @@
     </ClCompile>
     <ClCompile Include="METitleScene.cpp">
       <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="METurtle.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="METurtleScript.cpp">
+      <Filter>Script</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

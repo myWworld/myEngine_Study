@@ -1,6 +1,7 @@
 #include "MEPlayScene.h"
 #include "MEGameObject.h"
 #include "MEPlayer.h"
+#include "METurtle.h"
 #include "METransform.h"
 #include "MESpriteRenderer.h"
 #include "MEInput.h"
@@ -10,6 +11,7 @@
 #include "METexture.h"
 #include "MEResources.h"
 #include "MEPlayerScript.h"
+#include "METurtleScript.h"
 #include "MECamera.h"
 #include "MERenderer.h"
 #include "MEApplication.h"
@@ -38,42 +40,8 @@ namespace ME
 			Camera* cameraComp = camera->AddComponent<Camera>();
 			renderer::mainCamera = cameraComp;
 
-		//플레이어 생성
-			mPlayer = object::Instantiate<Player>
-				(enums::eLayerType::Player, Vector2(100, 406));
-
-		//	SpriteRenderer* sr = mPlayer->AddComponent<SpriteRenderer>();
-			mPlayer->AddComponent<PlayerScript>();
-			mPlayer->GetComponent<Transform>()->SetScale(Vector2(0.7f, 0.7f));
-				
-			graphics::Texture* megaman = Resources::Find<graphics::Texture>(L"MEGAMAN");
-			Animator *animator = mPlayer->AddComponent<Animator>();
-			
-
-			//sr->SetTexture(megaman);
-			animator->CreateAnimation(L"RightWalk", megaman, Vector2(0, 212.0f), Vector2(50.0f, 50.0f), Vector2(0, 0), 0.2f,8, 3);
-			animator->CreateAnimation(L"Run", megaman, Vector2(0, 212.0f), Vector2(50.0f, 50.0f), Vector2(0, 0), 0.01f, 8, 3);
-			animator->CreateAnimation(L"GetDown", megaman, Vector2(0, 0), Vector2(45.4f, 47.0f), Vector2(0, 0), 0.5f,6);
-			animator->CreateAnimation(L"Jump", megaman, Vector2(0, 412), Vector2(50.0f, 50.0f), Vector2(0, 0), 0.05f, 7);
-			animator->CreateAnimation(L"Standing", megaman, Vector2(301.0f, 10.0f), Vector2(50.0f, 50.0f), Vector2(0, 0), 0.3f, 2,8);
-			animator->CreateAnimation(L"StandAttack", megaman, Vector2(0, 112), Vector2(50.0f, 50.0f), Vector2::Zero, 0.1f, 3);
-			animator->CreateAnimation(L"RunningAttack", megaman, Vector2(250, 262), Vector2(50.0f, 50.0f), Vector2::Zero,0.1f, 3,8);
-			
-			GameObject* Bullet = object::Instantiate<GameObject>(enums::eLayerType::Paritcle);
-			graphics::Texture* bulletTexture = Resources::Find<graphics::Texture>(L"BULLETEFFECT");
-			Animator* particleAnimator = Bullet->AddComponent<Animator>();
-
-			animator->CreateAnimation(L"BulletEffect", bulletTexture, Vector2(0,0), Vector2(100, 20), Vector2::Zero,0.1f, 8);
-			
-
-			//mPlayer->GetComponent<Transform>()->SetPosition(Vector2(100, 800));
-
-		
-
-		//맵생성
-	
 			GameObject* bg = object::Instantiate<GameObject>
-				(enums::eLayerType::BackGround, Vector2(0,200.0f));
+				(enums::eLayerType::BackGround, Vector2(0, 200.0f));
 
 			SpriteRenderer* bgSr = bg->AddComponent<SpriteRenderer>();
 			bgSr->SetSize(Vector2(1.3f, 1.3f));
@@ -82,39 +50,42 @@ namespace ME
 			graphics::Texture* map = Resources::Find<graphics::Texture>(L"STAGE1_1");
 			bgSr->SetTexture(map);
 
+			mPlayer = object::Instantiate<Player>
+				(enums::eLayerType::Player, Vector2(100, 406));
+
+
+			mPlayer->AddComponent<PlayerScript>();
+			mPlayer->GetComponent<Transform>()->SetScale(Vector2(0.7f, 0.7f));
+				
+			graphics::Texture* megaman = Resources::Find<graphics::Texture>(L"MEGAMAN");
+			Animator *animator = mPlayer->AddComponent<Animator>();
+			
+			animator->CreateAnimation(L"RightWalk", megaman, Vector2(0, 212.0f), Vector2(50.0f, 50.0f), Vector2(0, 0), 0.2f,8, 3);
+			animator->CreateAnimation(L"Run", megaman, Vector2(0, 212.0f), Vector2(50.0f, 50.0f), Vector2(0, 0), 0.01f, 8, 3);
+			animator->CreateAnimation(L"GetDown", megaman, Vector2(0, 0), Vector2(45.4f, 47.0f), Vector2(0, 0), 0.5f,6);
+			animator->CreateAnimation(L"Jump", megaman, Vector2(0, 412), Vector2(50.0f, 50.0f), Vector2(0, 0), 0.05f, 7);
+			animator->CreateAnimation(L"Standing", megaman, Vector2(301.0f, 10.0f), Vector2(50.0f, 50.0f), Vector2(0, 0), 0.3f, 2,8);
+			animator->CreateAnimation(L"StandAttack", megaman, Vector2(0, 112), Vector2(50.0f, 50.0f), Vector2::Zero, 0.1f, 3);
+			animator->CreateAnimation(L"RunningAttack", megaman, Vector2(250, 262), Vector2(50.0f, 50.0f), Vector2::Zero,0.1f, 3,8);
+	
+
+			GameObject* mushroom = object::Instantiate<Turtle>(enums::eLayerType::Monster,Vector2(400,406));
+		
+			mushroom->AddComponent<TurtleScript>();
+			
+			graphics::Texture* mushroomTex = Resources::Find<graphics::Texture>(L"MUSHROOM");
+			Animator *mushroomAnimator = mushroom->AddComponent<Animator>();
+
+			mushroom->GetComponent<Transform>()->SetScale(Vector2(0.4f, 0.4f));
+
+			mushroomAnimator->CreateAnimation(L"TurtleLeftWalk", mushroomTex, Vector2(0, 132.0f), Vector2(130, 130), Vector2::Zero, 0.2f, 5);
+			mushroomAnimator->CreateAnimation(L"TurtleRightWalk", mushroomTex, Vector2(0, 132.0f), Vector2(130, 130), Vector2::Zero, 0.2f, 5);
+			mushroomAnimator->CreateAnimation(L"Idle", mushroomTex, Vector2(0, 0), Vector2(130, 130), Vector2::Zero, 0.2f, 1);
+
+
 			animator->PlayAnimation(L"Standing", true);
-		
-	//
-	//{//기타 오브젝트 생성
-	//	GameObject* flower = object::Instantiate<GameObject>
-	//		(enums::eLayerType::Items, Vector2(300, 215));
-	//
-	//	SpriteRenderer* flowerSr = flower->AddComponent<SpriteRenderer>();
-	//	flowerSr->SetSize(Vector2(0.03f, 0.03f));
-	//
-	//	graphics::Texture* flowerTexture = Resources::Find<graphics::Texture>(L"FLOWER");
-	//	flowerSr->SetTexture(flowerTexture);
-	//
-	//	GameObject* qbox = object::Instantiate<GameObject>
-	//		(enums::eLayerType::Items, Vector2(500, 150));
-	//
-	//	SpriteRenderer* qboxSr = qbox->AddComponent<SpriteRenderer>();
-	//	qboxSr->SetSize(Vector2(0.04f, 0.04f));
-	//
-	//	graphics::Texture* qboxTexture = Resources::Find<graphics::Texture>(L"QUESTIONBOX");
-	//	qboxSr->SetTexture(qboxTexture);
-	//
-	//	GameObject* qbox2 = object::Instantiate<GameObject>
-	//		(enums::eLayerType::Items, Vector2(200, 150));
-	//
-	//	SpriteRenderer* qbox2Sr = qbox2->AddComponent<SpriteRenderer>();
-	//	qbox2Sr->SetSize(Vector2(0.04f, 0.04f));
-	//
-	//	graphics::Texture* qbox2Texture = Resources::Find<graphics::Texture>(L"QUESTIONBOX");
-	//	qbox2Sr->SetTexture(qbox2Texture);
-	//}
-	//
-		
+			mushroomAnimator->PlayAnimation(L"Idle", false);
+			
 		
 
 		Scene::Initialize();

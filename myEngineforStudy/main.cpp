@@ -155,7 +155,10 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    Gdiplus::GdiplusStartup(&gpToken, &gpsi, NULL);
 
    ME::LoadResources();
-   ME::LoadScenes();    
+   ME::LoadScenes();   
+    
+   int a = 0;
+   srand((unsigned int)(&a));
 
    return TRUE;
 }

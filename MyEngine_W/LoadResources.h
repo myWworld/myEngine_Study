@@ -11,6 +11,7 @@ namespace ME
 		Resources::Load<graphics::Texture>(L"TITLE", L"..\\Resources\\Title1.png");
 		Resources::Load<graphics::Texture>(L"STAGE1_1", L"..\\Resources\\statge1_1.png");
 		Resources::Load<graphics::Texture>(L"MEGAMAN", L"..\\Resources\\Megaman.png");
+		Resources::Load<graphics::Texture>(L"MUSHROOM", L"..\\Resources\\MushRoom.png");
 		//::Load<graphics::Texture>(L"QUESTIONBOX", L"..\\Resources\\questionbox.png");
 	//	Resources::Load<graphics::Texture>(L"FLOWER", L"..\\Resources\\flower.png");
 		Resources::Load<graphics::Texture>(L"GAMEOVER", L"..\\Resources\\gameover.png");

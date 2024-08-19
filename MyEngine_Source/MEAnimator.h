@@ -11,6 +11,29 @@ namespace ME
 	class Animator:public Component
 	{
 	public:
+
+		struct Event
+		{
+			void operator()()
+			{
+				if (mEvent)
+					mEvent;
+			}
+
+			void operator=(std::function<void()>func)
+			{
+				mEvent = std::move(func);
+			}
+
+			std::function<void()> mEvent;
+		};
+
+		struct Events
+		{
+			Event mStartEvent;
+			Event mCompleteEvent;
+			Event mEndEvent;
+		};
 		
 		Animator();
 		~Animator();
@@ -31,11 +54,15 @@ namespace ME
 		Animation* FindAnimation(const std::wstring& name);
 		void PlayAnimation(const std::wstring& name, bool loop = true);
 
+		bool IsComplete() { return mActiveAnimation->IsComplete(); }
+
 	private:
 
 		std::map<std::wstring, Animation*> mAnimations;
 		Animation* mActiveAnimation;
 		bool mbLoop;
+
+		std::map<std::wstring, Events*> mEvents;
 
 	};
 

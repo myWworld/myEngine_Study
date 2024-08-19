@@ -7,6 +7,7 @@ namespace ME::enums
 		None,
 		BackGround,
 		Items,
+		Monster,
 		Player,
 		Paritcle,
 		Max = 16
