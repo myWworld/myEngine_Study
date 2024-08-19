@@ -20,10 +20,19 @@ namespace ME
 		void Render(HDC hdc)  override;
 		
 		void SetPosition(Vector2 pos) { mPosition.x = pos.x; mPosition.y = pos.y; }
+		void SetScale(Vector2 scale) { mScale = scale; }
+		void SetRotation(float rotation) { mRotation = rotation; }
+
 		Vector2 GetPosition() { return mPosition; }
+		Vector2 GetScale() { return mScale; }
+		float GetRotation() { return mRotation; }
 
 	private:
 		Vector2 mPosition;
+		Vector2 mScale;
+		
+		float mRotation;
+
 	};
 
 }

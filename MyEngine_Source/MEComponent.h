@@ -24,6 +24,8 @@ namespace ME
 	private:
 		GameObject* mOwner;
 		enums::eComponentType mType;
+
+		Vector2 Rotate;
 	};
 
 }

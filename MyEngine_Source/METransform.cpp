@@ -5,6 +5,8 @@ namespace ME
 
 	ME::Transform::Transform()
 		:Component(enums::eComponentType::Trasnform)
+		, mScale(Vector2::One)
+		, mRotation(0.0f)
 	{
 	}
 

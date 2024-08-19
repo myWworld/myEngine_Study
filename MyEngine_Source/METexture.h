@@ -19,7 +19,7 @@ namespace ME::graphics
 		
 		virtual HRESULT Load(const std::wstring& path) override;
 
-		UINT GedWidth() { return mWidth; }
+		UINT GetWidth() { return mWidth; }
 		UINT GetHeight() { return mHeight; }
 		HDC GedHdc() { return mHdc; }
 		eTextureType GetTextureType() { return mType; }

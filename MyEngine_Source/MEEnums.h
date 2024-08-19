@@ -8,6 +8,7 @@ namespace ME::enums
 		BackGround,
 		Items,
 		Player,
+		Paritcle,
 		Max = 16
 	};
 
@@ -15,6 +16,7 @@ namespace ME::enums
 	{
 		Texture,
 		AudioClip,
+		Animation,
 		Prefab,
 		End
 	};
@@ -23,6 +25,7 @@ namespace ME::enums
 	{
 		Trasnform,
 		SpriteRenderer,
+		Animator,
 		Script,
 		Camera,
 		End,

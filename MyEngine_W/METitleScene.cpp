@@ -20,20 +20,16 @@ ME::TitleScene::~TitleScene()
 
 void ME::TitleScene::Initialize()
 {
-	GameObject* camera = object::Instantiate<GameObject>(enums::eLayerType::None, Vector2(504, 216));
-
-	Camera* cameraComp = camera->AddComponent<Camera>();
-	renderer::mainCamera = cameraComp;
-
-	GameObject* titleBg = object::Instantiate<GameObject>(enums::eLayerType::BackGround, Vector2(280, 100));
+	
+	GameObject* titleBg = object::Instantiate<GameObject>(enums::eLayerType::BackGround, Vector2(380,60));
 
 	SpriteRenderer* sr = titleBg->AddComponent<SpriteRenderer>();
-	sr->SetSize(Vector2(0.2f, 0.2f));
+
+	Transform* tr = titleBg->GetComponent<Transform>();
+	tr->SetScale(Vector2(1.5f, 1.5f));
 	
 	graphics::Texture* titleTexture = Resources::Find<graphics::Texture>(L"TITLE");
 	sr->SetTexture(titleTexture);
-
-
 
 	Scene::Initialize();
 
@@ -49,7 +45,7 @@ void ME::TitleScene::LateUpdate()
 {
 	Scene::LateUpdate();
 
- 	if (Input::GetKeyDown(eKeyCode::Space))
+ 	if (Input::GetKey(eKeyCode::Space))
 	{
  		SceneManager::LoadScene(L"PlayScene");
 	}
@@ -61,5 +57,5 @@ void ME::TitleScene::Render(HDC mHdc)
 	Scene::Render(mHdc);
 	wchar_t str[50] = L"시작하려면 SPACE를 누르세요.";
 	UINT len = wcslen(str);
-	TextOut(mHdc, 380, 350, str, len);
+	TextOut(mHdc, 500, 350, str, len);
 }

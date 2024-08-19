@@ -39,6 +39,7 @@ namespace ME::graphics
 		else if (ext == L"bmp")
 		{
 			mType = eTextureType::Bmp;
+
 			mBitmap = (HBITMAP)LoadImageW(nullptr, path.c_str(), IMAGE_BITMAP,
 				0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
 

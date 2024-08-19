@@ -8,6 +8,17 @@ namespace ME
 	class PlayerScript :public Script
 	{
 	public:
+		enum class eState
+		{	
+			Standing,
+			Attack,
+			Jump,
+			Run,
+			Walk,
+			Fall,
+			GetDown,
+			Move
+		};
 
 		PlayerScript();
 		~PlayerScript();
@@ -18,8 +29,19 @@ namespace ME
 		void Render(HDC hdc)override;
 
 	private:
+
+		void Standing();
+		void Move();
+		void Attack();
+
+	private:
 		bool isJump;
 		int jumpSeconds;
+
+		eState mState;
+		eState mPrevState;
+
+		class Animator* mAnimator;
 	};
 }
 
