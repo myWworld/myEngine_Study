@@ -17,7 +17,7 @@ namespace ME
 			void operator()()
 			{
 				if (mEvent)
-					mEvent;
+					mEvent();
 			}
 
 			void operator=(std::function<void()>func)
@@ -30,9 +30,9 @@ namespace ME
 
 		struct Events
 		{
-			Event mStartEvent;
-			Event mCompleteEvent;
-			Event mEndEvent;
+			Event StartEvent;
+			Event CompleteEvent;
+			Event EndEvent;
 		};
 		
 		Animator();
@@ -54,6 +54,12 @@ namespace ME
 		Animation* FindAnimation(const std::wstring& name);
 		void PlayAnimation(const std::wstring& name, bool loop = true);
 
+		Events* FindEvents(const std::wstring& name);
+
+		std::function<void()>& GetStartEvent(const std::wstring& name);
+		std::function<void()>& GetCompleteEvent(const std::wstring& name);
+		std::function<void()>& GetEndEvent(const std::wstring& name);
+
 		bool IsComplete() { return mActiveAnimation->IsComplete(); }
 
 	private:
@@ -62,6 +68,8 @@ namespace ME
 		Animation* mActiveAnimation;
 		bool mbLoop;
 
+
+		//Event
 		std::map<std::wstring, Events*> mEvents;
 
 	};

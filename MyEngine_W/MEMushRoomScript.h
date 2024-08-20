@@ -7,7 +7,7 @@ namespace ME
 {
 
 
-	class TurtleScript :public Script
+	class MushRoomScript :public Script
 	{
 	public:
 
@@ -25,8 +25,8 @@ namespace ME
 			End,
 		};
 
-		TurtleScript();
-		~TurtleScript();
+		MushRoomScript();
+		~MushRoomScript();
 
 		void Initialize() override;
 		void Update()override;

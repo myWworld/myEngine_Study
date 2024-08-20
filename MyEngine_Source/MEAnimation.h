@@ -51,6 +51,18 @@ namespace ME
 		void SetAnimator(class Animator* animator) { mAnimator = animator; }
 
 	private:
+		
+		void InsertRightAnimationSheets(Vector2 leftTop, Vector2 size
+			, Vector2 offset, float duration
+			, UINT spriteLength1
+			, UINT spriteLength2);
+
+		void InsertLeftAnimationSheets(Vector2 leftTop, Vector2 size
+				, Vector2 offset, float duration
+				, UINT spriteLength1
+				, UINT spriteLength2);
+
+	private:
 
 		class Animator* mAnimator;
 		graphics::Texture* mTexture;

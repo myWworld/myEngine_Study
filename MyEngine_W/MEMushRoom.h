@@ -3,12 +3,12 @@
 
 namespace ME
 {
-	class Turtle:public GameObject
+	class MushRoom:public GameObject
 	{
 	public:
 
-		Turtle();
-		~Turtle();
+		MushRoom();
+		~MushRoom();
 
 		void Initialize() override;
 		void Update()override;

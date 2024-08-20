@@ -26,11 +26,17 @@
     <ClInclude Include="METitleScene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="METurtle.h">
+    <ClInclude Include="MEMushRoom.h">
       <Filter>Contents</Filter>
     </ClInclude>
-    <ClInclude Include="METurtleScript.h">
-      <Filter>Script</Filter>
+    <ClInclude Include="MEMushRoomScript.h">
+      <Filter>Script\Monsters</Filter>
+    </ClInclude>
+    <ClInclude Include="MESkeletonScript.h">
+      <Filter>Script\Monsters</Filter>
+    </ClInclude>
+    <ClInclude Include="MESkeleton.h">
+      <Filter>Contents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -42,6 +48,9 @@
     </Filter>
     <Filter Include="Script">
       <UniqueIdentifier>{2487e8b0-7a9a-4989-b70f-ed09f8743489}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Script\Monsters">
+      <UniqueIdentifier>{dddbcec6-cd02-46b8-9900-7fe2fd160b54}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -66,11 +75,17 @@
     <ClCompile Include="METitleScene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="METurtle.cpp">
+    <ClCompile Include="MEMushRoom.cpp">
       <Filter>Contents</Filter>
     </ClCompile>
-    <ClCompile Include="METurtleScript.cpp">
-      <Filter>Script</Filter>
+    <ClCompile Include="MEMushRoomScript.cpp">
+      <Filter>Script\Monsters</Filter>
+    </ClCompile>
+    <ClCompile Include="MESkeletonScript.cpp">
+      <Filter>Script\Monsters</Filter>
+    </ClCompile>
+    <ClCompile Include="MESkeleton.cpp">
+      <Filter>Contents</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

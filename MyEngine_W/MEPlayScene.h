@@ -1,5 +1,7 @@
 #pragma once
+#include "../MyEngine_Source/METexture.h"
 #include "../MyEngine_Source/MEScenes.h"
+#include "../MyEngine_Source/MEAnimator.h"
 
 namespace ME
 {
@@ -19,6 +21,12 @@ namespace ME
 
 	 void OnEnter() override;
 	 void OnExit() override;
+
+	private:
+
+		void CreatePlayerAnimation(Animator *animator, graphics::Texture* Rtexture, graphics::Texture* Ltexture);
+		void CreateMushRoomAnimation(Animator* animator, graphics::Texture* Rtexture, graphics::Texture* Ltexture);
+		void CreateSkeletonAnimation(Animator* animator, graphics::Texture* Rtexture, graphics::Texture* Ltexture);
 
 	private:
 

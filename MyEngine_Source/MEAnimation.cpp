@@ -143,16 +143,44 @@ namespace ME
 	{
 		mTexture = spriteSheet;
 		
+		std::wstring Direction = name.substr(name.size() - 1);
+
+		if (Direction == L"R")
+		{
+			InsertRightAnimationSheets(leftTop, size, offset, duration, spriteLength1, spriteLength2);
+		}
+		else if (Direction == L"L")
+		{
+			InsertLeftAnimationSheets(leftTop, size, offset, duration, spriteLength1, spriteLength2);
+		}
+		
+		
+	}
+	void Animation::Reset()
+	{
+
+		mTime = 0;
+		mIndex = 0;
+		mbComplete = false;
+	}
+
+	void Animation::InsertRightAnimationSheets(Vector2 leftTop, Vector2 size
+		, Vector2 offset, float duration
+		, UINT spriteLength1
+		, UINT spriteLength2)
+	{
+
 		int count = (spriteLength2 > 0) ? 2 : 1;
 		UINT Length = spriteLength1;
 		Vector2 pos = leftTop;
 
+
 		for (size_t j = 0; j < count; j++)
 		{
 
-			if (j == 1) 
-			{	
-				Length = spriteLength2; 
+			if (j == 1)
+			{
+				Length = spriteLength2;
 				pos.y += size.y;
 
 				if (pos.x > 0)
@@ -175,11 +203,47 @@ namespace ME
 			}
 		}
 	}
-	void Animation::Reset()
-	{
 
-		mTime = 0;
-		mIndex = 0;
-		mbComplete = false;
+
+	void Animation::InsertLeftAnimationSheets(Vector2 leftTop, Vector2 size
+		, Vector2 offset, float duration
+		, UINT spriteLength1
+		, UINT spriteLength2)
+	{
+		int count = (spriteLength2 > 0) ? 2 : 1;
+		UINT Length = spriteLength1;
+		Vector2 pos = leftTop;
+		
+		UINT width = mTexture->GetWidth();
+
+		for (size_t j = 0; j < count; j++)
+		{
+
+			if (j == 1)
+			{
+				Length = spriteLength2;
+				pos.y += size.y;
+
+				if (pos.x < width - size.x)
+				{
+					pos.x = width - size.x;
+				}
+
+			}
+
+			for (size_t i = 0; i < Length; i++)
+			{
+				Sprite sprite = {};
+				sprite.leftTop.x = pos.x - (size.x * i);
+				sprite.leftTop.y = pos.y;
+				sprite.size = size;
+				sprite.offset = offset;
+				sprite.duration = duration;
+
+				mAnimationSheet.push_back(sprite);
+			}
+		}
 	}
+
+
 }

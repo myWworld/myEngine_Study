@@ -30,15 +30,17 @@ namespace ME
 			Transform* tr = mTarget->GetComponent<Transform>();
 			mLookPosition = tr->GetPosition();
 		}
+		else
+		{
+			Transform* cameraTr = GetOwner()->GetComponent<Transform>();
 
-		Transform* cameraTr = GetOwner()->GetComponent<Transform>();
-		
-		mLookPosition = cameraTr->GetPosition();
-
-
+			mLookPosition = cameraTr->GetPosition();
+		}
 
 		mDistance = mLookPosition - (mResolution / 2.0f);
+
 	}
+
 	void Camera::LateUpdate()
 	{
 

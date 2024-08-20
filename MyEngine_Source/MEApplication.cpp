@@ -2,6 +2,7 @@
 #include "MEInput.h"
 #include "METime.h"
 #include "MESceneManager.h"
+#include "MEResources.h"
 
 namespace ME 
 {
@@ -20,7 +21,7 @@ namespace ME
 	
 	Application::~Application()
 	{
-
+		
 	}
 
 	void Application::Initialize(HWND hwnd, UINT width, UINT height)
@@ -68,6 +69,12 @@ namespace ME
 		CopyRenderTarget(mBackHdc, mHdc);
 		
 	
+	}
+
+	void Application::Release()
+	{
+		SceneManager::Release();
+		Resources::Release();
 	}
 
 	void Application::ClearRenderTarget()

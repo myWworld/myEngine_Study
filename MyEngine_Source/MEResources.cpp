@@ -3,4 +3,6 @@
 namespace ME
 {
 	std::map<std::wstring, Resource*> Resources::mResources = {};
+
+
 }

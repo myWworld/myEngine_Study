@@ -20,6 +20,13 @@ namespace ME
 			Move
 		};
 
+		enum class ePrevDirection
+		{
+			Left,
+			Right
+			
+		};
+
 		PlayerScript();
 		~PlayerScript();
 
@@ -33,13 +40,18 @@ namespace ME
 		void Standing();
 		void Move();
 		void Attack();
+		void Jump();
+		void Run();
+
+		void PlayStandingAnimByPrevDirection();
+
 
 	private:
 		bool isJump;
-		int jumpSeconds;
+		float jumpSeconds;
 
 		eState mState;
-		eState mPrevState;
+		ePrevDirection mPrevDirection;
 
 		class Animator* mAnimator;
 	};
