@@ -10,6 +10,17 @@ namespace ME {
 	class GameObject
 	{
 	public:
+
+		friend void Destroy(GameObject* obj);
+
+		enum class eState
+		{
+			Active,
+			Paused,
+			Dead,
+			End
+		};
+
 		GameObject();
 		~GameObject();
 		
@@ -47,17 +58,28 @@ namespace ME {
 				return component;
 		}
 
+		void SetActive(bool power)
+		{
+			if (power == true) mState = eState::Active;
+			if (power == false) mState = eState::Paused;
+		}
+
+		eState GetActive() { return mState; }
+
+		void Death() {mState = eState::Dead;}
 
 
 	private:
 		
 		void initializeTransform(); 
+		
 	
 	private:
 
 		std::vector<Component*> mComponents;
 
-		
+		eState mState;
+
 	};
 
 

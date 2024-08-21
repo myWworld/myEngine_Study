@@ -9,13 +9,11 @@ namespace ME
 	{
 	public:
 
-		Vector2 CalculatePosition(Vector2 pos) 
-		{
-			return Vector2(pos - mDistance);
-		}
-		
+		Vector2 CalculatePosition(Vector2 pos){ return pos - mDistance;}
+
 		Camera();
 		~Camera();
+
 
 		void Initialize() override;
 		void Update()override;

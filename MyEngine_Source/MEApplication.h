@@ -23,6 +23,8 @@ namespace ME
 		void Update();
 		void LateUpdate();
 		void Render();
+		void Destroy();
+
 		void Release();
 
 

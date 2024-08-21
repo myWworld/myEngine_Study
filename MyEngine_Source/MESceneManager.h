@@ -31,6 +31,8 @@ namespace ME
 		static void Update();
 		static void LateUpdate();
 		static void Render(HDC mHdc);
+		static void Destroy();
+
 		static void Release();
 
 	private:

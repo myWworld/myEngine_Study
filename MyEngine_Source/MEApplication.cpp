@@ -40,6 +40,8 @@ namespace ME
 		Update();
 		LateUpdate();
 		Render();
+
+		Destroy();
 	}
 
 	void Application::Update()
@@ -71,6 +73,11 @@ namespace ME
 	
 	}
 
+	void Application::Destroy()
+	{
+		SceneManager::Destroy();
+	}
+
 	void Application::Release()
 	{
 		SceneManager::Release();
@@ -98,10 +105,12 @@ namespace ME
 
 		RECT rect = { 0,0,width,height };
 
-		AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, false);
-
 		mWidth = rect.right - rect.left;
 		mHeight = rect.bottom - rect.top;
+
+		AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, false);
+
+
 
 		SetWindowPos(mHwnd, nullptr, 0, 0, mWidth,mHeight, 0);
 		ShowWindow(mHwnd, true);

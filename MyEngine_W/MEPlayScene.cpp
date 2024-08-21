@@ -37,12 +37,14 @@ namespace ME
 
 	void PlayScene::Initialize()
 	{
+
+		Vector2 resolution = Vector2(application.GetWidth(), application.GetHeight());
 		
-			GameObject* camera = object::Instantiate<GameObject>(enums::eLayerType::Player, Vector2(400,250));
+			GameObject* camera = object::Instantiate<GameObject>(enums::eLayerType::None, resolution/2.0f);
 			Camera* cameraComp = camera->AddComponent<Camera>();
 			renderer::mainCamera = cameraComp;
 
-			{
+			
 				GameObject* bg = object::Instantiate<GameObject>
 					(enums::eLayerType::BackGround, Vector2(0,200));
 
@@ -52,16 +54,16 @@ namespace ME
 
 				graphics::Texture* map = Resources::Find<graphics::Texture>(L"STAGE1_1");
 				bgSr->SetTexture(map);
-			}
+			
 
-			{
+			
 				mPlayer = object::Instantiate<Player>
 					(enums::eLayerType::Player, Vector2(100, 406));
-
-  				cameraComp->SetTarget(mPlayer);
+ 				cameraComp->SetTarget(mPlayer);
 
 				PlayerScript* playerScript = mPlayer->AddComponent<PlayerScript>();
 				mPlayer->GetComponent<Transform>()->SetScale(Vector2(0.7f, 0.7f));
+				
 
 				graphics::Texture* megamanRightTex = Resources::Find<graphics::Texture>(L"MEGAMANR");
 				graphics::Texture* megamanLeftTex = Resources::Find<graphics::Texture>(L"MEGAMANL");
@@ -73,11 +75,11 @@ namespace ME
 
 				CreatePlayerAnimation(animator, megamanRightTex, megamanLeftTex);
 				animator->PlayAnimation(L"StandingR", true);
-			}
-
-			{
-				GameObject* mushroom = object::Instantiate<MushRoom>(enums::eLayerType::Monster, Vector2(400, 425));
 			
+
+			
+				GameObject* mushroom = object::Instantiate<MushRoom>(enums::eLayerType::Monster, Vector2(400, 425));
+				
 
 				mushroom->AddComponent<MushRoomScript>();
 				Animator* mushroomAnimator = mushroom->AddComponent<Animator>();
@@ -87,9 +89,9 @@ namespace ME
 
 				CreateMushRoomAnimation(mushroomAnimator, mushroomRightTex, mushroomLeftTex);
 				mushroomAnimator->PlayAnimation(L"IdleL", false);
-			}
+			
 
-			{
+			
 				GameObject* skeleton = object::Instantiate<Skeleton>(enums::eLayerType::Monster
 					, Vector2(600, 406));
 
@@ -102,8 +104,8 @@ namespace ME
 				
 				CreateSkeletonAnimation(skeletonAnimator, skeletonRightTex, skeletonLeftTex);
 				skeletonAnimator->PlayAnimation(L"SkeletonIdleR",false);
-			}
-	
+			
+
 			
 			
 		
@@ -131,19 +133,19 @@ namespace ME
 
 		Transform* tr = mPlayer->GetComponent<Transform>();
 		Vector2 playerPos = tr->GetPosition();
-
-		if (playerPos.x > application.GetWidth() 
-			|| playerPos.x < 0)
-		{
-			SceneManager::LoadScene(L"GameOverScene");
-		}
-
-
-		if (playerPos.y < 0
-			|| playerPos.y > application.GetHeight())
-		{
-			SceneManager::LoadScene(L"GameOverScene");
-		}
+	//
+	//if (playerPos.x > application.GetWidth() 
+	//	|| playerPos.x < 0)
+	//{
+	//	SceneManager::LoadScene(L"GameOverScene");
+	//}
+	//
+	//
+	//if (playerPos.y < 0
+	//	|| playerPos.y > application.GetHeight())
+	//{
+	//	SceneManager::LoadScene(L"GameOverScene");
+	//}
 	}
 
 	void PlayScene::Render(HDC mHdc)

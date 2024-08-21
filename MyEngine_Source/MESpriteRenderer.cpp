@@ -74,17 +74,43 @@ namespace ME {
 		}
 		else if (mTexture->GetTextureType() == graphics::Texture::eTextureType::Bmp)
 		{
-		
-			TransparentBlt(hdc
-				,pos.x
-				,pos.y
-				,mTexture->GetWidth()*scale.x
-				,mTexture->GetHeight()*scale.y
-				,mTexture->GedHdc()
-				,0, 0
-				,mTexture->GetWidth()*mSize.x 
-				,mTexture->GetHeight()* mSize.y
-				,RGB(255, 0, 255));
+			HDC imgHdc = mTexture->GedHdc();
+
+			if (mTexture->IsAlpha())
+			{
+				//반투명한 효과를 원할때
+				BLENDFUNCTION func = {};
+				func.BlendOp = AC_SRC_OVER;
+				func.BlendFlags = 0;
+				func.AlphaFormat = 0;
+				func.SourceConstantAlpha = 255;
+
+
+				AlphaBlend(hdc
+					, pos.x
+					, pos.y
+					, mTexture->GetWidth() * scale.x
+					, mTexture->GetHeight() * scale.y
+					, imgHdc
+					, 0
+					, 0
+					,  mTexture->GetWidth() 
+					,  mTexture->GetHeight() 
+					, func);
+			}
+			else
+			{
+				TransparentBlt(hdc
+					, pos.x
+					, pos.y
+					, mTexture->GetWidth() * scale.x
+					, mTexture->GetHeight() * scale.y
+					, mTexture->GedHdc()
+					, 0, 0
+					, mTexture->GetWidth() * mSize.x
+					, mTexture->GetHeight() * mSize.y
+					, RGB(255, 0, 255));
+			}
 		}
 		
 	

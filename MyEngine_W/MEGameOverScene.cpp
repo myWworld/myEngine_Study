@@ -18,9 +18,9 @@ namespace ME
 	}
 	void GameOverScene::Initialize()
 	{
-		GameObject* camera = object::Instantiate<GameObject>(enums::eLayerType::None, Vector2(504, 216));
-		Camera* cameraComp = camera->AddComponent<Camera>();
-		renderer::mainCamera = cameraComp;
+	//GameObject* camera = object::Instantiate<GameObject>(enums::eLayerType::None, Vector2(504, 216));
+	//Camera* cameraComp = camera->AddComponent<Camera>();
+	//renderer::mainCamera = cameraComp;
 		
 		GameObject* bg = object::Instantiate<GameObject>(enums::eLayerType::BackGround, Vector2 (280,-10));
 		

@@ -6,6 +6,7 @@
 #include<algorithm>
 #include <map>
 #include<functional>
+#include<filesystem>
 
 #include "MEMath.h"
 #include "MEEnums.h"

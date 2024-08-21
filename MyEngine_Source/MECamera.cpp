@@ -10,8 +10,8 @@ namespace ME
 	Camera::Camera()
 		:Component(enums::eComponentType::Camera)
 		, mDistance(Vector2::Zero)
-		, mResolution(Vector2(1600,900))
-		, mLookPosition(Vector2::One)
+		, mResolution(Vector2::Zero)
+		, mLookPosition(Vector2::Zero)
 		, mTarget(nullptr)
 	{
 	}
@@ -23,6 +23,7 @@ namespace ME
 		mResolution.x = application.GetWidth();
 		mResolution.y = application.GetHeight();
 	}
+
 	void Camera::Update()
 	{
 		if (mTarget)
@@ -33,12 +34,11 @@ namespace ME
 		else
 		{
 			Transform* cameraTr = GetOwner()->GetComponent<Transform>();
-
 			mLookPosition = cameraTr->GetPosition();
 		}
 
 		mDistance = mLookPosition - (mResolution / 2.0f);
-
+		
 	}
 
 	void Camera::LateUpdate()

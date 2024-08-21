@@ -93,6 +93,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
   //      }
    // }
     Gdiplus::GdiplusShutdown(gpToken);
+    application.Release();
 
     return (int) msg.wParam;
 }
@@ -138,7 +139,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
-   const UINT width = 800;
+   const UINT width = 1000;
    const UINT height = 500;
 
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
@@ -157,11 +158,14 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    Gdiplus::GdiplusStartup(&gpToken, &gpsi, NULL);
 
+
    ME::LoadResources();
    ME::LoadScenes();   
     
    int a = 0;
    srand((unsigned int)(&a));
+
+
 
    return TRUE;
 }

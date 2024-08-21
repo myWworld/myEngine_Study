@@ -1,5 +1,6 @@
 #include "MEAnimator.h"
-#include "../MyEngine_Source/CommonInclude.h"
+#include "MEResources.h"
+#include "METexture.h"
 
 
 namespace ME
@@ -93,6 +94,55 @@ namespace ME
 		mAnimations.insert({ name, animation });
 
 	}
+
+
+	void Animator::CreateAnimationByFolder(const std::wstring& name
+		, const std::wstring& path
+		, Vector2 offset
+		, float duration)
+	{
+		Animation* animation = nullptr;
+		animation = FindAnimation(name);
+
+		if (animation != nullptr)
+		{
+			return;
+		}
+		
+		int filecount = 0;
+		std::filesystem::path fs(path);
+		std::vector<graphics::Texture*> images = {};
+
+		for (auto& p : std::filesystem::recursive_directory_iterator(fs))
+		{
+			std::wstring fileName = p.path().filename();
+			std::wstring fullName = p.path();
+
+			graphics::Texture* texture = Resources::Load<graphics::Texture>(fileName, fullName);
+			images.push_back(texture);
+			filecount++;
+		}
+
+		UINT sheetWidth = images[0]->GetWidth() * filecount;
+		UINT sheetHeight = images[0]->GetHeight();
+		graphics::Texture* spriteSheet = graphics::Texture::Create(name, sheetWidth, sheetHeight);
+
+		UINT imageWidth = images[0]->GetWidth();
+		UINT imageHeight = images[0]->GetHeight();
+
+		for (size_t i = 0; i < images.size(); i++)
+		{
+			BitBlt(spriteSheet->GedHdc()
+				, i * imageWidth, 0
+				, imageWidth, imageHeight
+				, images[i]->GedHdc(), 0, 0, SRCCOPY);
+		}
+
+		CreateAnimation(name, spriteSheet
+			, Vector2::Zero, Vector2(imageWidth, imageHeight)
+			, offset, filecount, duration);
+	}
+
 	Animation* Animator::FindAnimation(const std::wstring& name)
 	{
 		auto iter = mAnimations.find(name);

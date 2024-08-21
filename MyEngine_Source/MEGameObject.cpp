@@ -10,6 +10,7 @@ namespace ME {
 
 
 	GameObject::GameObject()
+		:mState(eState::Active)
 	{
 		mComponents.resize((UINT)enums::eComponentType::End);
 		initializeTransform();

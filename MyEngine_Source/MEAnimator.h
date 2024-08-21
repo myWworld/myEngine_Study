@@ -2,7 +2,7 @@
 
 #include "MEComponent.h"
 #include "MEAnimation.h"
-#
+#include "CommonInclude.h"
 
 namespace ME
 {
@@ -50,6 +50,11 @@ namespace ME
 			, float duration
 			, UINT spriteLength
 			, UINT spriteLength2 = 0);
+
+		void CreateAnimationByFolder(const std::wstring& name
+			, const std::wstring& path
+			, Vector2 offset
+			, float duration);
 
 		Animation* FindAnimation(const std::wstring& name);
 		void PlayAnimation(const std::wstring& name, bool loop = true);
