@@ -77,6 +77,8 @@ namespace ME
 				BoxCollider2D* playerBoxCollider = mPlayer->AddComponent<BoxCollider2D>();
 				
 				playerBoxCollider->SetOffset(Vector2(-60, -60));
+
+				object::DontDestroyOnLoad(mPlayer);
 			
 				graphics::Texture* megamanRightTex = Resources::Find<graphics::Texture>(L"MEGAMANR");
 				graphics::Texture* megamanLeftTex = Resources::Find<graphics::Texture>(L"MEGAMANL");
@@ -102,6 +104,7 @@ namespace ME
 				mushroom->AddComponent<MushRoomScript>();
 				Animator* mushroomAnimator = mushroom->AddComponent<Animator>();
 				BoxCollider2D* mushroomBoxCollider = mushroom->AddComponent<BoxCollider2D>();
+
 				mushroomBoxCollider->SetOffset(Vector2(-50, -50));
 
 				mushroom->GetComponent<Transform>()->SetScale(Vector2(0.4f, 0.4f));

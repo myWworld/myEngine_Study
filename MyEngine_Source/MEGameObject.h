@@ -64,11 +64,15 @@ namespace ME {
 			if (power == false) mState = eState::Paused;
 		}
 
-		eState GetActive() { return mState; }
+		eState GetState() { return mState; }
 		
 		bool IsActive() { return mState == eState::Active;}
+		bool IsDead() { return mState == eState::Dead; }
 
 		void Death() {mState = eState::Dead;}
+
+		void SetLayerType(enums::eLayerType type) { mLayerType = type; }
+		enums::eLayerType GetLayerType() { return mLayerType; }
 
 
 	private:
@@ -81,6 +85,7 @@ namespace ME {
 		std::vector<Component*> mComponents;
 
 		eState mState;
+		enums::eLayerType mLayerType;
 
 	};
 

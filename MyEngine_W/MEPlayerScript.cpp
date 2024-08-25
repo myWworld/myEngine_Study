@@ -344,6 +344,16 @@ namespace ME
 	void PlayerScript::Render(HDC hdc)
 	{
 	}
+	void PlayerScript::OnCollisionEnter(Collider* other)
+	{
+		int a = 0;
+	}
+	void PlayerScript::OnCollisionStay(Collider* other)
+	{
+	}
+	void PlayerScript::OnCollisionExit(Collider* other)
+	{
+	}
 }
 
 

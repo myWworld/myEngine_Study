@@ -67,4 +67,13 @@ namespace ME
 	void BulletScript::Destroy()
 	{
 	}
+	void BulletScript::OnCollisionEnter(Collider* other)
+	{
+	}
+	void BulletScript::OnCollisionStay(Collider* other)
+	{
+	}
+	void BulletScript::OnCollisionExit(Collider* other)
+	{
+	}
 }

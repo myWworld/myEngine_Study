@@ -66,7 +66,10 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)MECircleCollider2D.cpp">
       <Filter>Component\Collider</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)MECollisionManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MECollisionManager.cpp">
+      <Filter>Component\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MEDontDestroyOnLoad.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)MEApplication.h" />
@@ -143,7 +146,10 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)MEBoxCollider2D.h">
       <Filter>Component\Collider</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)MECollisionManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MECollisionManager.h">
+      <Filter>Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MEDontDestroyOnLoad.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">

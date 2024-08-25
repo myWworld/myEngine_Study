@@ -117,4 +117,13 @@ namespace ME
 	void MushRoomScript::Render(HDC hdc)
 	{
 	}
+	void MushRoomScript::OnCollisionEnter(Collider* other)
+	{
+	}
+	void MushRoomScript::OnCollisionStay(Collider* other)
+	{
+	}
+	void MushRoomScript::OnCollisionExit(Collider* other)
+	{
+	}
 }

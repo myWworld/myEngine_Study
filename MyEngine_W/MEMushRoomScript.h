@@ -2,6 +2,7 @@
 #include "../MyEngine_Source/MEScript.h"
 #include "../MyEngine_Source/MEAnimator.h"
 #include "METransform.h"
+#include "../MyEngine_Source/MECollider.h"
 
 namespace ME
 {
@@ -32,6 +33,10 @@ namespace ME
 		void Update()override;
 		void LateUpdate()override;
 		void Render(HDC hdc)override;
+
+		void OnCollisionEnter( Collider* other) ;
+		void OnCollisionStay( Collider* other) ;
+		void OnCollisionExit( Collider* other) ;
 
 	private:
 

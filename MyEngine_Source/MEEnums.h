@@ -22,7 +22,11 @@ namespace ME::enums
 		End
 	};
 
-	
+	enum class eColliderType
+	{
+		Rect2D,
+		Circle2D,
+	};
 
 	enum class eComponentType
 	{

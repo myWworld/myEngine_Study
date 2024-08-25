@@ -90,6 +90,12 @@ namespace ME
 		mLayers[(UINT)type]->AddGameObject(gameObject);
 	}
 
+	void Scene::EraseGameObject(GameObject* gameObj)
+	{
+		enums::eLayerType layerType = gameObj->GetLayerType();
+		mLayers[(UINT)layerType]->EraseGameObject(gameObj);
+	}
+
 	void Scene::createLayers()
 	{
 		mLayers.resize((UINT)enums::eLayerType::Max);

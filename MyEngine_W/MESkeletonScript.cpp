@@ -160,4 +160,13 @@ namespace ME
 	void SkeletonScript::Render(HDC hdc)
 	{
 	}
+	void SkeletonScript::OnCollisionEnter(Collider* other)
+	{
+	}
+	void SkeletonScript::OnCollisionStay(Collider* other)
+	{
+	}
+	void SkeletonScript::OnCollisionExit(Collider* other)
+	{
+	}
 }
