@@ -41,13 +41,14 @@ namespace ME
 
 			if (mActiveAnimation->IsComplete() == true)
 			{	
+				if (mbLoop == true)
+					mActiveAnimation->Reset();
+
 				if (events)
 				{
 					events->CompleteEvent();
 				}
 
-				if(mbLoop == true)
-					mActiveAnimation->Reset();
 			}
 
 		}

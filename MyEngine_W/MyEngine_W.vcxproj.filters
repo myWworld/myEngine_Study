@@ -38,6 +38,12 @@
     <ClInclude Include="MESkeleton.h">
       <Filter>Contents</Filter>
     </ClInclude>
+    <ClInclude Include="MEBulletScript.h">
+      <Filter>Script</Filter>
+    </ClInclude>
+    <ClInclude Include="MEBullet.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Contents">
@@ -85,6 +91,12 @@
       <Filter>Script\Monsters</Filter>
     </ClCompile>
     <ClCompile Include="MESkeleton.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="MEBulletScript.cpp">
+      <Filter>Script</Filter>
+    </ClCompile>
+    <ClCompile Include="MeBullet.cpp">
       <Filter>Contents</Filter>
     </ClCompile>
   </ItemGroup>

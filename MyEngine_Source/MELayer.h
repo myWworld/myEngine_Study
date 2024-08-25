@@ -4,6 +4,7 @@
 #include "CommonInclude.h"
 #include "MEGameObject.h"
 
+
 namespace ME
 {
 	class Layer:public Entity
@@ -19,9 +20,14 @@ namespace ME
 		virtual void Destroy();
 
 		void AddGameObject(GameObject* gameObject);
+
+		const std::vector<GameObject*> GetGameObject() { return mGameObjects; }
+
+	
 	private:
 
 		std::vector<GameObject*> mGameObjects;
+		
 
 		typedef std::vector<GameObject*>::iterator GameObjectIter;
 

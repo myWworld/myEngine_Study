@@ -2,11 +2,13 @@
 #include <Windows.h>
 #include<vector>
 #include<list>
+#include<stack>
 #include<string>
 #include<algorithm>
 #include <map>
 #include<functional>
 #include<filesystem>
+#include<bitset>
 
 #include "MEMath.h"
 #include "MEEnums.h"

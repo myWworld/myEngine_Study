@@ -1,23 +1,31 @@
 #include "MEPlayScene.h"
 #include "MEGameObject.h"
-#include "METransform.h"
-#include "MESpriteRenderer.h"
+
 #include "MEInput.h"
 #include "METitleScene.h"
-#include "MESceneManager.h"
 #include "MEObject.h"
 #include "MEResources.h"
+
+#include "MESceneManager.h"
+#include "METransform.h"
+#include "MESpriteRenderer.h"
+#include "MEBoxCollider2D.h"
+#include "MECamera.h"
 
 #include "MERenderer.h"
 #include "MEApplication.h"
 
-#include "MECamera.h"
 #include "MEPlayer.h"
 #include "MEPlayerScript.h"
 #include "MEMushRoom.h"
 #include "MEMushRoomScript.h"
 #include "MESkeleton.h"
 #include "MESkeletonScript.h"
+#include "MEBullet.h"
+#include "MEBulletScript.h"
+
+#include "MECollisionManager.h"
+
 
 extern ME::Application application;
 
@@ -37,6 +45,9 @@ namespace ME
 
 	void PlayScene::Initialize()
 	{
+		CollisionManager::CollisionLayerCheck(enums::eLayerType::Player
+			, enums::eLayerType::Monster
+			, true);
 
 		Vector2 resolution = Vector2(application.GetWidth(), application.GetHeight());
 		
@@ -55,7 +66,7 @@ namespace ME
 				graphics::Texture* map = Resources::Find<graphics::Texture>(L"STAGE1_1");
 				bgSr->SetTexture(map);
 			
-
+				
 			
 				mPlayer = object::Instantiate<Player>
 					(enums::eLayerType::Player, Vector2(100, 406));
@@ -63,26 +74,36 @@ namespace ME
 
 				PlayerScript* playerScript = mPlayer->AddComponent<PlayerScript>();
 				mPlayer->GetComponent<Transform>()->SetScale(Vector2(0.7f, 0.7f));
+				BoxCollider2D* playerBoxCollider = mPlayer->AddComponent<BoxCollider2D>();
 				
-
+				playerBoxCollider->SetOffset(Vector2(-60, -60));
+			
 				graphics::Texture* megamanRightTex = Resources::Find<graphics::Texture>(L"MEGAMANR");
 				graphics::Texture* megamanLeftTex = Resources::Find<graphics::Texture>(L"MEGAMANL");
 
 				Animator* animator = mPlayer->AddComponent<Animator>();
-
-				//animator->GetCompleteEvent(L"Attack") = std::bind(&PlayerScript::ÇÔ¼ö, playerScript);
-
+				
 
 				CreatePlayerAnimation(animator, megamanRightTex, megamanLeftTex);
 				animator->PlayAnimation(L"StandingR", true);
-			
+				
+			  
+				animator->GetCompleteEvent(L"StandAttackL") = std::bind(&PlayerScript::MakeBullet, playerScript);
+				animator->GetCompleteEvent(L"RunningAttackL") = std::bind(&PlayerScript::MakeBullet, playerScript);
+			  
+				animator->GetCompleteEvent(L"StandAttackR") = std::bind(&PlayerScript::MakeBullet, playerScript);
+				animator->GetCompleteEvent(L"RunningAttackR") = std::bind(&PlayerScript::MakeBullet, playerScript);
+//				animator->GetStartEvent(L"RunningAttackR") = std::bind(&PlayerScript::MakeBullet, playerScript);
 
-			
 				GameObject* mushroom = object::Instantiate<MushRoom>(enums::eLayerType::Monster, Vector2(400, 425));
+
 				
 
 				mushroom->AddComponent<MushRoomScript>();
 				Animator* mushroomAnimator = mushroom->AddComponent<Animator>();
+				BoxCollider2D* mushroomBoxCollider = mushroom->AddComponent<BoxCollider2D>();
+				mushroomBoxCollider->SetOffset(Vector2(-50, -50));
+
 				mushroom->GetComponent<Transform>()->SetScale(Vector2(0.4f, 0.4f));
 				graphics::Texture* mushroomLeftTex = Resources::Find<graphics::Texture>(L"MUSHROOML");
 				graphics::Texture* mushroomRightTex = Resources::Find<graphics::Texture>(L"MUSHROOMR");
@@ -181,11 +202,11 @@ namespace ME
 		,graphics::Texture* Rtexture
 		,graphics::Texture* Ltexture)
 	{
-		animator->CreateAnimation(L"RightWalkR", Rtexture, Vector2(0, 212.0f), Vector2(50.0f, 50.0f), Vector2(0, 0), 0.2f, 8, 3);
-		animator->CreateAnimation(L"LeftWalkL", Ltexture, Vector2(356, 212.0f), Vector2(50, 50), Vector2(0, 0), 0.2f, 8, 3);
+		animator->CreateAnimation(L"RightWalkR", Rtexture, Vector2(0, 212.0f), Vector2(50.0f, 50.0f), Vector2(0, 0), 0.1f, 8, 3);
+		animator->CreateAnimation(L"LeftWalkL", Ltexture, Vector2(356, 212.0f), Vector2(50, 50), Vector2(0, 0), 0.1f, 8, 3);
 
-		animator->CreateAnimation(L"RunR", Rtexture, Vector2(0, 212.0f), Vector2(50.0f, 50.0f), Vector2(0, 0), 0.06f, 8, 3);
-		animator->CreateAnimation(L"GetDownR", Rtexture, Vector2(0, 0), Vector2(45.4f, 47.0f), Vector2(0, 0), 0.5f, 6);
+		animator->CreateAnimation(L"RunR", Rtexture, Vector2(0, 212.0f), Vector2(50.0f, 50.0f), Vector2(0, 0), 0.07f, 8, 3);
+		animator->CreateAnimation(L"RunL", Ltexture, Vector2(356, 212), Vector2(50.0f, 50.0f), Vector2(0, 0), 0.07f, 8,3);
 
 		animator->CreateAnimation(L"JumpR", Rtexture, Vector2(0, 412), Vector2(50.0f, 50.0f), Vector2(0, 0), 0.1f, 7);
 		animator->CreateAnimation(L"JumpL", Ltexture, Vector2(356, 412), Vector2(50.0f, 50.0f), Vector2(0, 0), 0.1f, 7);
@@ -194,7 +215,10 @@ namespace ME
 		animator->CreateAnimation(L"StandingL", Ltexture, Vector2(55.0f, 10.0f), Vector2(50.0f, 50.0f), Vector2(0, 0), 0.3f, 2, 8);
 		
 		animator->CreateAnimation(L"StandAttackR", Rtexture, Vector2(0, 112), Vector2(50.0f, 50.0f), Vector2::Zero, 0.1f, 3);
-		animator->CreateAnimation(L"RunningAttackR", Rtexture, Vector2(250, 262), Vector2(50.0f, 50.0f), Vector2::Zero, 0.1f, 3, 8);
+		animator->CreateAnimation(L"RunningAttackR", Rtexture, Vector2(245, 262), Vector2(50.0f, 50.0f), Vector2::Zero, 0.07f, 3, 8);
+
+		animator->CreateAnimation(L"StandAttackL", Ltexture, Vector2(357, 112), Vector2(49.0f, 50.0f), Vector2::Zero, 0.1f, 3);
+		animator->CreateAnimation(L"RunningAttackL", Ltexture, Vector2(356, 262), Vector2(50.0f, 50.0f), Vector2::Zero, 0.07f, 3, 8);
 	}
 
 	void PlayScene::CreateMushRoomAnimation(Animator* animator

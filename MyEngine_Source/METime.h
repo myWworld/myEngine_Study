@@ -9,7 +9,7 @@ namespace ME {
 		static void Update();
 		static void Render(HDC hdc);
 
-		static float DeltaTime() { return DeltaTimeValue; }
+		__forceinline static float DeltaTime() { return DeltaTimeValue; }
 
 	private:
 		static LARGE_INTEGER CpuFrequency;

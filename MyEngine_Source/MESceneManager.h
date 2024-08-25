@@ -8,7 +8,6 @@ namespace ME
 	{
 	public:
 		template<typename T>
-		
 		static Scene* CreateScene(const std::wstring& name)
 		{
 			T* scene = new T();

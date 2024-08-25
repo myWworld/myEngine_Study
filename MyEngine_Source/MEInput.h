@@ -36,12 +36,10 @@ namespace ME {
 		static void Initialize();
 		static void Update();
 
-		static bool GetKeyDown(eKeyCode code) { return Keys[(UINT)code].state == eKeystate::Down; }
-		static bool GetKeyUp(eKeyCode code){ return Keys[(UINT)code].state == eKeystate::Up; }
-		static bool GetKey(eKeyCode code) {
-			return Keys[(UINT)code].state == eKeystate::Pressed;
-		}
-		static math::Vector2 GetMousePos() { return mMousePosition; }
+		__forceinline static bool GetKeyDown(eKeyCode code) { return Keys[(UINT)code].state == eKeystate::Down; }
+		__forceinline static bool GetKeyUp(eKeyCode code){ return Keys[(UINT)code].state == eKeystate::Up; }
+		__forceinline static bool GetKey(eKeyCode code) {	return Keys[(UINT)code].state == eKeystate::Pressed;}
+		__forceinline static math::Vector2 GetMousePos() { return mMousePosition; }
 
 	private:
 

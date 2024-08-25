@@ -57,6 +57,16 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)MEAnimation.cpp">
       <Filter>Resource\Animation</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MECollider.cpp">
+      <Filter>Component\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MEBoxCollider2D.cpp">
+      <Filter>Component\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MECircleCollider2D.cpp">
+      <Filter>Component\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MECollisionManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)MEApplication.h" />
@@ -124,6 +134,16 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)MEAnimation.h">
       <Filter>Resource\Animation</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MECollider.h">
+      <Filter>Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MECircleCollider2D.h">
+      <Filter>Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MEBoxCollider2D.h">
+      <Filter>Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MECollisionManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">
@@ -167,6 +187,9 @@
     </Filter>
     <Filter Include="Resource\Animation">
       <UniqueIdentifier>{f108d414-a31d-49c1-9411-84a7ce1fa8e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Collider">
+      <UniqueIdentifier>{1105f7e1-abf9-4168-b7de-f90f89a50fce}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

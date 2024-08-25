@@ -7,6 +7,7 @@
 namespace ME
 {
 	MushRoomScript::MushRoomScript()
+		:mSpeed(25.0f)
 	{
 	}
 	MushRoomScript::~MushRoomScript()
@@ -78,10 +79,10 @@ namespace ME
 		switch (mDirection)
 		{
 		case ME::MushRoomScript::eDirection::Left:
-			pos.x -= 20 * Time::DeltaTime();
+			pos += Vector2::Left * (mSpeed * Time::DeltaTime());
 			break;
 		case ME::MushRoomScript::eDirection::Right:
-			pos.x += 20 * Time::DeltaTime();
+			pos += Vector2::Right * (mSpeed * Time::DeltaTime());
 			break;
 		case ME::MushRoomScript::eDirection::End:
 			break;

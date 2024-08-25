@@ -9,7 +9,7 @@ namespace ME::enums
 		Items,
 		Monster,
 		Player,
-		Paritcle,
+		Particle,
 		Max = 16
 	};
 
@@ -22,12 +22,15 @@ namespace ME::enums
 		End
 	};
 
+	
+
 	enum class eComponentType
 	{
 		Trasnform,
+		Collider,
+		Script,
 		SpriteRenderer,
 		Animator,
-		Script,
 		Camera,
 		End,
 	};

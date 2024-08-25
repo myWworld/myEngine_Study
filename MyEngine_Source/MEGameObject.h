@@ -65,6 +65,8 @@ namespace ME {
 		}
 
 		eState GetActive() { return mState; }
+		
+		bool IsActive() { return mState == eState::Active;}
 
 		void Death() {mState = eState::Dead;}
 

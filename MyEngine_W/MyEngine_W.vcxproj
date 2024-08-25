@@ -20,6 +20,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LoadResources.h" />
+    <ClInclude Include="MEBullet.h" />
+    <ClInclude Include="MEBulletScript.h" />
     <ClInclude Include="MEEndScene.h" />
     <ClInclude Include="MEGameOverScene.h" />
     <ClInclude Include="MELoadScene.h" />
@@ -34,6 +36,8 @@
     <ClInclude Include="MEMushRoomScript.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="MeBullet.cpp" />
+    <ClCompile Include="MEBulletScript.cpp" />
     <ClCompile Include="MEEndScene.cpp" />
     <ClCompile Include="MEGameOverScene.cpp" />
     <ClCompile Include="MEPlayer.cpp" />

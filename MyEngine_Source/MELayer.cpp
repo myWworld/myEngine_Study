@@ -46,6 +46,7 @@ namespace ME
 
 			gameObj->Update();
 		}
+
 	}
 
 	void ME::Layer::LateUpdate()
@@ -65,6 +66,8 @@ namespace ME
 
 			gameObj->LateUpdate();
 		}
+
+	
 	}
 
 	void ME::Layer::Render(HDC hdc)
@@ -84,6 +87,7 @@ namespace ME
 
 			gameObj->Render(hdc);
 		}
+
 	}
 	
 	void Layer::Destroy()
@@ -108,8 +112,8 @@ namespace ME
 	
 			iter++;
 			
-
 		}
+			
 	}
 
 	void ME::Layer::AddGameObject(GameObject* gameObject)
@@ -120,4 +124,6 @@ namespace ME
 
 		mGameObjects.push_back(gameObject);
 	}
+
+
 }

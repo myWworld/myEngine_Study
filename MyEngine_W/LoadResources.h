@@ -23,7 +23,9 @@ namespace ME
 		//::Load<graphics::Texture>(L"QUESTIONBOX", L"..\\Resources\\questionbox.png");
 	//	Resources::Load<graphics::Texture>(L"FLOWER", L"..\\Resources\\flower.png");
 		Resources::Load<graphics::Texture>(L"GAMEOVER", L"..\\Resources\\gameover.png");
-		Resources::Load<graphics::Texture>(L"BULLETEFFECT", L"..\\Resources\\BulletEffect.png");
+
+		Resources::Load<graphics::Texture>(L"BULLETL", L"..\\Resources\\BulletL.png");
+		Resources::Load<graphics::Texture>(L"BULLETR", L"..\\Resources\\BulletR.png");
 	}
 
 }

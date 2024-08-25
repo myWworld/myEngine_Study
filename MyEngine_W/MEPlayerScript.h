@@ -1,5 +1,6 @@
 #pragma once
 #include "../MyEngine_Source/MEScript.h"
+#include "../MyEngine_Source/MEAnimator.h"
 
 namespace ME
 {
@@ -34,17 +35,21 @@ namespace ME
 		void Update()override;
 		void LateUpdate()override;
 		void Render(HDC hdc)override;
+		
+		void MakeBullet();
+
+		ePrevDirection GetPrevDirection() { return mPrevDirection; }
 
 	private:
 
 		void Standing();
 		void Move();
-		void Attack();
 		void Jump();
 		void Run();
+		void Attack();
 
 		void PlayStandingAnimByPrevDirection();
-
+		void PlayBulletByPrveDirection(Animator* animator);
 
 	private:
 		bool isJump;

@@ -47,6 +47,7 @@ namespace ME
 		eDirection mDirection;
 
 		float mTime;
+		float mSpeed;
 
 		class Animator* mAnimator;
 
