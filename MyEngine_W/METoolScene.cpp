@@ -17,11 +17,7 @@ namespace ME
 	}
 	void ToolScene::Initialize()
 	{
-		Tile* tile = object::Instantiate<Tile>(enums::eLayerType::Tile);
-		TileMapRenderer *tmr = tile->AddComponent<TileMapRenderer>();
-		
-		tmr->SetTexture(Resources::Find<graphics::Texture>(L"SPRINGFLOOR"));
-		
+	
 		Scene::Initialize();
 
 
@@ -48,7 +44,18 @@ namespace ME
 			tmr->SetTexture(Resources::Find<graphics::Texture>(L"SPRINGFLOOR"));
 
 			tile->SetPosition(idxX, idxY);
+			mTiles.push_back(tile);
+		}
 
+
+		if (Input::GetKeyDown(eKeyCode::S))
+		{
+			Save();
+		}
+
+		if (Input::GetKeyDown(eKeyCode::L))
+		{
+			Load();
 		}
 
 	}
@@ -81,6 +88,123 @@ namespace ME
 	void ToolScene::OnExit()
 	{
 		Scene::OnExit();
+	}
+	void ToolScene::Save()
+	{
+		// open a file name
+		OPENFILENAME ofn = {};
+
+		wchar_t szFilePath[256] = {};
+
+		ZeroMemory(&ofn, sizeof(ofn));
+		ofn.lStructSize = sizeof(ofn);
+		ofn.hwndOwner = NULL;
+		ofn.lpstrFile = szFilePath;
+		ofn.lpstrFile[0] = '\0';
+		ofn.nMaxFile = 256;
+		ofn.lpstrFilter = L"Tile\0*.tile\0";
+		ofn.nFilterIndex = 1;
+		ofn.lpstrFileTitle = NULL;
+		ofn.nMaxFileTitle = 0;
+		ofn.lpstrInitialDir = NULL;
+		ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+
+		if (false == GetSaveFileName(&ofn))
+			return;
+
+		FILE* pFile = nullptr;
+
+		_wfopen_s(&pFile, szFilePath, L"wb");
+		
+		for (Tile * tile: mTiles)
+		{
+			
+			Transform* tr = tile->GetComponent<Transform>();
+			TileMapRenderer* tmr = tile->GetComponent<TileMapRenderer>();
+
+			Vector2 sourceIndex;
+			sourceIndex = tmr->GetIndex();
+
+			Vector2 position;
+			position = tr->GetPosition();
+
+			int x = (int)sourceIndex.x;
+			int y = (int)sourceIndex.y;
+
+			fwrite(&x, sizeof(int), 1, pFile);
+			fwrite(&y, sizeof(int), 1, pFile);
+
+			x = (int)position.x;
+			y = (int)position.y;
+
+			fwrite(&x, sizeof(int), 1, pFile);
+			fwrite(&y, sizeof(int), 1, pFile);
+		}
+
+		fclose(pFile);
+
+	}
+
+	void ToolScene::Load()
+	{
+		// open a file name
+		OPENFILENAME ofn = {};
+
+		wchar_t szFilePath[256] = {};
+
+		ZeroMemory(&ofn, sizeof(ofn));
+		ofn.lStructSize = sizeof(ofn);
+		ofn.hwndOwner = NULL;
+		ofn.lpstrFile = szFilePath;
+		ofn.lpstrFile[0] = '\0';
+		ofn.nMaxFile = 256;
+		ofn.lpstrFilter = L"Tile\0*.tile\0";
+		ofn.nFilterIndex = 1;
+		ofn.lpstrFileTitle = NULL;
+		ofn.nMaxFileTitle = 0;
+		ofn.lpstrInitialDir = NULL;
+		ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+
+		if (false == GetSaveFileName(&ofn))
+			return;
+
+		FILE* pFile = nullptr;
+
+		_wfopen_s(&pFile, szFilePath, L"rb");
+
+		while (true)
+		{
+			int idxX = 0;
+			int idxY = 0;
+
+			int posX = 0;
+			int posY = 0;
+
+
+			if (fread(&idxX, sizeof(int), 1, pFile) == NULL)
+				break;
+			if (fread(&idxY, sizeof(int), 1, pFile) == NULL)
+				break;
+			if (fread(&posX, sizeof(int), 1, pFile) == NULL)
+				break;
+			if (fread(&posY, sizeof(int), 1, pFile) == NULL)
+				break;
+
+			Tile* tile = object::Instantiate<Tile>(enums::eLayerType::Tile);
+			TileMapRenderer* tmr = tile->AddComponent<TileMapRenderer>();
+
+			tmr->SetTexture(Resources::Find<graphics::Texture>(L"SPRINGFLOOR"));
+			tmr->SetIndex(Vector2(idxX, idxY));
+
+			tile->SetPosition(posX, posY);
+
+
+			mTiles.push_back(tile);
+		}
+
+
+
+		fclose(pFile);
 	}
 }
 
