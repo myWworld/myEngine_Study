@@ -6,6 +6,11 @@
 #include "MERenderer.h"
 #include "MECamera.h"
 #include "MEInput.h"
+#include "MEApplication.h"
+
+#include "MECameraScript.h"
+
+extern ME::Application application;
 
 namespace ME
 {
@@ -17,7 +22,15 @@ namespace ME
 	}
 	void ToolScene::Initialize()
 	{
-	
+
+		Vector2 resolution = Vector2(application.GetWidth(), application.GetHeight());
+
+		GameObject* camera = object::Instantiate<GameObject>(enums::eLayerType::None, resolution/2.0f);
+		Camera* cameraComp = camera->AddComponent<Camera>();
+		camera->AddComponent<CameraScript>();
+
+		renderer::mainCamera = cameraComp;
+
 		Scene::Initialize();
 
 
@@ -33,18 +46,24 @@ namespace ME
 		if (Input::GetKeyDown(eKeyCode::LeftMous))
 		{
 			Vector2 pos = Input::GetMousePos();
+			pos = renderer::mainCamera->CalculateTilePosition(pos);
 			
+			if (pos.x >= 0.0f && pos.y >= 0.0f)
+			{
+				int idxX = pos.x / TileMapRenderer::TileSize.x;
+				int idxY = pos.y / TileMapRenderer::TileSize.y;
+
+				Tile* tile = object::Instantiate<Tile>(enums::eLayerType::Tile);
+				TileMapRenderer* tmr = tile->AddComponent<TileMapRenderer>();
+
 		
-			int idxX = pos.x / TileMapRenderer::TileSize.x;
-			int idxY = pos.y / TileMapRenderer::TileSize.y;
+				tmr->SetTexture(Resources::Find<graphics::Texture>(L"SPRINGFLOOR"));
+				tmr->SetIndex(TileMapRenderer::SelectedIndex);
 
-			Tile* tile = object::Instantiate<Tile>(enums::eLayerType::Tile);
-			TileMapRenderer* tmr = tile->AddComponent<TileMapRenderer>();
+				tile->SetIndexPosition(idxX, idxY);
 
-			tmr->SetTexture(Resources::Find<graphics::Texture>(L"SPRINGFLOOR"));
-
-			tile->SetPosition(idxX, idxY);
-			mTiles.push_back(tile);
+				mTiles.push_back(tile);
+			}
 		}
 
 
@@ -65,15 +84,20 @@ namespace ME
 
 		for (size_t i = 0; i < 50; i++)
 		{
-			MoveToEx(mHdc, TileMapRenderer::TileSize.x * i, 0, NULL);
-			LineTo(mHdc, TileMapRenderer::TileSize.x *i, 1000);
+			Vector2 pos = renderer::mainCamera->CalculatePosition(Vector2(TileMapRenderer::TileSize.x * i, 0.0f));
+
+			MoveToEx(mHdc, pos.x, 0, NULL);
+			LineTo(mHdc, pos.x, 1000);
 
 		}
 
 		for (size_t i = 0; i < 50; i++)
 		{
-			MoveToEx(mHdc, 0, TileMapRenderer::TileSize.y * i, NULL);
-			LineTo(mHdc,1000, TileMapRenderer::TileSize.y * i);
+
+			Vector2 pos = renderer::mainCamera->CalculatePosition(Vector2(0.0f, TileMapRenderer::TileSize.y * i));
+
+			MoveToEx(mHdc, 0, pos.y, NULL);
+			LineTo(mHdc,1000, pos.y);
 
 		}
 	}
@@ -122,23 +146,25 @@ namespace ME
 			Transform* tr = tile->GetComponent<Transform>();
 			TileMapRenderer* tmr = tile->GetComponent<TileMapRenderer>();
 
-			Vector2 sourceIndex;
-			sourceIndex = tmr->GetIndex();
+			Vector2 sourceIndex = tmr->GetIndex();
 
-			Vector2 position;
-			position = tr->GetPosition();
+			Vector2 position = tr->GetPosition();
 
 			int x = (int)sourceIndex.x;
+		
+			fwrite(&x, sizeof(int), 1, pFile);
+
 			int y = (int)sourceIndex.y;
 
-			fwrite(&x, sizeof(int), 1, pFile);
 			fwrite(&y, sizeof(int), 1, pFile);
 
 			x = (int)position.x;
-			y = (int)position.y;
-
+	
 			fwrite(&x, sizeof(int), 1, pFile);
+
+			y = (int)position.y;
 			fwrite(&y, sizeof(int), 1, pFile);
+
 		}
 
 		fclose(pFile);
@@ -190,19 +216,14 @@ namespace ME
 			if (fread(&posY, sizeof(int), 1, pFile) == NULL)
 				break;
 
-			Tile* tile = object::Instantiate<Tile>(enums::eLayerType::Tile);
+			Tile* tile = object::Instantiate<Tile>(enums::eLayerType::Tile,Vector2(posX,posY));
 			TileMapRenderer* tmr = tile->AddComponent<TileMapRenderer>();
 
 			tmr->SetTexture(Resources::Find<graphics::Texture>(L"SPRINGFLOOR"));
 			tmr->SetIndex(Vector2(idxX, idxY));
 
-			tile->SetPosition(posX, posY);
-
-
 			mTiles.push_back(tile);
 		}
-
-
 
 		fclose(pFile);
 	}
@@ -213,10 +234,23 @@ LRESULT CALLBACK WndTileProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPar
 {
 	switch (message)
 	{
-	case WM_COMMAND:
-	{ 
-	} 
+	case WM_LBUTTONDOWN:
+	{
+		POINT mousePos = { };
+		GetCursorPos(&mousePos);
+		ScreenToClient(hWnd, &mousePos);
+
+		ME::math::Vector2 mousePosition;
+		mousePosition.x = mousePos.x;
+		mousePosition.y = mousePos.y;
+		int idxX = mousePosition.x / ME::TileMapRenderer::OriginTileSize.x;
+		int idxY = mousePosition.y / ME::TileMapRenderer::OriginTileSize.y;
+		ME::TileMapRenderer::SelectedIndex = Vector2(idxX, idxY);
+
+		
+	}
 	break;
+
 	case WM_PAINT:
 	{
 		PAINTSTRUCT ps;

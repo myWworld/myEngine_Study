@@ -26,6 +26,8 @@ namespace ME
 
 	public:
 		static Vector2 TileSize;
+		static Vector2 OriginTileSize;
+		static Vector2 SelectedIndex;
 
 	private:
 

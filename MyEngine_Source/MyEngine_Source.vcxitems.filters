@@ -37,7 +37,7 @@
       <Filter>Component\Script</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)METransform.cpp">
-      <Filter>Component\Collider\Transform</Filter>
+      <Filter>Component\Transform</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MESpriteRenderer.cpp">
       <Filter>Component\SpriteRenderer</Filter>
@@ -64,14 +64,14 @@
       <Filter>Component\Collider</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MEDontDestroyOnLoad.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)MEComponent.cpp">
-      <Filter>Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)MECircleCollider2D.cpp">
-      <Filter>Component\Animator</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)METileMapRenderer.cpp">
       <Filter>Component\TileMapRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MEComponent.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MECircleCollider2D.cpp">
+      <Filter>Component\Collider</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -120,7 +120,7 @@
       <Filter>Component\Script</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)METransform.h">
-      <Filter>Component\Collider\Transform</Filter>
+      <Filter>Component\Transform</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)MESpriteRenderer.h">
       <Filter>Component\SpriteRenderer</Filter>
@@ -194,9 +194,6 @@
     <Filter Include="Component\Collider">
       <UniqueIdentifier>{1105f7e1-abf9-4168-b7de-f90f89a50fce}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Component\Collider\Transform">
-      <UniqueIdentifier>{c016cc52-c4ea-477a-8a62-6315edb97326}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameObject\Helpers">
       <UniqueIdentifier>{a9b08f96-38c2-42e1-adaf-89d955b8ad7e}</UniqueIdentifier>
     </Filter>
@@ -205,6 +202,9 @@
     </Filter>
     <Filter Include="Component\TileMapRenderer">
       <UniqueIdentifier>{8ed21957-36c6-4f6f-a692-10cf17f31d05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Transform">
+      <UniqueIdentifier>{c016cc52-c4ea-477a-8a62-6315edb97326}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

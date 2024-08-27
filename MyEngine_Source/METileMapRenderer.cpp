@@ -11,6 +11,8 @@ namespace ME {
 
 
 	 Vector2 TileMapRenderer::TileSize = Vector2::One;
+	 Vector2 TileMapRenderer::OriginTileSize = Vector2::One;
+	 Vector2 TileMapRenderer::SelectedIndex = Vector2::One;
 	 
 	ME::TileMapRenderer::TileMapRenderer()
 		:mSize(Vector2(3.0f,3.0f))
@@ -18,8 +20,10 @@ namespace ME {
 		, Component(enums::eComponentType::SpriteRenderer)
 		, mIndex(Vector2::One )
 		, mTileSize(16.0f, 16.0f)
+		
 	{
 		TileSize = mTileSize * mSize;
+		OriginTileSize = mTileSize;
 	}
 
 	ME::TileMapRenderer::~TileMapRenderer()

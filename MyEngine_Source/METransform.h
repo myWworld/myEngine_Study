@@ -19,11 +19,12 @@ namespace ME
 		void LateUpdate()  override;
 		void Render(HDC hdc)  override;
 		
-		void SetPosition(Vector2 pos) { mPosition.x = pos.x; mPosition.y = pos.y; }
+		void SetPosition(Vector2 pos) { mPosition = pos; }
 		void SetScale(Vector2 scale) { mScale = scale; }
 		void SetRotation(float rotation) { mRotation = rotation; }
 
 		Vector2 GetPosition() { return mPosition; }
+
 		Vector2 GetScale() { return mScale; }
 		float GetRotation() { return mRotation; }
 

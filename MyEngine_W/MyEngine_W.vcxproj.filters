@@ -47,6 +47,9 @@
     <ClInclude Include="METile.h">
       <Filter>Contents</Filter>
     </ClInclude>
+    <ClInclude Include="MECameraScript.h">
+      <Filter>Script</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Contents">
@@ -107,6 +110,9 @@
     </ClCompile>
     <ClCompile Include="METile.cpp">
       <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="MECameraScript.cpp">
+      <Filter>Script</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

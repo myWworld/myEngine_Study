@@ -22,6 +22,7 @@
     <ClInclude Include="LoadResources.h" />
     <ClInclude Include="MEBullet.h" />
     <ClInclude Include="MEBulletScript.h" />
+    <ClInclude Include="MECameraScript.h" />
     <ClInclude Include="MEEndScene.h" />
     <ClInclude Include="MEGameOverScene.h" />
     <ClInclude Include="MELoadScene.h" />
@@ -39,6 +40,7 @@
   <ItemGroup>
     <ClCompile Include="MeBullet.cpp" />
     <ClCompile Include="MEBulletScript.cpp" />
+    <ClCompile Include="MECameraScript.cpp" />
     <ClCompile Include="MEEndScene.cpp" />
     <ClCompile Include="MEGameOverScene.cpp" />
     <ClCompile Include="MEPlayer.cpp" />

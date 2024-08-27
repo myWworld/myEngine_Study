@@ -23,6 +23,8 @@
 #include "MESkeletonScript.h"
 #include "MEBullet.h"
 #include "MEBulletScript.h"
+#include "METile.h"
+#include "METileMapRenderer.h"
 
 #include "MECollisionManager.h"
 
@@ -48,6 +50,8 @@ namespace ME
 		CollisionManager::CollisionLayerCheck(enums::eLayerType::Player, enums::eLayerType::Monster,true);
 
 		CollisionManager::CollisionLayerCheck(enums::eLayerType::Particle, enums::eLayerType::Monster,true);
+
+		//만약 타일맵 만들면 _wfopen_s함수로 불러온다음에 찍어내면됨 타일 렌더러 load함수에 있는거 가져다 쓰면됨.
 
 
 		Vector2 resolution = Vector2(application.GetWidth(), application.GetHeight());
