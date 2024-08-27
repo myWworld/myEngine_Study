@@ -5,7 +5,7 @@
 
 namespace ME
 {
-	 std::bitset<(UINT)enums::eLayerType::Max> CollisionManager::mCollisionLayerMatrix[(UINT)enums::eLayerType::Max] = {};
+	 std::bitset<(UINT)enums::eLayerType::Max> CollisionManager::mCollisionLayerMatrix[(UINT)enums::eLayerType::Max] = {0};
 	 std::unordered_map<UINT64, bool> CollisionManager::mCollisionMap = {};
 	 
 	 void ME::CollisionManager::Iniatialize()
@@ -20,7 +20,7 @@ namespace ME
 		{
 			for (UINT col = 0; col < (UINT)enums::eLayerType::Max; col++)
 			{
-				if (mCollisionLayerMatrix[row][col] == true);
+				if (mCollisionLayerMatrix[row][col] == true)
 				{
 					LayerCollision(scene, (enums::eLayerType)row, (enums::eLayerType)col);
 				}
@@ -52,7 +52,7 @@ namespace ME
 			col = (UINT)left;
 		}
 
-		mCollisionLayerMatrix[row][col] = enable;
+ 		mCollisionLayerMatrix[row][col] = enable;
 	}
 
 
@@ -115,6 +115,7 @@ namespace ME
 		//만약에 충돌체 정보가 없다면 충돌정보를 생성
 
 		auto iter = mCollisionMap.find(id.id);
+
 		if (iter == mCollisionMap.end())
 		{
 			mCollisionMap.insert({ id.id, false });
@@ -168,9 +169,12 @@ namespace ME
 		if (leftType == enums::eColliderType::Rect2D
 			&& rightType == enums::eColliderType::Rect2D)
 		{
+			Vector2 leftCenterPos = leftPos  + (leftSize / 2.0f);
+			Vector2 rightCenterPos = rightPos + (rightSize / 2.0f);
+
 			//AABB 충돌 rect-rect
-			if (fabs(leftPos.x - rightPos.x) < fabs(leftSize.x / 2.0f + rightSize.x / 2.0f)
-				&& fabs(leftPos.y - rightPos.y) < fabs(leftSize.y / 2.0f + rightSize.y / 2.0f))
+			if (fabs(leftCenterPos.x - rightCenterPos.x) < fabs(leftSize.x / 2.0f + rightSize.x / 2.0f)
+				&& fabs(leftCenterPos.y - rightCenterPos.y) < fabs(leftSize.y / 2.0f + rightSize.y / 2.0f))
 			{
 				return true;
 			}

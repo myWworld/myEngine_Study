@@ -26,6 +26,8 @@ namespace ME
 
 		Resources::Load<graphics::Texture>(L"BULLETL", L"..\\Resources\\BulletL.png");
 		Resources::Load<graphics::Texture>(L"BULLETR", L"..\\Resources\\BulletR.png");
+
+		Resources::Load<graphics::Texture>(L"SPRINGFLOOR", L"..\\Resources\\SpringFloor.bmp");
 	}
 
 }

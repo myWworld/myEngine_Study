@@ -2,12 +2,16 @@
 #include "../MyEngine_Source/MEInput.h"
 #include "../MyEngine_Source/MEGameObject.h"
 #include "../MyEngine_Source/METime.h"
-
+#include "MEBullet.h"
 
 namespace ME
 {
 	MushRoomScript::MushRoomScript()
 		:mSpeed(25.0f)
+		, mHp(100.0f)
+		, mRespawnTime(0.0f)
+		, mbIsDead(false)
+		, mbIsRespawn(false)
 	{
 	}
 	MushRoomScript::~MushRoomScript()
@@ -26,6 +30,11 @@ namespace ME
 			mAnimator = GetOwner()->GetComponent<Animator>();
 		}
 
+		if (mHp == 0)
+		{
+			mState = eState::Die;
+
+		}
 
 		switch (mState)
 		{
@@ -34,6 +43,12 @@ namespace ME
 			break;
 		case ME::MushRoomScript::eState::Walk:
 			Move();
+			break;
+		case ME::MushRoomScript::eState::Die:
+			Die();
+			break;
+		case ME::MushRoomScript::eState::Hurt:
+			Hurt();
 			break;
 		default:
 			break;
@@ -69,6 +84,57 @@ namespace ME
 		Transform* tr = GetOwner()->GetComponent<Transform>();
 
 		Translate(tr);
+
+	}
+
+	void MushRoomScript::Respawn()
+	{
+		if (mbIsRespawn == true)
+		{
+			GetOwner()->SetNoRender(false);
+			
+		}
+	}
+
+	void MushRoomScript::Die()
+	{
+		GameObject::eState state = GetOwner()->GetState();
+
+		if (state == GameObject::eState::Active && mbIsDead == false)
+		{
+
+			mAnimator->PlayAnimation(L"DeadR", false);
+
+			mbIsDead = true;
+			mbIsRespawn = true;
+		}
+
+		if (state == GameObject::eState::NoRender)
+		{
+
+			mRespawnTime += Time::DeltaTime();
+
+			if (mRespawnTime > 5.0f)
+			{
+
+				mRespawnTime = 0.0f;
+				mState = eState::Idle;
+
+				GetOwner()->SetNoRender(true);
+				mAnimator->PlayAnimation(L"idleL", true);
+
+
+				mHp = 100.0f;
+				mbIsDead = false;
+				mbIsRespawn = false;
+			}
+
+		}
+
+	}
+	
+	void MushRoomScript::Hurt()
+	{
 
 	}
 
@@ -119,10 +185,31 @@ namespace ME
 	}
 	void MushRoomScript::OnCollisionEnter(Collider* other)
 	{
+		if (other->GetName() == L"Bullet")
+		{
+			Bullet* bullet = static_cast<Bullet*>(other->GetOwner());
+
+			if (mHp == 0)
+				return;
+			else
+			{
+				bullet->SetActive(false);
+				bullet->SetDeath();
+
+				mHp -= 10;
+			}
+		}
+
+		if (other->GetName() == L"Player")
+		{
+			return;
+		}
 	}
+
 	void MushRoomScript::OnCollisionStay(Collider* other)
 	{
 	}
+
 	void MushRoomScript::OnCollisionExit(Collider* other)
 	{
 	}

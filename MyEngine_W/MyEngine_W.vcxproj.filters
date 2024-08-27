@@ -23,9 +23,6 @@
     <ClInclude Include="MEGameOverScene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="METitleScene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="MEMushRoom.h">
       <Filter>Contents</Filter>
     </ClInclude>
@@ -42,6 +39,12 @@
       <Filter>Script</Filter>
     </ClInclude>
     <ClInclude Include="MEBullet.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="METoolScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="METile.h">
       <Filter>Contents</Filter>
     </ClInclude>
   </ItemGroup>
@@ -97,6 +100,12 @@
       <Filter>Script</Filter>
     </ClCompile>
     <ClCompile Include="MeBullet.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="METoolScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="METile.cpp">
       <Filter>Contents</Filter>
     </ClCompile>
   </ItemGroup>

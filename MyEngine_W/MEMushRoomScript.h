@@ -16,6 +16,8 @@ namespace ME
 		{
 			Idle,
 			Walk,
+			Die,
+			Hurt,
 
 		};
 
@@ -34,15 +36,24 @@ namespace ME
 		void LateUpdate()override;
 		void Render(HDC hdc)override;
 
-		void OnCollisionEnter( Collider* other) ;
-		void OnCollisionStay( Collider* other) ;
-		void OnCollisionExit( Collider* other) ;
+		void OnCollisionEnter( Collider* other) override;
+		void OnCollisionStay( Collider* other) override;
+		void OnCollisionExit( Collider* other) override;
+
+		eDirection GetDirection() { return mDirection; }
+
+		void Respawn();
+
+		float GetHp() { return mHp; }
+
+		void Hurt();
+
 
 	private:
 
 		void Idle();
 		void Move();
-
+		void Die();
 		void PlayAnimationByDirection(eDirection direction);
 		void Translate(Transform* tr);
 
@@ -56,6 +67,10 @@ namespace ME
 
 		class Animator* mAnimator;
 
+		float mRespawnTime;
+		float mHp;
+		bool mbIsDead;
+		bool mbIsRespawn;
 	};
 
 }

@@ -30,14 +30,23 @@ namespace ME
 			Left,
 		};
 
+		SkeletonScript();
+		~SkeletonScript();
+
 		void Initialize() override;
 		void Update()override;
 		void LateUpdate()override;
 		void Render(HDC hdc)override;
 
-		void OnCollisionEnter( Collider* other) ;
-		void OnCollisionStay( Collider* other) ;
-		void OnCollisionExit( Collider* other) ;
+		void OnCollisionEnter( Collider* other) override;
+		void OnCollisionStay( Collider* other) override;
+		void OnCollisionExit( Collider* other) override;
+
+		eDirection GetDirection() { return mDirection; }
+
+		float GetHp() { return mHp; }
+
+		void Respawn();
 
 	private:
 		
@@ -46,6 +55,8 @@ namespace ME
 		void Shout();
 		void Move();
 		void Translate(Transform *tr);
+		void Die();
+		void Hurt();
 		
 		void PlayAnimationByStateAndDirection();
 
@@ -55,7 +66,12 @@ namespace ME
 
 		float mTime;
 
-		eState mState;
+		float mRespawnTime;
+		float mHp;
+		bool mbIsDead;
+		bool mbISRespawn;
+
+		eState mSkeletonState;
 		eDirection mDirection;
 	};
 

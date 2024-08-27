@@ -6,6 +6,7 @@ namespace ME::enums
 	{
 		None,
 		BackGround,
+		Tile,
 		Items,
 		Monster,
 		Player,

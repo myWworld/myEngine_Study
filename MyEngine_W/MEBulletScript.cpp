@@ -7,7 +7,11 @@
 #include "MEResources.h"
 #include "MEAnimator.h"
 
+#include "MEMushRoomScript.h"
+#include "MEMushRoom.h"
 
+#include "MESkeleton.h"
+#include "MESkeletonScript.h"
 
 
 namespace ME
@@ -37,7 +41,7 @@ namespace ME
 			{
 				bullet->SetActive(false);
 				
-				bullet->Death();
+				bullet->SetDeath();
 			}
 
 			if (bullet->GetDirection() == Bullet::eDirection::Left)
@@ -69,6 +73,65 @@ namespace ME
 	}
 	void BulletScript::OnCollisionEnter(Collider* other)
 	{
+	
+		if (other->GetName() == L"Mushroom")
+		{
+			MushRoom* monster = static_cast<MushRoom*>(other->GetOwner());
+			MushRoomScript* script = monster->GetComponent<MushRoomScript>();
+			Animator* animator = monster->GetComponent<Animator>();
+
+			MushRoomScript::eDirection direction = script->GetDirection();
+
+			
+			if (script->GetHp() > 0)
+			{
+
+				if (direction == MushRoomScript::eDirection::Left)
+				{
+					animator->PlayAnimation(L"HurtL", false);
+				}
+				else if (direction == MushRoomScript::eDirection::Right)
+				{
+					animator->PlayAnimation(L"HurtR", false);
+				}
+			}
+			else
+			{
+				return;
+
+			}
+				
+		}
+
+		if (other->GetName() == L"Skeleton")
+		{	
+			
+			Skeleton* monster = static_cast<Skeleton*>(other->GetOwner());
+
+			Animator* animator = monster->GetComponent<Animator>();
+			SkeletonScript* script = monster->GetComponent<SkeletonScript>();
+
+			SkeletonScript::eDirection direction = script->GetDirection();
+
+			if (script->GetHp() != 0)
+			{
+				if (direction == SkeletonScript::eDirection::Left)
+				{
+					animator->PlayAnimation(L"HurtL", false);
+				}
+				else if (direction == SkeletonScript::eDirection::Right)
+				{
+					animator->PlayAnimation(L"HurtR", false);
+				}
+			}
+			else
+			{
+				return;
+
+			}
+		}
+
+
 	}
 	void BulletScript::OnCollisionStay(Collider* other)
 	{

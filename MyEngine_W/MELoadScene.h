@@ -6,7 +6,7 @@
 #include "MEScoreScene.h"
 #include "METitleScene.h"
 #include "MEGameOverScene.h"
-
+#include "METoolScene.h"
 
 namespace ME
 {
@@ -17,19 +17,16 @@ namespace ME
 		SceneManager::CreateScene<TitleScene>(L"TitleScene");
 		SceneManager::CreateScene<PlayScene>(L"PlayScene");
 		SceneManager::CreateScene<GameOverScene>(L"GameOverScene");
+		SceneManager::CreateScene<ToolScene>(L"ToolScene");
+
 	//SceneManager::CreateScene<EndScene>(L"EndScene");
 		//SceneManager::CreateScene<ScoreScene>(L"ScoreScene");
 		
 		
-		//SceneManager::LoadScene(L"PlayScene");
+		SceneManager::LoadScene(L"ToolScene");
 
-		SceneManager::LoadScene(L"TitleScene");
-		//SceneManager::LoadScene(L"GameOverScene");
-		
-		//SceneManager::LoadScene(L"ScoreScene");
-
-		//SceneManager::LoadScene(L"EndScene");
-
+		//SceneManager::LoadScene(L"TitleScene");
+	
 
 	}
 }

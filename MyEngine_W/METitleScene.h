@@ -13,8 +13,15 @@ namespace ME
 		void Update() override;
 		void LateUpdate() override;
 		void Render(HDC mHdc) override;
+
+
+		void OnEnter() override;
+		void OnExit() override;
+
 	private:
 
+
+		class GameObject* titleBg;
 	};
 }
 

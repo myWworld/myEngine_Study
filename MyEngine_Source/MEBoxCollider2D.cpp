@@ -40,8 +40,12 @@ namespace ME
 		HPEN greenPen = CreatePen(PS_SOLID, 2, RGB(0, 255, 0));
 		HPEN oldPen = (HPEN)SelectObject(hdc, greenPen);
 
-		Rectangle(hdc, pos.x, pos.y, pos.x + offset.x +100, pos.y +offset.y+ 100);
-		
+		Vector2 rightBottom;
+		rightBottom.x = pos.x + offset.x + (100.0f * GetSize().x);
+		rightBottom.y = pos.y + offset.y + (100.0f * GetSize().y);
+
+		Rectangle(hdc, pos.x + offset.x, pos.y + offset.x, rightBottom.x, rightBottom.y);
+
 		SelectObject(hdc, oldBrush);
 		SelectObject(hdc, oldPen);
 		DeleteObject(greenPen);

@@ -145,7 +145,7 @@ namespace ME
 			);
 		}
 
-		Rectangle(hdc, pos.x, pos.y, pos.x +5 , pos.y+5);
+		//Rectangle(hdc, pos.x, pos.y, pos.x +5 , pos.y+5);
 	}
 
 	void Animation::CreateAnimation(const std::wstring& name, graphics::Texture* spriteSheet, Vector2 leftTop, Vector2 size

@@ -18,6 +18,7 @@ namespace ME {
 			Active,
 			Paused,
 			Dead,
+			NoRender,
 			End
 		};
 
@@ -64,14 +65,21 @@ namespace ME {
 			if (power == false) mState = eState::Paused;
 		}
 
+		void SetNoRender(bool render)
+		{
+			if (render == true) mState = eState::Active;
+			if (render == false) mState = eState::NoRender;
+		}
+
 		eState GetState() { return mState; }
 		
 		bool IsActive() { return mState == eState::Active;}
 		bool IsDead() { return mState == eState::Dead; }
 
-		void Death() {mState = eState::Dead;}
+		void SetDeath() {mState = eState::Dead;}
 
 		void SetLayerType(enums::eLayerType type) { mLayerType = type; }
+
 		enums::eLayerType GetLayerType() { return mLayerType; }
 
 

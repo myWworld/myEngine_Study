@@ -8,17 +8,14 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)MEMath.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)MEComponent.cpp">
-      <Filter>Component</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MEGameObject.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MEInput.cpp">
-      <Filter>Helpers</Filter>
+      <Filter>GameObject\Helpers</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)METime.cpp">
-      <Filter>Helpers</Filter>
+      <Filter>GameObject\Helpers</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MESceneManager.cpp">
       <Filter>Scene</Filter>
@@ -40,7 +37,7 @@
       <Filter>Component\Script</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)METransform.cpp">
-      <Filter>Component\Transform</Filter>
+      <Filter>Component\Collider\Transform</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MESpriteRenderer.cpp">
       <Filter>Component\SpriteRenderer</Filter>
@@ -63,13 +60,19 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)MEBoxCollider2D.cpp">
       <Filter>Component\Collider</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)MECircleCollider2D.cpp">
-      <Filter>Component\Collider</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MECollisionManager.cpp">
       <Filter>Component\Collider</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MEDontDestroyOnLoad.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MEComponent.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MECircleCollider2D.cpp">
+      <Filter>Component\Animator</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)METileMapRenderer.cpp">
+      <Filter>Component\TileMapRenderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)MEApplication.h" />
@@ -82,17 +85,14 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)MEMath.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)MEComponent.h">
-      <Filter>Component</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)MEGameObject.h">
       <Filter>GameObject</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)MEInput.h">
-      <Filter>Helpers</Filter>
+      <Filter>GameObject\Helpers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)METime.h">
-      <Filter>Helpers</Filter>
+      <Filter>GameObject\Helpers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)MESceneManager.h">
       <Filter>Scene</Filter>
@@ -120,7 +120,7 @@
       <Filter>Component\Script</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)METransform.h">
-      <Filter>Component\Transform</Filter>
+      <Filter>Component\Collider\Transform</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)MESpriteRenderer.h">
       <Filter>Component\SpriteRenderer</Filter>
@@ -150,6 +150,12 @@
       <Filter>Component\Collider</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)MEDontDestroyOnLoad.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MEComponent.h">
+      <Filter>Component\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)METileMapRenderer.h">
+      <Filter>Component\TileMapRenderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">
@@ -160,9 +166,6 @@
     </Filter>
     <Filter Include="GameObject">
       <UniqueIdentifier>{a394ac0a-e9df-4ce5-a02f-e8a568c4301c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Helpers">
-      <UniqueIdentifier>{a9b08f96-38c2-42e1-adaf-89d955b8ad7e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Scene">
       <UniqueIdentifier>{1daadc24-e613-4265-85d5-55ac3318f44e}</UniqueIdentifier>
@@ -176,9 +179,6 @@
     <Filter Include="Component\Script">
       <UniqueIdentifier>{73a8c883-38ba-48d0-a884-fab993ddcafe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Component\Transform">
-      <UniqueIdentifier>{c016cc52-c4ea-477a-8a62-6315edb97326}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Component\SpriteRenderer">
       <UniqueIdentifier>{7b5ae57b-26f9-4b48-9aaa-7c67f6d68a00}</UniqueIdentifier>
     </Filter>
@@ -188,14 +188,23 @@
     <Filter Include="Renderer">
       <UniqueIdentifier>{b6d9077a-bff3-4b28-a6f9-77a4c7d67e72}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Component\Animator">
-      <UniqueIdentifier>{7f2ce8b0-757a-4291-8448-803a6e31bf8a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resource\Animation">
       <UniqueIdentifier>{f108d414-a31d-49c1-9411-84a7ce1fa8e8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Component\Collider">
       <UniqueIdentifier>{1105f7e1-abf9-4168-b7de-f90f89a50fce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Collider\Transform">
+      <UniqueIdentifier>{c016cc52-c4ea-477a-8a62-6315edb97326}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Helpers">
+      <UniqueIdentifier>{a9b08f96-38c2-42e1-adaf-89d955b8ad7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Animator">
+      <UniqueIdentifier>{7f2ce8b0-757a-4291-8448-803a6e31bf8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\TileMapRenderer">
+      <UniqueIdentifier>{8ed21957-36c6-4f6f-a692-10cf17f31d05}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

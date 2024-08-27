@@ -19,7 +19,6 @@ namespace ME
 
 	private:
 
-		Vector2 mSize;
 	};
 
 }

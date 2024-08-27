@@ -7,6 +7,13 @@
 #include "MEBullet.h"
 #include "MEObject.h"
 #include "MEResources.h"
+#include "MEBoxCollider2D.h"
+#include "MESceneManager.h"
+#include "MEScenes.h"
+
+#include "CommonInclude.h"
+
+#include "MERenderer.h"
 
 namespace ME
 {
@@ -15,6 +22,7 @@ namespace ME
 		, jumpSeconds(0)
 		, mState(PlayerScript::eState::Standing)
 		, mAnimator(nullptr)
+		,mHp(100.0f)
 	{
 	}
 	PlayerScript::~PlayerScript()
@@ -30,6 +38,11 @@ namespace ME
 		if (mAnimator == nullptr)
 		{
 			mAnimator = GetOwner()->GetComponent<Animator>();
+		}
+
+		if (mHp == 0)
+		{
+			mState = eState::Die;
 		}
 
 
@@ -55,6 +68,9 @@ namespace ME
 			break;
 		case ME::PlayerScript::eState::GetDown:
 			Move();
+			break;
+		case ME::PlayerScript::eState::Die:
+			Die();
 			break;
 		default:
 			break;
@@ -82,6 +98,23 @@ namespace ME
 			mAnimator->PlayAnimation(L"LeftWalkL");
 
 		}
+
+		if (Input::GetKey(eKeyCode::W) || Input::GetKey(eKeyCode::A))
+		{
+
+			mState = eState::Walk;
+			mAnimator->PlayAnimation(L"LeftWalkL");
+
+		}
+
+		if (Input::GetKey(eKeyCode::S) || Input::GetKey(eKeyCode::A))
+		{
+
+			mState = eState::Walk;
+			mAnimator->PlayAnimation(L"LeftWalkL");
+
+		}
+
 
 
 		if (Input::GetKey(eKeyCode::Space) && isJump == false)
@@ -152,7 +185,16 @@ namespace ME
 			}
 
 		}
+		
+		if (Input::GetKey(eKeyCode::S))
+		{
+			pos.y += 100.0f * Time::DeltaTime();
+		}
 
+		if (Input::GetKey(eKeyCode::W))
+		{
+			pos.y -= 100.0f * Time::DeltaTime();
+		}
 
 		if (Input::GetKey(eKeyCode::Space) && isJump == false)
 		{
@@ -165,7 +207,8 @@ namespace ME
 		if ((Input::GetKeyUp(eKeyCode::Right) || Input::GetKeyUp(eKeyCode::D))
 			|| (Input::GetKeyUp(eKeyCode::Left) || Input::GetKeyUp(eKeyCode::A))
 			|| (Input::GetKeyUp(eKeyCode::Down) || Input::GetKeyUp(eKeyCode::S))
-			|| (Input::GetKeyUp(eKeyCode::Space)))
+			|| (Input::GetKeyUp(eKeyCode::Space))
+			|| Input::GetKey(eKeyCode::W) || Input::GetKey(eKeyCode::S))
 		{
 			mState = eState::Standing;
 
@@ -230,6 +273,17 @@ namespace ME
 			PlayStandingAnimByPrevDirection();
 		}
 	}
+
+	void PlayerScript::Die()
+	{
+		GetOwner()->SetActive(false);
+		GetOwner()->SetDeath();
+		
+		renderer::mainCamera->SetTarget(nullptr);
+		
+
+		SceneManager::LoadScene(L"GameOverScene");
+	}
 	
 	void PlayerScript::Attack()
 	{
@@ -271,6 +325,11 @@ namespace ME
 
 		bullet->AddComponent<BulletScript>();
 		Animator* bulletAnim = bullet->AddComponent<Animator>();
+		BoxCollider2D* bulletCollider = bullet->AddComponent<BoxCollider2D>();
+		bulletCollider->SetName(L"Bullet");
+
+		bulletCollider->SetSize(Vector2(0.05f, 0.1f));
+		bulletCollider->SetOffset(Vector2(-17, -20));
 
 		graphics::Texture* bulletRightTex = Resources::Find<graphics::Texture>(L"BULLETR");
 		graphics::Texture* bulletLeftTex = Resources::Find<graphics::Texture>(L"BULLETL");
@@ -286,7 +345,7 @@ namespace ME
 		bulletAnim->CreateAnimation(L"BulletR", bulletRightTex, Vector2(0, 0)
 			, Vector2(50, 50), Vector2(0, 0), 0.3f, 1);
 		bulletAnim->CreateAnimation(L"BulletL", bulletLeftTex, Vector2(0, 0)
-			, Vector2(50, 50), Vector2(20, 0), 0.3f, 1);
+			, Vector2(50, 50), Vector2(0, 0), 0.3f, 1);
 
 		if (mPrevDirection == ePrevDirection::Left)
 		{
@@ -346,10 +405,64 @@ namespace ME
 	}
 	void PlayerScript::OnCollisionEnter(Collider* other)
 	{
-		int a = 0;
+		if (other->GetOwner()->GetLayerType() == enums::eLayerType::Monster)
+		{
+			GameObject* monster = other->GetOwner();
+
+
+			if (mHp != 0)
+			{
+				mHp -= 10;
+
+				Transform* MonsterTr = monster->GetComponent<Transform>();
+				Transform* tr = GetOwner()->GetComponent<Transform>();
+
+				Vector2 pos = tr->GetPosition();
+
+				Vector2 playerPos = tr->GetPosition() + GetOwner()->GetComponent<Collider>()->GetOffset();
+				Vector2 monsterPos =MonsterTr->GetPosition() + other->GetOffset();
+
+				Vector2 playerColliderSize = GetOwner()->GetComponent<Collider>()->GetSize() * 100.0f;
+				Vector2 monsterColliderSize = other->GetSize() * 100.0f;
+				
+				Vector2 playerCenterPos = playerPos + (playerColliderSize / 2.0f);
+				Vector2 monsterCenterPos = monsterPos + (monsterColliderSize / 2.0f);
+
+				Vector2 leftOrRight = playerCenterPos - monsterCenterPos;
+
+				if (leftOrRight.x >= 0)
+				{
+					pos += Vector2::Right * (100.0f);
+				}
+				else
+				{
+					pos += Vector2::Left * (100.0f);
+				}
+
+				if (mPrevDirection == ePrevDirection::Left)
+				{
+					
+					mAnimator->PlayAnimation(L"HurtL", false);
+				
+				}
+				else if (mPrevDirection == ePrevDirection::Right)
+				{
+					mAnimator->PlayAnimation(L"HurtR", false);
+					
+				}
+
+				tr->SetPosition(pos);
+
+				mState = eState::Standing;
+				PlayStandingAnimByPrevDirection();
+			}
+			else if(mHp == 0)
+				return;
+		}
 	}
 	void PlayerScript::OnCollisionStay(Collider* other)
 	{
+		
 	}
 	void PlayerScript::OnCollisionExit(Collider* other)
 	{

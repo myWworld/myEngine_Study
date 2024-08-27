@@ -23,9 +23,9 @@ namespace ME
 		void Render(HDC hdc)override;
 		void Destroy();
 
-		void OnCollisionEnter( Collider* other) ;
-		void OnCollisionStay( Collider* other) ;
-		void OnCollisionExit( Collider* other) ;
+		void OnCollisionEnter( Collider* other) override;
+		void OnCollisionStay( Collider* other) override;
+		void OnCollisionExit( Collider* other) override;
 
 		void SetPlayer(GameObject* gameObj) { mPlayer = gameObj; }
 	

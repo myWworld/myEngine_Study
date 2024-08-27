@@ -28,10 +28,10 @@ namespace ME
 		void CreateMushRoomAnimation(Animator* animator, graphics::Texture* Rtexture, graphics::Texture* Ltexture);
 		void CreateSkeletonAnimation(Animator* animator, graphics::Texture* Rtexture, graphics::Texture* Ltexture);
 
+		void playerInitialize();
+
 	private:
 
-		class Player* mPlayer;
-		
 
 	};
 }

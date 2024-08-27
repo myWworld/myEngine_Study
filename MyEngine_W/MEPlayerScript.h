@@ -19,7 +19,8 @@ namespace ME
 			Walk,
 			Fall,
 			GetDown,
-			Move
+			Move,
+			Die
 		};
 
 		enum class ePrevDirection
@@ -37,9 +38,9 @@ namespace ME
 		void LateUpdate()override;
 		void Render(HDC hdc)override;
 
-		void OnCollisionEnter(Collider* other) ;
-		void OnCollisionStay(Collider* other) ;
-		void OnCollisionExit(Collider* other) ;
+		void OnCollisionEnter(Collider* other) override;
+		void OnCollisionStay(Collider* other) override;
+		void OnCollisionExit(Collider* other) override;
 		
 		void MakeBullet();
 
@@ -52,6 +53,7 @@ namespace ME
 		void Jump();
 		void Run();
 		void Attack();
+		void Die();
 
 		void PlayStandingAnimByPrevDirection();
 		void PlayBulletByPrveDirection(Animator* animator);
@@ -59,6 +61,7 @@ namespace ME
 	private:
 		bool isJump;
 		float jumpSeconds;
+		float mHp;
 
 		eState mState;
 		ePrevDirection mPrevDirection;

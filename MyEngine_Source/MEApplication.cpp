@@ -3,6 +3,7 @@
 #include "METime.h"
 #include "MESceneManager.h"
 #include "MEResources.h"
+#include "MECollisionManager.h"
 
 
 namespace ME 
@@ -32,6 +33,7 @@ namespace ME
 		 createBuffer(width, height);
 		 initializeEtc();
 		
+		 CollisionManager::Iniatialize();
 		 SceneManager::Initialize();
 		 
 	}
@@ -50,13 +52,15 @@ namespace ME
 		Input::Update();
 		Time::Update();
 
+   		CollisionManager::Update();
 		SceneManager::Update();
 
 		
 	}
 
 	void Application::LateUpdate()
-	{
+	{	
+		CollisionManager::LateUpdate();
 		SceneManager::LateUpdate();
 	}
 
@@ -67,6 +71,7 @@ namespace ME
 
 		Time::Render(mBackHdc);
 		
+		CollisionManager::Render(mBackHdc);
 		SceneManager::Render(mBackHdc);
 
 		CopyRenderTarget(mBackHdc, mHdc);

@@ -31,9 +31,10 @@
     <ClInclude Include="MEScoreScene.h" />
     <ClInclude Include="MESkeleton.h" />
     <ClInclude Include="MESkeletonScript.h" />
-    <ClInclude Include="METitleScene.h" />
     <ClInclude Include="MEMushRoom.h" />
     <ClInclude Include="MEMushRoomScript.h" />
+    <ClInclude Include="METile.h" />
+    <ClInclude Include="METoolScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MeBullet.cpp" />
@@ -46,9 +47,11 @@
     <ClCompile Include="MEScoreScene.cpp" />
     <ClCompile Include="MESkeleton.cpp" />
     <ClCompile Include="MESkeletonScript.cpp" />
+    <ClCompile Include="METile.cpp" />
     <ClCompile Include="METitleScene.cpp" />
     <ClCompile Include="MEMushRoom.cpp" />
     <ClCompile Include="MEMushRoomScript.cpp" />
+    <ClCompile Include="METoolScene.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

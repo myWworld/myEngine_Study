@@ -40,6 +40,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)MEScript.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MESpriteRenderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)METexture.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)METileMapRenderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)METime.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)METransform.h" />
   </ItemGroup>
@@ -67,6 +68,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)MEScript.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MESpriteRenderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)METexture.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)METileMapRenderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)METime.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)METransform.cpp" />
   </ItemGroup>

@@ -19,6 +19,9 @@ namespace ME
 		void LateUpdate()override;
 		void Render(HDC mHdc)override;
 
+		void OnEnter() override;
+		void OnExit() override;
+
 	private:
 
 	};

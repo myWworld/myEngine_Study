@@ -38,6 +38,7 @@ namespace ME
 				continue;
 
 			GameObject::eState state = gameObj->GetState();
+
 			if (state == GameObject::eState::Dead
 					|| state == GameObject::eState::Paused)
 			{
@@ -80,7 +81,8 @@ namespace ME
 
 			GameObject::eState state = gameObj->GetState();
 			if (state == GameObject::eState::Dead
-				|| state == GameObject::eState::Paused)
+				|| state == GameObject::eState::Paused
+				|| state == GameObject::eState::NoRender)
 			{
 				continue;
 			}
@@ -132,6 +134,8 @@ namespace ME
 			return;
 
 		mGameObjects.push_back(gameObject);
+
+		
 	}
 
 
@@ -140,6 +144,7 @@ namespace ME
 		for (GameObject* gameObj : mGameObjects)
 		{
 			GameObject::eState active = gameObj->GetState();
+
 			if (active == GameObject::eState::Dead)
 			{
 				gameObjs.push_back(gameObj);

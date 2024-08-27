@@ -2,9 +2,22 @@
 #include "../MyEngine_Source/MEInput.h"
 #include "../MyEngine_Source/MEGameObject.h"
 #include "../MyEngine_Source/METime.h"
+#include "MEBullet.h"
+#include "MEBulletScript.h"
 
 namespace ME
 {
+	SkeletonScript::SkeletonScript()
+		:mTime(0.0f)
+		, mHp(100.0f)
+		, mRespawnTime(0.0f)
+		,mbIsDead(false)
+		,mbISRespawn(false)
+	{
+	}
+	SkeletonScript::~SkeletonScript()
+	{
+	}
 	void SkeletonScript::Initialize()
 	{
 	}
@@ -15,7 +28,14 @@ namespace ME
 			mAnimator = GetOwner()->GetComponent<Animator>();
 		}
 
-		switch (mState)
+		if (mHp == 0)
+		{				
+			mSkeletonState = eState::Die;
+
+		}
+
+
+		switch (mSkeletonState)
 		{
 		case ME::SkeletonScript::eState::Idle:
 			Idle();
@@ -33,7 +53,7 @@ namespace ME
 			Move();
 			break;
 		case ME::SkeletonScript::eState::Die:
-			Move();
+			Die();
 			break;
 		default:
 			break;
@@ -49,7 +69,7 @@ namespace ME
 			int direction = rand() % 2;
 
 			mDirection = (eDirection)direction;
-			mState = (eState)state;
+			mSkeletonState = (eState)state;
 
 			PlayAnimationByStateAndDirection();
 
@@ -62,14 +82,14 @@ namespace ME
 	{
 		if (mAnimator->IsComplete())
 		{
-			mState = eState::Idle;
+			mSkeletonState = eState::Idle;
 		}
 	}
 	void SkeletonScript::Attack()
 	{
 		if (mAnimator->IsComplete())
 		{
-			mState = eState::Idle;
+			mSkeletonState = eState::Idle;
 		}
 	}
 	void SkeletonScript::Move()
@@ -83,11 +103,57 @@ namespace ME
 
 		if (mTime > 2.5f)
 		{
-			mState = eState::Idle;
+			mSkeletonState = eState::Idle;
 			mTime = 0;
 		}
 	}
 
+	void SkeletonScript::Die()
+	{
+		if (GetOwner()->GetState() == GameObject::eState::Active && mbIsDead == false)
+		{
+			if (mDirection == SkeletonScript::eDirection::Left)
+			{
+				mAnimator->PlayAnimation(L"DeadL", false);
+			}
+			else if (mDirection == SkeletonScript::eDirection::Right)
+			{
+				mAnimator->PlayAnimation(L"DeadR", false);
+			}
+
+			mbIsDead = true;
+			mbISRespawn = true;
+		}
+
+		if (GetOwner()->GetState() == GameObject::eState::NoRender)
+		{
+
+			mRespawnTime += Time::DeltaTime();
+
+			if (mRespawnTime > 5.0f)
+			{
+
+				mRespawnTime = 0.0f;
+				mSkeletonState = eState::Idle;
+				
+				GetOwner()->SetNoRender(true);
+
+				mHp = 100.0f;
+				mbIsDead = false;
+				mbISRespawn = false;
+			}
+			
+		}
+
+	
+	}
+
+	void SkeletonScript::Respawn()
+	{
+		if(mbISRespawn == true)
+			GetOwner()->SetNoRender(false);
+
+	}
 
 	void SkeletonScript::Translate(Transform* tr)
 	{
@@ -114,7 +180,7 @@ namespace ME
 	{
 		if (mDirection == eDirection::Right)
 		{
-			switch (mState)
+			switch (mSkeletonState)
 			{
 			case ME::SkeletonScript::eState::Idle:
 				mAnimator->PlayAnimation(L"SkeletonIdleR");
@@ -134,7 +200,7 @@ namespace ME
 		}
 		else if (mDirection == eDirection::Left)
 		{
-			switch (mState)
+			switch (mSkeletonState)
 			{
 			case ME::SkeletonScript::eState::Idle:
 				mAnimator->PlayAnimation(L"SkeletonIdleL");
@@ -162,6 +228,20 @@ namespace ME
 	}
 	void SkeletonScript::OnCollisionEnter(Collider* other)
 	{
+		if (other->GetName() == L"Bullet")
+		{
+			Bullet* bullet = static_cast<Bullet*>(other->GetOwner());
+
+			if (mHp == 0)
+				return;
+			else
+			{
+				bullet->SetActive(false);
+				bullet->SetDeath();
+				mHp -= 10;
+			}
+			
+		}
 	}
 	void SkeletonScript::OnCollisionStay(Collider* other)
 	{

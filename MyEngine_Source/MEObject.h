@@ -27,6 +27,7 @@ namespace ME::object
 	static T* Instantiate(ME::enums::eLayerType type, math::Vector2 position)
 	{
 		T* gameObject = new T();
+
 		gameObject->SetLayerType(type);
 
 		Scene* activeScene = SceneManager::GetActiveScene();
@@ -45,7 +46,7 @@ namespace ME::object
 
 	static void Destroy(GameObject* obj)
 	{
-		obj->Death();
+		obj->SetDeath();
 	}
 
 	static void DontDestroyOnLoad(GameObject* gameObject)

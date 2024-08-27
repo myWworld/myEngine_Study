@@ -22,7 +22,7 @@ namespace ME
 	//Camera* cameraComp = camera->AddComponent<Camera>();
 	//renderer::mainCamera = cameraComp;
 		
-		GameObject* bg = object::Instantiate<GameObject>(enums::eLayerType::BackGround, Vector2 (280,-10));
+		GameObject* bg = object::Instantiate<GameObject>(enums::eLayerType::BackGround, Vector2(0,250));
 		
 		SpriteRenderer* sr = bg->AddComponent<SpriteRenderer>();
 		sr->SetSize(Vector2(0.3, 0.3));
@@ -41,9 +41,11 @@ namespace ME
 	{
 		Scene::LateUpdate();
 
-		if (Input::GetKey(eKeyCode::Space))
+		if (Input::GetKeyDown(eKeyCode::Space))
 		{
 			SceneManager::LoadScene(L"TitleScene");
+
+
 		}
 	}
 	void GameOverScene::Render(HDC mHdc)
@@ -53,5 +55,12 @@ namespace ME
 		UINT len = wcslen(str);
 
 		TextOut(mHdc, 340, 300, str, len);
+	}
+	void GameOverScene::OnEnter()
+	{
+
+	}
+	void GameOverScene::OnExit()
+	{
 	}
 }

@@ -36,7 +36,7 @@ namespace ME
 
     }
     void Collider::OnCollisionStay(Collider* other)
-    
+
     {
         Script* script = GetOwner()->GetComponent<Script>();
         script->OnCollisionStay(other);
