@@ -27,3 +27,4 @@ namespace ME
 
 }
 
+LRESULT CALLBACK    WndTileProc(HWND, UINT, WPARAM, LPARAM);

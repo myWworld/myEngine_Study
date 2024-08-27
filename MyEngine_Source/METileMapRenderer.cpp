@@ -9,6 +9,9 @@
 
 namespace ME {
 
+
+	 Vector2 TileMapRenderer::TileSize = Vector2::One;
+	 
 	ME::TileMapRenderer::TileMapRenderer()
 		:mSize(Vector2(3.0f,3.0f))
 		, mTexture(nullptr)
@@ -16,6 +19,7 @@ namespace ME {
 		, mIndex(Vector2::One )
 		, mTileSize(16.0f, 16.0f)
 	{
+		TileSize = mTileSize * mSize;
 	}
 
 	ME::TileMapRenderer::~TileMapRenderer()
