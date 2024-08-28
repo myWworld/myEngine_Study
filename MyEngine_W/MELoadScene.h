@@ -13,11 +13,11 @@ namespace ME
 	void LoadScenes()
 	{
 		
-		
-		SceneManager::CreateScene<TitleScene>(L"TitleScene");
+		SceneManager::CreateScene<ToolScene>(L"ToolScene");
+ 		SceneManager::CreateScene<TitleScene>(L"TitleScene");
 		SceneManager::CreateScene<PlayScene>(L"PlayScene");
 		SceneManager::CreateScene<GameOverScene>(L"GameOverScene");
-		SceneManager::CreateScene<ToolScene>(L"ToolScene");
+		
 
 	//SceneManager::CreateScene<EndScene>(L"EndScene");
 		//SceneManager::CreateScene<ScoreScene>(L"ScoreScene");

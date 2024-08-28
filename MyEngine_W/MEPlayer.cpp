@@ -21,4 +21,6 @@ void ME::Player::LateUpdate()
 void ME::Player::Render(HDC hdc)
 {
 	GameObject::Render(hdc);
+
+	
 }

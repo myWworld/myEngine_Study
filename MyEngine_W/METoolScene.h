@@ -1,6 +1,7 @@
 #pragma once
 #include "../MyEngine_Source/MEScenes.h"
 #include "../MyEngine_Source/MESceneManager.h"
+#include "../MyEngine_Source/MECamera.h"
 #include "METile.h"
 
 
@@ -27,6 +28,7 @@ namespace ME
 
 	private:
 		std::vector<Tile*> mTiles;
+		Camera* mCameraComp;
 	};
 
 }

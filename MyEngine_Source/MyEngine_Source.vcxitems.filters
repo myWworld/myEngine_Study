@@ -156,9 +156,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)MECollisionManager.h">
       <Filter>Component\Collider</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)MEComponent.h">
-      <Filter>Component\Script</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)METileMapRenderer.h">
       <Filter>Component\TileMapRenderer</Filter>
     </ClInclude>
@@ -173,6 +170,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)MEApplication.h">
       <Filter>High Level Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MEComponent.h">
+      <Filter>Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -28,6 +28,10 @@ namespace ME
 		Resources::Load<graphics::Texture>(L"BULLETR", L"..\\Resources\\BulletR.png");
 
 		Resources::Load<graphics::Texture>(L"SPRINGFLOOR", L"..\\Resources\\SpringFloor.bmp");
+
+		Resources::Load<graphics::Texture>(L"COIN", L"..\\Resources\\Coin.png");
+		Resources::Load<graphics::Texture>(L"QBOX", L"..\\Resources\\Qbox.png");
+		Resources::Load<graphics::Texture>(L"USEDQBOX", L"..\\Resources\\Usedqbox.png");
 	}
 
 }

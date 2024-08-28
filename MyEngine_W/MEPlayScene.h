@@ -2,6 +2,7 @@
 #include "../MyEngine_Source/METexture.h"
 #include "../MyEngine_Source/MEScenes.h"
 #include "../MyEngine_Source/MEAnimator.h"
+#include "../MyEngine_Source/MECamera.h"
 
 namespace ME
 {
@@ -32,6 +33,7 @@ namespace ME
 
 	private:
 
-
+		class GameObject* mPlayer;
+		class Camera* mCameraComp;
 	};
 }

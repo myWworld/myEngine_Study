@@ -4,6 +4,7 @@
 #include "../MyEngine_Source/METime.h"
 #include "MEBullet.h"
 #include "MEBulletScript.h"
+#include "MEPlayerScript.h"
 
 namespace ME
 {
@@ -123,6 +124,7 @@ namespace ME
 
 			mbIsDead = true;
 			mbISRespawn = true;
+			PlayerScript::PlusScore();
 		}
 
 		if (GetOwner()->GetState() == GameObject::eState::NoRender)

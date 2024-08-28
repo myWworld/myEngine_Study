@@ -4,7 +4,7 @@
 #include "METileMapRenderer.h"
 #include "MEResources.h"
 #include "MERenderer.h"
-#include "MECamera.h"
+
 #include "MEInput.h"
 #include "MEApplication.h"
 
@@ -26,10 +26,10 @@ namespace ME
 		Vector2 resolution = Vector2(application.GetWidth(), application.GetHeight());
 
 		GameObject* camera = object::Instantiate<GameObject>(enums::eLayerType::None, resolution/2.0f);
-		Camera* cameraComp = camera->AddComponent<Camera>();
+		mCameraComp = camera->AddComponent<Camera>();
 		camera->AddComponent<CameraScript>();
 
-		renderer::mainCamera = cameraComp;
+		renderer::mainCamera = mCameraComp;
 
 		Scene::Initialize();
 
@@ -107,6 +107,8 @@ namespace ME
 	}
 	void ToolScene::OnEnter()
 	{
+
+		renderer::mainCamera = mCameraComp;
 		Scene::OnEnter();
 	}
 	void ToolScene::OnExit()

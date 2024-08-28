@@ -1,5 +1,6 @@
 #pragma once
 #include "../MyEngine_Source/MEScenes.h"
+#include "../MyEngine_Source/MECamera.h"
 
 namespace ME
 {
@@ -20,7 +21,7 @@ namespace ME
 
 	private:
 
-
+		class Camera* mCameraComp;
 		class GameObject* titleBg;
 	};
 }

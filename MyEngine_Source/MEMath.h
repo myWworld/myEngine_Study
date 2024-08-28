@@ -71,6 +71,32 @@ namespace ME::math
 			y = y + pos.y;
 
 		}
+
+		void operator-=(Vector2 pos)
+		{
+
+			x = x - pos.x;
+			y = y - pos.y;
+
+		}
+
+		void operator*=(Vector2 pos)
+		{
+
+			x = x * pos.x;
+			y = y * pos.y;
+
+		}
+
+		void operator*=(float pos)
+		{
+
+			x = x * pos;
+			y = y * pos;
+
+		}
+
+
 		Vector2 operator/(float value)
 		{
 			Vector2 rst;
@@ -127,8 +153,16 @@ namespace ME::math
 		Vector2 normalize()
 		{
 			float len = length();
-			x /= len;
-			y /= len;
+
+			if (len == 0)
+			{
+				x = 0;
+				y = 0;
+				return *this;
+			}
+
+			x = x / len;
+			y = y / len;
 
 			return *this;
 		}
@@ -139,19 +173,19 @@ namespace ME::math
 
 			this->normalize();
 			float x = cosf(radian) * x - sinf(radian) * y;
-			float y = sinf(radian) * x + cosf(radian	) * y;
+			float y = sinf(radian) * x + cosf(radian) * y;
 
 			return Vector2(x, y);
 		}
 
-		float Dot(Vector2 v2)
+		static float Dot(Vector2 v1, Vector2 v2)
 		{
-			return x * v2.x + y * v2.y;
+			return v1.x * v2.x + v1.y * v2.y;
 		}
 
-		float Cross(Vector2 v2)
+		static float Cross(Vector2 v1, Vector2 v2)
 		{
-			return x * v2.y - y * v2.x;
+			return v1.x * v2.y - v1.y * v2.x;
 		}
 
 	};

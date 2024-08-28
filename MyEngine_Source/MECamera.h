@@ -5,7 +5,7 @@ namespace ME
 {
 	using namespace ME::math;
 
-	class Camera:public Component
+	class Camera :public Component
 	{
 	public:
 
@@ -28,6 +28,7 @@ namespace ME
 	private:
 
 		//std::vector<GameObject*> mGameObjects;
+
 
 		Vector2 mDistance;
 		Vector2 mResolution;

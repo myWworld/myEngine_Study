@@ -6,6 +6,7 @@
 #include "MEGameObject.h"
 #include "MERenderer.h"
 #include "MECamera.h"
+#include "MESceneManager.h"
 
 namespace ME
 {
@@ -64,6 +65,7 @@ namespace ME
 
 		Sprite sprite = mAnimationSheet[mIndex];
 
+	
 		if (renderer::mainCamera)
 		{
 			pos = renderer::mainCamera->CalculatePosition(pos);

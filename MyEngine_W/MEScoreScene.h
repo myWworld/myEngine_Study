@@ -1,5 +1,6 @@
 #pragma once
 #include "../MyEngine_Source/MEScenes.h"
+#include "../MyEngine_Source/MECamera.h"
 
 
 namespace ME
@@ -17,7 +18,7 @@ namespace ME
 		void Render(HDC mHdc) override;
 
 	private:
-
+		Camera* mCameraComp;
 	};
 
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include "../MyEngine_Source/MEScenes.h"
+#include "../MyEngine_Source/MECamera.h"
 
 
 namespace ME
@@ -18,6 +19,7 @@ namespace ME
 
 	private:
 
+		Camera* mCameraComp;
 	};
 
 }

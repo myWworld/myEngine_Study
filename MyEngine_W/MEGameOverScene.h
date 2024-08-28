@@ -2,6 +2,7 @@
 #include "../MyEngine_Source/CommonInclude.h"
 #include "../MyEngine_Source/MESceneManager.h"
 #include "../MyEngine_Source/MEScenes.h"
+#include "../MyEngine_Source/MECamera.h"
 
 
 namespace ME
@@ -23,6 +24,8 @@ namespace ME
 		void OnExit() override;
 
 	private:
+
+		class Camera* mCameraComp;
 
 	};
 

@@ -71,7 +71,7 @@ namespace ME {
 	void GameObject::Render(HDC hdc)
 	{
 
-		for (Component* comp : mComponents)
+ 		for (Component* comp : mComponents)
 		{
 			if (comp == nullptr)
 				continue;

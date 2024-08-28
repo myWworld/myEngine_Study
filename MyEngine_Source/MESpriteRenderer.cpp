@@ -43,7 +43,8 @@ namespace ME {
 		Vector2 scale = tr->GetScale();
 		float rot = tr->GetRotation();
 
-		pos = renderer::mainCamera->CalculatePosition(pos);
+		if(renderer::mainCamera)
+			pos = renderer::mainCamera->CalculatePosition(pos);
 
 		if (mTexture->GetTextureType() == graphics::Texture::eTextureType::Png)
 		{

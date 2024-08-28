@@ -6,14 +6,18 @@ namespace ME
 {
 	Rigidbody::Rigidbody()
 		:Component(enums::eComponentType::Rigidbody)
+		, mbGround(false)
 		, mMass(1.0f)
 		, mFriction(10.0f)
 	, mForce(Vector2::Zero)
 	, mVelocity(Vector2::Zero)
-	, mGravity(Vector2::Zero)
+	, mLimitVelocity(Vector2(50.0f,1000.0f))
+	, mGravity(Vector2(0.0f, 800.0f))
 	, mAccelation(Vector2::Zero)
 
 	{
+
+
 	}
 	Rigidbody::~Rigidbody()
 	{
@@ -27,6 +31,47 @@ namespace ME
 		mAccelation = mForce / mMass;
 
 		mVelocity += mAccelation * Time::DeltaTime();
+
+		if (mbGround)
+		{
+			Vector2 gravity = mGravity;
+			gravity.normalize();
+
+			float dot = math::Vector2::Dot(mVelocity, gravity);
+			mVelocity -= gravity * dot;
+		
+		}
+		else
+		{
+			//공중
+
+			mVelocity += mGravity * Time::DeltaTime();
+		}
+
+		//최대속도 제한
+
+
+		Vector2 gravity = mGravity;
+		gravity.normalize();
+
+		float dot = math::Vector2::Dot(mVelocity, gravity);
+		gravity = gravity * dot;
+
+		Vector2 sideVelocity = mVelocity - gravity;
+
+		if (mLimitVelocity.y < gravity.length())
+		{
+			gravity.normalize();
+			gravity *= mLimitVelocity.y;
+		}
+
+		if (mLimitVelocity.x < sideVelocity.length())
+		{
+			sideVelocity.normalize();
+			sideVelocity *= mLimitVelocity.x;
+		}
+
+		mVelocity = gravity + sideVelocity;
 
 		if (!(mVelocity == Vector2::Zero))
 		{

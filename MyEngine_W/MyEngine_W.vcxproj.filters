@@ -50,6 +50,18 @@
     <ClInclude Include="MECameraScript.h">
       <Filter>Script</Filter>
     </ClInclude>
+    <ClInclude Include="MEFloorScript.h">
+      <Filter>Script</Filter>
+    </ClInclude>
+    <ClInclude Include="MEFloor.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="MECoinScript.h">
+      <Filter>Script\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="MEQboxScript.h">
+      <Filter>Script\Items</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Contents">
@@ -63,6 +75,9 @@
     </Filter>
     <Filter Include="Script\Monsters">
       <UniqueIdentifier>{dddbcec6-cd02-46b8-9900-7fe2fd160b54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Script\Items">
+      <UniqueIdentifier>{75d15f21-2897-4291-aa27-8a319bd451a9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -113,6 +128,18 @@
     </ClCompile>
     <ClCompile Include="MECameraScript.cpp">
       <Filter>Script</Filter>
+    </ClCompile>
+    <ClCompile Include="MEFloorScript.cpp">
+      <Filter>Script</Filter>
+    </ClCompile>
+    <ClCompile Include="MEFloor.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="MECoinScript.cpp">
+      <Filter>Script\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="MEQboxScript.cpp">
+      <Filter>Script\Items</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

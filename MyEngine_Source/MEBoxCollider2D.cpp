@@ -44,7 +44,7 @@ namespace ME
 		rightBottom.x = pos.x + offset.x + (100.0f * GetSize().x);
 		rightBottom.y = pos.y + offset.y + (100.0f * GetSize().y);
 
-		Rectangle(hdc, pos.x + offset.x, pos.y + offset.x, rightBottom.x, rightBottom.y);
+		Rectangle(hdc, pos.x + offset.x, pos.y + offset.y, rightBottom.x, rightBottom.y);
 
 		SelectObject(hdc, oldBrush);
 		SelectObject(hdc, oldPen);

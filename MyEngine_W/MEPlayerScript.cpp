@@ -18,12 +18,15 @@
 
 namespace ME
 {
+	float PlayerScript::mScore = 0.0f;
+
 	PlayerScript::PlayerScript()
 		:isJump(false)
 		, jumpSeconds(0)
 		, mState(PlayerScript::eState::Standing)
 		, mAnimator(nullptr)
 		,mHp(100.0f)
+		
 	{
 	}
 	PlayerScript::~PlayerScript()
@@ -116,9 +119,9 @@ namespace ME
 
 		}
 
+		Rigidbody* rb = GetOwner()->GetComponent<Rigidbody>();
 
-
-		if (Input::GetKey(eKeyCode::Space) && isJump == false)
+		if (Input::GetKey(eKeyCode::Space) && rb->IsGround())
 		{
 
 			mState = eState::Jump;
@@ -151,9 +154,10 @@ namespace ME
 		if (Input::GetKey(eKeyCode::Right) || Input::GetKey(eKeyCode::D))
 		{
 
+		
 			mPrevDirection = ePrevDirection::Right;
 
-			rb->AddForce(Vector2(50.0f, 0));
+			pos += Vector2::Right * (90 * Time::DeltaTime());
 
 			if (Input::GetKey(eKeyCode::Shift))
 			{
@@ -176,7 +180,7 @@ namespace ME
 		{
 				mPrevDirection = ePrevDirection::Left;
 
-				rb->AddForce(Vector2(-50.0f, 0));
+				pos += Vector2::Left * (90 * Time::DeltaTime());
 
 			if (Input::GetKey(eKeyCode::Shift))
 			{
@@ -192,17 +196,8 @@ namespace ME
 
 		}
 		
-		if (Input::GetKey(eKeyCode::S))
-		{
-			pos.y += 100.0f * Time::DeltaTime();
-		}
 
-		if (Input::GetKey(eKeyCode::W))
-		{
-			pos.y -= 100.0f * Time::DeltaTime();
-		}
-
-		if (Input::GetKey(eKeyCode::Space) && isJump == false)
+		if (Input::GetKey(eKeyCode::Space) && rb->IsGround())
 		{
 			mState = eState::Jump;
 			mAnimator->PlayAnimation(L"JumpR", false);
@@ -213,8 +208,7 @@ namespace ME
 		if ((Input::GetKeyUp(eKeyCode::Right) || Input::GetKeyUp(eKeyCode::D))
 			|| (Input::GetKeyUp(eKeyCode::Left) || Input::GetKeyUp(eKeyCode::A))
 			|| (Input::GetKeyUp(eKeyCode::Down) || Input::GetKeyUp(eKeyCode::S))
-			|| (Input::GetKeyUp(eKeyCode::Space))
-			|| Input::GetKey(eKeyCode::W) || Input::GetKey(eKeyCode::S))
+			|| (Input::GetKeyUp(eKeyCode::Space)))
 		{
 			mState = eState::Standing;
 
@@ -229,45 +223,31 @@ namespace ME
 		Vector2 pos = tr->GetPosition();
 		Rigidbody* rb = GetOwner()->GetComponent<Rigidbody>();
 
-		if (isJump == false)
-		{
-			rb->AddForce(Vector2(0, -500.0f));
-			isJump = true;
-			
-		}
-		else if (isJump == true)
-		{
-			jumpSeconds += Time::DeltaTime();
-			
+		Vector2 velocity = rb->GetVelocity();
+		velocity.y = -300.0f;
+		rb->SetVelocity(velocity);
 
-			if (jumpSeconds > 0.5f)
-			{
-				isJump = false;
-				jumpSeconds = 0;
-				
-				mState = eState::Standing;
-				PlayStandingAnimByPrevDirection();
-			}
+		rb->SetGround(false);
 		
-	
-		}
 
-		tr->SetPosition(pos);
+		mState = eState::Standing;
+		
 	}
 
 	void PlayerScript::Run()
 	{
 		Transform* tr = GetOwner()->GetComponent<Transform>();
 		Vector2 pos = tr->GetPosition();
+		Rigidbody* rb = GetOwner()->GetComponent<Rigidbody>();
 
 
 		if (mPrevDirection == ePrevDirection::Left)
 		{
-			pos += Vector2::Left * (130.0f * Time::DeltaTime());
+			pos += Vector2::Left * (130 * Time::DeltaTime());
 		}
 		else if (mPrevDirection == ePrevDirection::Right)
 		{
-			pos += Vector2::Right * (130.0f * Time::DeltaTime());
+			pos += Vector2::Right * (130 * Time::DeltaTime());
 		}
 		
 		tr->SetPosition(pos);
@@ -335,7 +315,7 @@ namespace ME
 		BoxCollider2D* bulletCollider = bullet->AddComponent<BoxCollider2D>();
 		bulletCollider->SetName(L"Bullet");
 
-		bulletCollider->SetSize(Vector2(0.05f, 0.1f));
+		bulletCollider->SetSize(Vector2(0.05f, 0.05f));
 		bulletCollider->SetOffset(Vector2(-17, -20));
 
 		graphics::Texture* bulletRightTex = Resources::Find<graphics::Texture>(L"BULLETR");
@@ -409,6 +389,13 @@ namespace ME
 
 	void PlayerScript::Render(HDC hdc)
 	{
+		std::wstring wstr = std::to_wstring(mScore);
+
+		wchar_t str[50];
+
+		wcsncpy_s(str, wstr.c_str(), 50);
+
+		TextOut(hdc, 700, 0, str, wcslen(str));
 	}
 	void PlayerScript::OnCollisionEnter(Collider* other)
 	{
@@ -423,6 +410,7 @@ namespace ME
 
 				Transform* MonsterTr = monster->GetComponent<Transform>();
 				Transform* tr = GetOwner()->GetComponent<Transform>();
+				Rigidbody *rb = GetOwner()->GetComponent<Rigidbody>();
 
 				Vector2 pos = tr->GetPosition();
 
@@ -439,24 +427,42 @@ namespace ME
 
 				if (leftOrRight.x >= 0)
 				{
-					pos += Vector2::Right * (100.0f);
+					if (mPrevDirection == ePrevDirection::Left)
+					{
+
+						mAnimator->PlayAnimation(L"HurtL", false);
+
+					}
+					else if (mPrevDirection == ePrevDirection::Right)
+					{
+						mAnimator->PlayAnimation(L"HurtR", false);
+
+					}
+				
+					Vector2 velocity = rb->GetVelocity();
+					velocity.x = 50.0f;
+					rb->SetVelocity(velocity);
 				}
 				else
 				{
-					pos += Vector2::Left * (100.0f);
+					if (mPrevDirection == ePrevDirection::Left)
+					{
+
+						mAnimator->PlayAnimation(L"HurtL", false);
+
+					}
+					else if (mPrevDirection == ePrevDirection::Right)
+					{
+						mAnimator->PlayAnimation(L"HurtR", false);
+
+					}
+				
+					Vector2 velocity = rb->GetVelocity();
+					velocity.x = -50.0f;
+					rb->SetVelocity(velocity);
 				}
 
-				if (mPrevDirection == ePrevDirection::Left)
-				{
-					
-					mAnimator->PlayAnimation(L"HurtL", false);
-				
-				}
-				else if (mPrevDirection == ePrevDirection::Right)
-				{
-					mAnimator->PlayAnimation(L"HurtR", false);
-					
-				}
+			
 
 				tr->SetPosition(pos);
 
@@ -469,7 +475,9 @@ namespace ME
 	}
 	void PlayerScript::OnCollisionStay(Collider* other)
 	{
-		
+		Transform* tr = GetOwner()->GetComponent<Transform>();
+		Vector2 pos = tr->GetPosition();
+		tr->SetPosition(pos);
 	}
 	void PlayerScript::OnCollisionExit(Collider* other)
 	{

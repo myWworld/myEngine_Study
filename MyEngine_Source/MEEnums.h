@@ -10,6 +10,7 @@ namespace ME::enums
 		Items,
 		Monster,
 		Player,
+		Floor,
 		Particle,
 		Max = 16
 	};

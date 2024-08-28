@@ -9,6 +9,7 @@
 #include<functional>
 #include<filesystem>
 #include<bitset>
+#include<string>
 
 #include "MEMath.h"
 #include "MEEnums.h"

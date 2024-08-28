@@ -46,6 +46,8 @@ namespace ME
 
 		ePrevDirection GetPrevDirection() { return mPrevDirection; }
 
+		static void PlusScore() { PlayerScript::mScore += 10.0f; }
+
 	private:
 
 		void Standing();
@@ -62,6 +64,7 @@ namespace ME
 		bool isJump;
 		float jumpSeconds;
 		float mHp;
+		static float mScore;
 
 		eState mState;
 		ePrevDirection mPrevDirection;

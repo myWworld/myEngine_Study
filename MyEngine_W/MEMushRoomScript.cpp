@@ -3,6 +3,7 @@
 #include "../MyEngine_Source/MEGameObject.h"
 #include "../MyEngine_Source/METime.h"
 #include "MEBullet.h"
+#include "MEPlayerScript.h"
 
 namespace ME
 {
@@ -104,6 +105,7 @@ namespace ME
 		{
 
 			mAnimator->PlayAnimation(L"DeadR", false);
+			PlayerScript::PlusScore();
 
 			mbIsDead = true;
 			mbIsRespawn = true;

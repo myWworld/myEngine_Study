@@ -10,7 +10,6 @@
 #include "METransform.h"
 #include "MESpriteRenderer.h"
 #include "MEBoxCollider2D.h"
-#include "MECamera.h"
 #include "MERigidbody.h"
 
 #include "MERenderer.h"
@@ -26,6 +25,9 @@
 #include "MEBulletScript.h"
 #include "METile.h"
 #include "METileMapRenderer.h"
+#include "MEFloor.h"
+#include "MEFloorScript.h"
+#include "MEQboxScript.h"
 
 #include "MECollisionManager.h"
 
@@ -55,70 +57,115 @@ namespace ME
 		Vector2 resolution = Vector2(application.GetWidth(), application.GetHeight());
 
 		GameObject* camera = object::Instantiate<GameObject>(enums::eLayerType::None, resolution / 2.0f);
-		Camera* cameraComp = camera->AddComponent<Camera>();
-		renderer::mainCamera = cameraComp;
+		mCameraComp = camera->AddComponent<Camera>();
+;
+		renderer::mainCamera = mCameraComp;
+
+		{
+			GameObject* qbox = object::Instantiate<GameObject>(enums::eLayerType::Particle, Vector2(200, 430));
+			BoxCollider2D* qboxCol = qbox->AddComponent<BoxCollider2D>();
+
+			qbox->AddComponent<QboxScript>();
+		
 			
-				GameObject* bg = object::Instantiate<GameObject>
-					(enums::eLayerType::BackGround, Vector2(0,200));
+			qboxCol->SetOffset(Vector2(-100, -100));
+			qboxCol->SetSize(Vector2(0.2f, 0.2f));
 
-				SpriteRenderer* bgSr = bg->AddComponent<SpriteRenderer>();
-				bgSr->SetSize(Vector2(1.3f, 1.3f));
+			Animator* qboxAnimator = qbox->AddComponent<Animator>();
 
+			qbox->GetComponent<Transform>()->SetScale(Vector2(0.1f, 0.1f));
 
-				graphics::Texture* map = Resources::Find<graphics::Texture>(L"STAGE1_1");
-				bgSr->SetTexture(map);
-			
-			
-				GameObject* mushroom = object::Instantiate<MushRoom>(enums::eLayerType::Monster, Vector2(400, 425));
+			graphics::Texture* qboxTex = Resources::Find<graphics::Texture>(L"QBOX");
+			graphics::Texture* usedQboxTex = Resources::Find<graphics::Texture>(L"USEDQBOX");
 
-				MushRoomScript* mushroomScript = mushroom->AddComponent<MushRoomScript>();
-				Animator* mushroomAnimator = mushroom->AddComponent<Animator>();
+			qboxAnimator->CreateAnimation(L"IdleR", qboxTex, Vector2(0, 0), Vector2(200, 200), Vector2::Zero
+				, 0.2f, 4);
+			qboxAnimator->CreateAnimation(L"UsedR", usedQboxTex, Vector2(0, 0), Vector2(240, 242), Vector2(17,17)
+				, 0.2f, 1);
 
-				BoxCollider2D* mushroomBoxCollider = mushroom->AddComponent<BoxCollider2D>();
-				mushroomBoxCollider->SetName(L"Mushroom");
+			qboxAnimator->PlayAnimation(L"IdleR", true);
 
-				mushroomBoxCollider->SetOffset(Vector2(-65, -65));
-				mushroomBoxCollider->SetSize(Vector2(0.5f, 0.5f));
+		}
 
+		{
 
-				mushroom->GetComponent<Transform>()->SetScale(Vector2(0.4f, 0.4f));
-				graphics::Texture* mushroomLeftTex = Resources::Find<graphics::Texture>(L"MUSHROOML");
-				graphics::Texture* mushroomRightTex = Resources::Find<graphics::Texture>(L"MUSHROOMR");
+		}
+		
+		{
+			GameObject* bg = object::Instantiate<GameObject>
+				(enums::eLayerType::BackGround, Vector2(0, 200));
 
-				CreateMushRoomAnimation(mushroomAnimator, mushroomRightTex, mushroomLeftTex);
-
-				mushroomAnimator->GetCompleteEvent(L"DeadR") = std::bind(&MushRoomScript::Respawn, mushroomScript);
-
-				mushroomAnimator->PlayAnimation(L"IdleL", false);
-			
-
-			
-				GameObject* skeleton = object::Instantiate<Skeleton>(enums::eLayerType::Monster
-					, Vector2(600, 406));
-
-				BoxCollider2D* skeletonCollider = skeleton->AddComponent<BoxCollider2D>();
-				skeletonCollider->SetName(L"Skeleton");
-
-				skeletonCollider->SetOffset(Vector2(-34, -70));
-				skeletonCollider->SetSize(Vector2(0.2f, 0.8f));
+			SpriteRenderer* bgSr = bg->AddComponent<SpriteRenderer>();
+			bgSr->SetSize(Vector2(1.3f, 1.3f));
 
 
-				SkeletonScript* skeletonScript = skeleton->AddComponent<SkeletonScript>();
-				Animator* skeletonAnimator = skeleton->AddComponent<Animator>();
-				skeleton->GetComponent<Transform>()->SetScale(Vector2(0.6f, 0.6f));
+			graphics::Texture* map = Resources::Find<graphics::Texture>(L"STAGE1_1");
+			bgSr->SetTexture(map);
 
-				graphics::Texture* skeletonLeftTex = Resources::Find<graphics::Texture>(L"SKELETONL");
-				graphics::Texture* skeletonRightTex = Resources::Find<graphics::Texture>(L"SKELETONR");
-				
-				CreateSkeletonAnimation(skeletonAnimator, skeletonRightTex, skeletonLeftTex);
+		}
+
+		{
+			Floor* floor = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(0, 420));
+			BoxCollider2D* floorCol = floor->AddComponent<BoxCollider2D>();
+			floor->AddComponent<FloorScript>();
+			floorCol->SetName(L"Floor");
+
+			floorCol->SetSize(Vector2(20.0f, 3.0f));
+			floorCol->SetOffset(Vector2(0, 0));
+		}//floor
+		
+		{
+			GameObject* mushroom = object::Instantiate<MushRoom>(enums::eLayerType::Monster, Vector2(400, 425));
+
+			MushRoomScript* mushroomScript = mushroom->AddComponent<MushRoomScript>();
+			Animator* mushroomAnimator = mushroom->AddComponent<Animator>();
+
+			BoxCollider2D* mushroomBoxCollider = mushroom->AddComponent<BoxCollider2D>();
+			mushroomBoxCollider->SetName(L"Mushroom");
+
+			mushroomBoxCollider->SetOffset(Vector2(-65, -65));
+			mushroomBoxCollider->SetSize(Vector2(0.5f, 0.5f));
 
 
-				skeletonAnimator->GetCompleteEvent(L"DeadL") = std::bind(&SkeletonScript::Respawn, skeletonScript);
-				skeletonAnimator->GetCompleteEvent(L"DeadR") = std::bind(&SkeletonScript::Respawn, skeletonScript);
+			mushroom->GetComponent<Transform>()->SetScale(Vector2(0.4f, 0.4f));
+			graphics::Texture* mushroomLeftTex = Resources::Find<graphics::Texture>(L"MUSHROOML");
+			graphics::Texture* mushroomRightTex = Resources::Find<graphics::Texture>(L"MUSHROOMR");
+
+			CreateMushRoomAnimation(mushroomAnimator, mushroomRightTex, mushroomLeftTex);
+
+			mushroomAnimator->GetCompleteEvent(L"DeadR") = std::bind(&MushRoomScript::Respawn, mushroomScript);
+
+			mushroomAnimator->PlayAnimation(L"IdleL", false);
+		}//mushroom
+
+		{
+			GameObject* skeleton = object::Instantiate<Skeleton>(enums::eLayerType::Monster
+				, Vector2(600, 406));
+
+			BoxCollider2D* skeletonCollider = skeleton->AddComponent<BoxCollider2D>();
+			skeletonCollider->SetName(L"Skeleton");
+
+			skeletonCollider->SetOffset(Vector2(-34, -40));
+			skeletonCollider->SetSize(Vector2(0.2f, 0.5f));
 
 
-				skeletonAnimator->PlayAnimation(L"SkeletonIdleR",false);
-			
+			SkeletonScript* skeletonScript = skeleton->AddComponent<SkeletonScript>();
+			Animator* skeletonAnimator = skeleton->AddComponent<Animator>();
+			skeleton->GetComponent<Transform>()->SetScale(Vector2(0.6f, 0.6f));
+
+			graphics::Texture* skeletonLeftTex = Resources::Find<graphics::Texture>(L"SKELETONL");
+			graphics::Texture* skeletonRightTex = Resources::Find<graphics::Texture>(L"SKELETONR");
+
+			CreateSkeletonAnimation(skeletonAnimator, skeletonRightTex, skeletonLeftTex);
+
+
+			skeletonAnimator->GetCompleteEvent(L"DeadL") = std::bind(&SkeletonScript::Respawn, skeletonScript);
+			skeletonAnimator->GetCompleteEvent(L"DeadR") = std::bind(&SkeletonScript::Respawn, skeletonScript);
+
+
+			skeletonAnimator->PlayAnimation(L"SkeletonIdleR", false);
+
+		}//skeleton
 
 			
 			
@@ -171,9 +218,18 @@ namespace ME
 	{
 		CollisionManager::CollisionLayerCheck(enums::eLayerType::Player, enums::eLayerType::Monster, true);
 		CollisionManager::CollisionLayerCheck(enums::eLayerType::Particle, enums::eLayerType::Monster, true);
+		CollisionManager::CollisionLayerCheck(enums::eLayerType::Floor, enums::eLayerType::Player, true);
+
+		CollisionManager::CollisionLayerCheck(enums::eLayerType::Particle, enums::eLayerType::Player, true);
+		CollisionManager::CollisionLayerCheck(enums::eLayerType::Items, enums::eLayerType::Player, true);
+		CollisionManager::CollisionLayerCheck(enums::eLayerType::Items, enums::eLayerType::Floor, true);
 
 
+		mPlayer = object::Instantiate<Player>
+			(enums::eLayerType::Player, Vector2(100, 406));
 
+		renderer::mainCamera = mCameraComp;
+		mCameraComp->SetTarget(mPlayer);
 
 		playerInitialize();
 
@@ -187,15 +243,14 @@ namespace ME
 
 	void PlayScene::playerInitialize()
 	{
-		GameObject* mPlayer = object::Instantiate<Player>
-			(enums::eLayerType::Player, Vector2(100, 406));
-
-		renderer::mainCamera->SetTarget(mPlayer);
-
+	
 		PlayerScript* playerScript = mPlayer->AddComponent<PlayerScript>();
 		mPlayer->GetComponent<Transform>()->SetScale(Vector2(0.7f, 0.7f));
 
 		mPlayer->AddComponent <Rigidbody>();
+		
+		Rigidbody* playerRb = mPlayer->GetComponent<Rigidbody>();
+		playerRb->SetMass(1.0f);
 
 		BoxCollider2D* playerBoxCollider = mPlayer->AddComponent<BoxCollider2D>();
 		playerBoxCollider->SetName(L"Player");
@@ -204,6 +259,7 @@ namespace ME
 		playerBoxCollider->SetSize(Vector2(0.3f, 0.3f));
 
 		//	object::DontDestroyOnLoad(mPlayer);
+		
 
 		graphics::Texture* megamanRightTex = Resources::Find<graphics::Texture>(L"MEGAMANR");
 		graphics::Texture* megamanLeftTex = Resources::Find<graphics::Texture>(L"MEGAMANL");
@@ -261,7 +317,7 @@ namespace ME
 		animator->CreateAnimation(L"HurtL", Ltexture, Vector2(0, 395), Vector2(130, 150), Vector2::Zero, 0.02f, 1);
 		animator->CreateAnimation(L"HurtR", Rtexture, Vector2(703, 395), Vector2(130, 150), Vector2::Zero, 0.02f, 1);
 
-		animator->CreateAnimation(L"DeadR", Ltexture, Vector2(0, 1056), Vector2(202, 140), Vector2::Zero, 0.4f, 4, 2);
+		animator->CreateAnimation(L"DeadR", Ltexture, Vector2(0, 1056), Vector2(202, 140), Vector2::Zero, 0.2f, 4, 2);
 	}
 
 	void PlayScene::CreateSkeletonAnimation(Animator* animator
@@ -283,8 +339,8 @@ namespace ME
 		animator->CreateAnimation(L"HurtL", Ltexture, Vector2(985, 880), Vector2(125, 130), Vector2::Zero, 0.05f, 3);
 		animator->CreateAnimation(L"HurtR", Rtexture, Vector2(0, 880), Vector2(125, 130), Vector2::Zero, 0.05f, 3);
 
-		animator->CreateAnimation(L"DeadL", Ltexture, Vector2(962, 1020), Vector2(148, 137), Vector2::Zero, 0.4f, 6);
-		animator->CreateAnimation(L"DeadR", Rtexture, Vector2(0, 1020), Vector2(148, 137), Vector2::Zero, 0.4f, 6);
+		animator->CreateAnimation(L"DeadL", Ltexture, Vector2(962, 1020), Vector2(148, 137), Vector2::Zero, 0.2f, 6);
+		animator->CreateAnimation(L"DeadR", Rtexture, Vector2(0, 1020), Vector2(148, 137), Vector2::Zero, 0.2f, 6);
 
 
 	

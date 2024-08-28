@@ -4,6 +4,7 @@
 namespace ME::renderer 
 {
 	extern Camera* mainCamera;
+	extern Camera* playerCamera;
 
 }
 
