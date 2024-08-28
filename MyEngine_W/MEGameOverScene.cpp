@@ -58,9 +58,12 @@ namespace ME
 	}
 	void GameOverScene::OnEnter()
 	{
+		Scene::OnEnter();
 
 	}
 	void GameOverScene::OnExit()
 	{
+		Scene::OnExit();
+
 	}
 }

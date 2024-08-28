@@ -8,6 +8,7 @@
 #include "../MyEngine_W/LoadResources.h"
 #include "../MyEngine_Source/METexture.h"
 #include "../MyEngine_W/METoolScene.h"
+#include "../MyEngine_Source/MESceneManager.h"
 
 
 
@@ -135,8 +136,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
       CW_USEDEFAULT, 0, width,height, nullptr, nullptr, hInstance, nullptr);
 
-   HWND ToolHwnd = CreateWindowW(L"TILEWINDOW", L"TileWindow", WS_OVERLAPPEDWINDOW,
-       0, 0, width, height, nullptr, nullptr, hInstance, nullptr);
+
 
    application.Initialize(hWnd, width, height);
 
@@ -157,22 +157,33 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    //Tile 윈도우 크기 조정
 
-  ME::graphics::Texture* texture =  ME::Resources::Find<ME::graphics::Texture>(L"SPRINGFLOOR");
+   ME::Scene* activeScene = ME::SceneManager::GetActiveScene();
 
-  RECT rect = { 0,0,texture->GetWidth(),texture->GetHeight()};
+   std::wstring name = activeScene->GetName();
+
+   if (name == L"ToolScene")
+   {
+       HWND ToolHwnd = CreateWindowW(L"TILEWINDOW", L"TileWindow", WS_OVERLAPPEDWINDOW,
+           0, 0, width, height, nullptr, nullptr, hInstance, nullptr);
+
+       ME::graphics::Texture* texture = ME::Resources::Find<ME::graphics::Texture>(L"SPRINGFLOOR");
+
+       RECT rect = { 0,0,texture->GetWidth(),texture->GetHeight() };
 
 
-  UINT toolWidth = rect.right - rect.left;
-   UINT toolHeight = rect.bottom - rect.top;
+       UINT toolWidth = rect.right - rect.left;
+       UINT toolHeight = rect.bottom - rect.top;
 
-  AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, false);
+       AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, false);
 
 
 
-  SetWindowPos(ToolHwnd, nullptr, width, 0, toolWidth, toolHeight, 0);
+       SetWindowPos(ToolHwnd, nullptr, width, 0, toolWidth, toolHeight, 0);
 
-  ShowWindow(ToolHwnd, true);
-  UpdateWindow(ToolHwnd);
+       ShowWindow(ToolHwnd, true);
+       UpdateWindow(ToolHwnd);
+   }
+
 
 
     

@@ -1,5 +1,6 @@
 
 #include "MEScenes.h"
+#include "MECollisionManager.h"
 
 namespace ME
 {
@@ -82,8 +83,8 @@ namespace ME
 	 }
 	void Scene::OnExit()
 	{
-
-	 }
+		CollisionManager::Clear();
+	}
 
 	void Scene::AddGameObject(GameObject* gameObject, const enums::eLayerType type)
 	{

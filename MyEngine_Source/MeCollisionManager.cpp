@@ -58,8 +58,8 @@ namespace ME
 
 	void CollisionManager::LayerCollision(Scene* scene, enums::eLayerType left, enums::eLayerType right)
 	{
-		const std::vector<GameObject*>& lefts = scene->GetLayer(left)->GetGameObject();
-		const std::vector<GameObject*>& rights = scene->GetLayer(right)->GetGameObject();
+		const std::vector<GameObject*>& lefts = SceneManager::GetGameObject(left);
+		const std::vector<GameObject*>& rights = SceneManager::GetGameObject(right);
 
 		for (GameObject* left : lefts)
 		{
@@ -231,6 +231,12 @@ namespace ME
 
 
 		return false;
+	}
+
+	void CollisionManager::Clear()
+	{
+		mCollisionMap.clear();
+		mCollisionLayerMatrix->reset();
 	}
 
 }

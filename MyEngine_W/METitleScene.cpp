@@ -72,11 +72,15 @@ namespace ME
 	{
 		Transform* tr = titleBg->GetComponent<Transform>();
 		tr->SetPosition(Vector2(250, 60));
+
+		Scene::OnEnter();
+
 	}
 
 	void TitleScene::OnExit()
 	{
-		
+		Scene::OnExit();
+
 	}
 
 }

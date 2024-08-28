@@ -23,9 +23,9 @@ namespace ME
 		//SceneManager::CreateScene<ScoreScene>(L"ScoreScene");
 		
 		
-		SceneManager::LoadScene(L"ToolScene");
+	//	SceneManager::LoadScene(L"ToolScene");
 
-		//SceneManager::LoadScene(L"TitleScene");
+		SceneManager::LoadScene(L"TitleScene");
 	
 
 	}

@@ -47,10 +47,7 @@ namespace ME
 
 	void PlayScene::Initialize()
 	{
-		CollisionManager::CollisionLayerCheck(enums::eLayerType::Player, enums::eLayerType::Monster,true);
-
-		CollisionManager::CollisionLayerCheck(enums::eLayerType::Particle, enums::eLayerType::Monster,true);
-
+		
 		//만약 타일맵 만들면 _wfopen_s함수로 불러온다음에 찍어내면됨 타일 렌더러 load함수에 있는거 가져다 쓰면됨.
 
 
@@ -173,13 +170,17 @@ namespace ME
 
 	void PlayScene::OnEnter()
 	{
+		CollisionManager::CollisionLayerCheck(enums::eLayerType::Player, enums::eLayerType::Monster, true);
+		CollisionManager::CollisionLayerCheck(enums::eLayerType::Particle, enums::eLayerType::Monster, true);
+
 		playerInitialize();
 
+		Scene::OnEnter();
 
 	}
 	void PlayScene::OnExit()
 	{
-
+		Scene::OnExit();
 	}
 
 	void PlayScene::playerInitialize()

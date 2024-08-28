@@ -25,7 +25,7 @@ namespace ME
 		static Scene* GetActiveScene() { return mActiveScene; }
 		static Scene* GetDontDestroyOnLoad() {return mDontDestroyOnLoad;}
 
-
+		static std::vector<GameObject*> GetGameObject(enums::eLayerType layer);
 
 		static void Initialize();
 		static void Update();

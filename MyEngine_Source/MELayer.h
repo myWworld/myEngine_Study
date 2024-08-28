@@ -22,9 +22,7 @@ namespace ME
 		void AddGameObject(GameObject* gameObject);
 		void EraseGameObject(GameObject* eraseGameObj);
 
-		const std::vector<GameObject*> GetGameObject() { 
-			int a = 0;
-			return mGameObjects;  }
+		const std::vector<GameObject*> GetGameObject() { return mGameObjects;  }
 
 	private:
 

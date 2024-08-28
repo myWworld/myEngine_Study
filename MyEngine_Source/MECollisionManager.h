@@ -35,6 +35,8 @@ namespace ME
 
 		static bool Intersect(Collider* left, Collider* right);
 
+		static void Clear();
+
 	private:
 
 
