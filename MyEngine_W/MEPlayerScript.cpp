@@ -10,6 +10,7 @@
 #include "MEBoxCollider2D.h"
 #include "MESceneManager.h"
 #include "MEScenes.h"
+#include "MERigidbody.h"
 
 #include "CommonInclude.h"
 
@@ -143,12 +144,16 @@ namespace ME
 
 		Transform* tr = GetOwner()->GetComponent<Transform>();
 		Vector2 pos = tr->GetPosition();
+		
+		Rigidbody* rb = GetOwner()->GetComponent<Rigidbody>();
+
 
 		if (Input::GetKey(eKeyCode::Right) || Input::GetKey(eKeyCode::D))
 		{
 
 			mPrevDirection = ePrevDirection::Right;
-			pos.x += 100.0f * Time::DeltaTime();
+
+			rb->AddForce(Vector2(50.0f, 0));
 
 			if (Input::GetKey(eKeyCode::Shift))
 			{
@@ -170,7 +175,8 @@ namespace ME
 		if (Input::GetKey(eKeyCode::Left) || Input::GetKey(eKeyCode::A))
 		{
 				mPrevDirection = ePrevDirection::Left;
-			pos.x -= 100.0f * Time::DeltaTime();
+
+				rb->AddForce(Vector2(-50.0f, 0));
 
 			if (Input::GetKey(eKeyCode::Shift))
 			{
@@ -221,17 +227,18 @@ namespace ME
 
 		Transform* tr = GetOwner()->GetComponent<Transform>();
 		Vector2 pos = tr->GetPosition();
-
+		Rigidbody* rb = GetOwner()->GetComponent<Rigidbody>();
 
 		if (isJump == false)
 		{
+			rb->AddForce(Vector2(0, -500.0f));
 			isJump = true;
-			pos.y -= 40.0f;
+			
 		}
 		else if (isJump == true)
 		{
 			jumpSeconds += Time::DeltaTime();
-			pos.y += 80.0f * Time::DeltaTime();
+			
 
 			if (jumpSeconds > 0.5f)
 			{

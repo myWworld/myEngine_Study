@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)MEApplication.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MEEntity.cpp">
       <Filter>Common</Filter>
     </ClCompile>
@@ -12,10 +11,10 @@
       <Filter>GameObject</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MEInput.cpp">
-      <Filter>GameObject\Helpers</Filter>
+      <Filter>Helpers</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)METime.cpp">
-      <Filter>GameObject\Helpers</Filter>
+      <Filter>Helpers</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MESceneManager.cpp">
       <Filter>Scene</Filter>
@@ -23,7 +22,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)MEScenes.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)MELayer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MEResource.cpp">
       <Filter>Resource</Filter>
     </ClCompile>
@@ -63,7 +61,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)MECollisionManager.cpp">
       <Filter>Component\Collider</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)MEDontDestroyOnLoad.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)METileMapRenderer.cpp">
       <Filter>Component\TileMapRenderer</Filter>
     </ClCompile>
@@ -73,9 +70,20 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)MECircleCollider2D.cpp">
       <Filter>Component\Collider</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MERigidbody.cpp">
+      <Filter>Component\Rigidbody</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MEDontDestroyOnLoad.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MELayer.cpp">
+      <Filter>Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MEApplication.cpp">
+      <Filter>High Level Interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)MEApplication.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CommonInclude.h">
       <Filter>Common</Filter>
     </ClInclude>
@@ -89,10 +97,10 @@
       <Filter>GameObject</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)MEInput.h">
-      <Filter>GameObject\Helpers</Filter>
+      <Filter>Helpers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)METime.h">
-      <Filter>GameObject\Helpers</Filter>
+      <Filter>Helpers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)MESceneManager.h">
       <Filter>Scene</Filter>
@@ -100,7 +108,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)MEScenes.h">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)MELayer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MEEnums.h">
       <Filter>Common</Filter>
     </ClInclude>
@@ -149,12 +156,23 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)MECollisionManager.h">
       <Filter>Component\Collider</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)MEDontDestroyOnLoad.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MEComponent.h">
       <Filter>Component\Script</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)METileMapRenderer.h">
       <Filter>Component\TileMapRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MERigidbody.h">
+      <Filter>Component\Rigidbody</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MEDontDestroyOnLoad.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MELayer.h">
+      <Filter>Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MEApplication.h">
+      <Filter>High Level Interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -194,9 +212,6 @@
     <Filter Include="Component\Collider">
       <UniqueIdentifier>{1105f7e1-abf9-4168-b7de-f90f89a50fce}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObject\Helpers">
-      <UniqueIdentifier>{a9b08f96-38c2-42e1-adaf-89d955b8ad7e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Component\Animator">
       <UniqueIdentifier>{7f2ce8b0-757a-4291-8448-803a6e31bf8a}</UniqueIdentifier>
     </Filter>
@@ -205,6 +220,18 @@
     </Filter>
     <Filter Include="Component\Transform">
       <UniqueIdentifier>{c016cc52-c4ea-477a-8a62-6315edb97326}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Rigidbody">
+      <UniqueIdentifier>{a9c3e4fc-068a-4ae6-b24e-7e489607ff9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers">
+      <UniqueIdentifier>{a9b08f96-38c2-42e1-adaf-89d955b8ad7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Layer">
+      <UniqueIdentifier>{40647e28-63db-43e8-a25d-3d61d091b8b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="High Level Interface">
+      <UniqueIdentifier>{b614a526-ce92-4456-b95b-642ecf3dd72b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

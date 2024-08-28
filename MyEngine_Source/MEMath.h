@@ -48,6 +48,13 @@ namespace ME::math
 			return rst;
 		}
 
+
+		Vector2 operator-()
+		{
+			return Vector2(-x,-y);
+			
+		}
+
 		Vector2 operator+(Vector2 other)
 		{
 			Vector2 rst;
@@ -91,6 +98,18 @@ namespace ME::math
 			rst.y = y * pos.y;
 
 			return rst;
+
+		}
+
+
+		bool operator==(Vector2 pos)
+		{
+		
+
+			if (x == pos.x && y == pos.y)
+				return true;
+
+			return false;
 
 		}
 

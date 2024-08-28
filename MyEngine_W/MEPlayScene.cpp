@@ -11,6 +11,7 @@
 #include "MESpriteRenderer.h"
 #include "MEBoxCollider2D.h"
 #include "MECamera.h"
+#include "MERigidbody.h"
 
 #include "MERenderer.h"
 #include "MEApplication.h"
@@ -68,8 +69,6 @@ namespace ME
 				bgSr->SetTexture(map);
 			
 			
-				playerInitialize();
-
 				GameObject* mushroom = object::Instantiate<MushRoom>(enums::eLayerType::Monster, Vector2(400, 425));
 
 				MushRoomScript* mushroomScript = mushroom->AddComponent<MushRoomScript>();
@@ -173,6 +172,9 @@ namespace ME
 		CollisionManager::CollisionLayerCheck(enums::eLayerType::Player, enums::eLayerType::Monster, true);
 		CollisionManager::CollisionLayerCheck(enums::eLayerType::Particle, enums::eLayerType::Monster, true);
 
+
+
+
 		playerInitialize();
 
 		Scene::OnEnter();
@@ -192,6 +194,8 @@ namespace ME
 
 		PlayerScript* playerScript = mPlayer->AddComponent<PlayerScript>();
 		mPlayer->GetComponent<Transform>()->SetScale(Vector2(0.7f, 0.7f));
+
+		mPlayer->AddComponent <Rigidbody>();
 
 		BoxCollider2D* playerBoxCollider = mPlayer->AddComponent<BoxCollider2D>();
 		playerBoxCollider->SetName(L"Player");

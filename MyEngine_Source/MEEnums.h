@@ -33,6 +33,7 @@ namespace ME::enums
 	{
 		Trasnform,
 		Collider,
+		Rigidbody,
 		Script,
 		SpriteRenderer,
 		Animator,
