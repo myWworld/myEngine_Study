@@ -30,6 +30,12 @@ namespace ME::enums
 		Circle2D,
 	};
 
+	enum class eUIType
+	{
+
+		End,
+	};
+
 	enum class eComponentType
 	{
 		Trasnform,

@@ -44,6 +44,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)METileMapRenderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)METime.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)METransform.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MEUIBase.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MEUIManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)MEAnimation.cpp" />
@@ -73,5 +75,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)METileMapRenderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)METime.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)METransform.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MEUIBase.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MEUIManager.cpp" />
   </ItemGroup>
 </Project>

@@ -23,13 +23,13 @@
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MEResource.cpp">
-      <Filter>Resource</Filter>
+      <Filter>Scene\Resource</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MEResources.cpp">
-      <Filter>Resource</Filter>
+      <Filter>Scene\Resource</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)METexture.cpp">
-      <Filter>Resource\Texture</Filter>
+      <Filter>Scene\Resource\Texture</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MEScript.cpp">
       <Filter>Component\Script</Filter>
@@ -50,7 +50,7 @@
       <Filter>Component\Animator</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MEAnimation.cpp">
-      <Filter>Resource\Animation</Filter>
+      <Filter>Scene\Resource\Animation</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MECollider.cpp">
       <Filter>Component\Collider</Filter>
@@ -73,14 +73,20 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)MERigidbody.cpp">
       <Filter>Component\Rigidbody</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)MEDontDestroyOnLoad.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MELayer.cpp">
       <Filter>Layer</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MEApplication.cpp">
       <Filter>High Level Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MEDontDestroyOnLoad.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MEUIManager.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MEUIBase.cpp">
+      <Filter>UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -115,13 +121,13 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)MEResource.h">
-      <Filter>Resource</Filter>
+      <Filter>Scene\Resource</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)MEResources.h">
-      <Filter>Resource</Filter>
+      <Filter>Scene\Resource</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)METexture.h">
-      <Filter>Resource\Texture</Filter>
+      <Filter>Scene\Resource\Texture</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)MEScript.h">
       <Filter>Component\Script</Filter>
@@ -142,7 +148,7 @@
       <Filter>Component\Animator</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)MEAnimation.h">
-      <Filter>Resource\Animation</Filter>
+      <Filter>Scene\Resource\Animation</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)MECollider.h">
       <Filter>Component\Collider</Filter>
@@ -174,6 +180,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)MEComponent.h">
       <Filter>Component</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MEUIManager.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MEUIBase.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">
@@ -188,12 +200,6 @@
     <Filter Include="Scene">
       <UniqueIdentifier>{1daadc24-e613-4265-85d5-55ac3318f44e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource">
-      <UniqueIdentifier>{e6ab78fb-4086-42e2-bd09-5fcab82ce315}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource\Texture">
-      <UniqueIdentifier>{ab9af308-f594-473d-a342-b4ec4f780af8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Component\Script">
       <UniqueIdentifier>{73a8c883-38ba-48d0-a884-fab993ddcafe}</UniqueIdentifier>
     </Filter>
@@ -205,9 +211,6 @@
     </Filter>
     <Filter Include="Renderer">
       <UniqueIdentifier>{b6d9077a-bff3-4b28-a6f9-77a4c7d67e72}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource\Animation">
-      <UniqueIdentifier>{f108d414-a31d-49c1-9411-84a7ce1fa8e8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Component\Collider">
       <UniqueIdentifier>{1105f7e1-abf9-4168-b7de-f90f89a50fce}</UniqueIdentifier>
@@ -232,6 +235,18 @@
     </Filter>
     <Filter Include="High Level Interface">
       <UniqueIdentifier>{b614a526-ce92-4456-b95b-642ecf3dd72b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{07d269ef-de9f-40eb-b56c-0d107968cb6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Resource">
+      <UniqueIdentifier>{e6ab78fb-4086-42e2-bd09-5fcab82ce315}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Resource\Texture">
+      <UniqueIdentifier>{ab9af308-f594-473d-a342-b4ec4f780af8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Resource\Animation">
+      <UniqueIdentifier>{f108d414-a31d-49c1-9411-84a7ce1fa8e8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
