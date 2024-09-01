@@ -88,6 +88,12 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)MEUIBase.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MEUIHUD.cpp">
+      <Filter>UI\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MEUIButton.cpp">
+      <Filter>UI\Button</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)CommonInclude.h">
@@ -186,6 +192,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)MEUIBase.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MEUIHUD.h">
+      <Filter>UI\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MEUIButton.h">
+      <Filter>UI\Button</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">
@@ -247,6 +259,12 @@
     </Filter>
     <Filter Include="Scene\Resource\Animation">
       <UniqueIdentifier>{f108d414-a31d-49c1-9411-84a7ce1fa8e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\Button">
+      <UniqueIdentifier>{6504640a-83c6-471b-8f66-eda7cb37b822}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\HUD">
+      <UniqueIdentifier>{e23192da-4c5b-418e-800f-55690fb58aa4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

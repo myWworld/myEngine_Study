@@ -1,14 +1,22 @@
 #include "MEUIManager.h"
+#include "MEUIHUD.h"
+#include "MEUIButton.h"
 
 namespace ME
 {
-	std::unordered_map<enums::eUIType, UIBase*> mUIs = {};
-	std::stack<UIBase*> mUIBases = {};
-	std::queue<enums::eUIType> mRequestUIQueue = {};
-	UIBase* mActiveUI = {};
+	std::unordered_map<enums::eUIType, UIBase*> UIManager::mUIs = {};
+	std::stack<UIBase*> UIManager::mUIBases = {};
+	std::queue<enums::eUIType> UIManager::mRequestUIQueue = {};
+	UIBase* UIManager::mActiveUI =nullptr;
 
 	void UIManager::Initailize()
 	{
+		UIHUD* hud = new UIHUD();
+		mUIs.insert({ enums::eUIType::HpBar,hud });
+
+		UIButton* button = new UIButton();
+		mUIs.insert({ enums::eUIType::Button, button });
+
 	}
 	void UIManager::Render(HDC hdc)
 	{
@@ -20,7 +28,7 @@ namespace ME
 
 			if (uiBase)
 			{
-				uiBase->Initialize();
+				uiBase->Render(hdc);
 				uiBases.pop();
 			}
 
@@ -40,6 +48,7 @@ namespace ME
 
 		OnComplete(iter->second);
 	}
+
 	void UIManager::Update()
 	{
 		std::stack<UIBase*> uiBases = mUIBases;
@@ -100,6 +109,7 @@ namespace ME
 			while (!uiBases.empty())
 			{
 				UIBase* uiBase = uiBases.top();
+				uiBases.pop();
 
 				if (uiBase)
 				{
@@ -120,14 +130,26 @@ namespace ME
 	{
 		mActiveUI = nullptr;
 	}
+	void UIManager::Release()
+	{
+		for (auto iter : mUIs)
+		{
+			delete iter.second;
+			iter.second = nullptr;
+		}
+	}
+
 	void UIManager::Push(enums::eUIType type)
 	{
 		mRequestUIQueue.push(type);
 	}
+
 	void UIManager::Pop(enums::eUIType type)
 	{
 		if (mUIBases.size() <= 0)
 			return;
+
+		std::stack<UIBase*> tempStack;
 
 		UIBase* uibase = nullptr;
 
@@ -136,7 +158,43 @@ namespace ME
 			uibase = mUIBases.top();
 			mUIBases.pop();
 
+			if (uibase->GetType() != type)
+			{
+				tempStack.push(uibase);
+				continue;
+			}
+
+			if (uibase->IsFullScreen())
+			{
+				std::stack<UIBase*> uiBases = mUIBases;
+
+				while (!uiBases.empty())
+				{
+					UIBase* uiBase = uiBases.top();
+					uiBases.pop();
+
+					if (uiBase)
+					{
+						uiBase->Active();
+						break;
+					}
+				}
+			}
+
+			uibase->UIClear();
+
 
 		}
+
+		while (tempStack.size() > 0)
+		{
+			uibase = tempStack.top();
+			tempStack.pop();
+			mUIBases.push(uibase);
+		}
 	}
+
+
+
+
 }

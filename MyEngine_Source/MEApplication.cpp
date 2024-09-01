@@ -4,6 +4,7 @@
 #include "MESceneManager.h"
 #include "MEResources.h"
 #include "MECollisionManager.h"
+#include "MEUIManager.h"
 
 
 namespace ME 
@@ -53,6 +54,7 @@ namespace ME
 		Time::Update();
 
    		CollisionManager::Update();
+		UIManager::Update();
 		SceneManager::Update();
 
 		
@@ -61,6 +63,7 @@ namespace ME
 	void Application::LateUpdate()
 	{	
 		CollisionManager::LateUpdate();
+		UIManager::LateUpdate();
 		SceneManager::LateUpdate();
 	}
 
@@ -72,6 +75,7 @@ namespace ME
 		Time::Render(mBackHdc);
 		
 		CollisionManager::Render(mBackHdc);
+		UIManager::Render(mBackHdc);
 		SceneManager::Render(mBackHdc);
 
 		CopyRenderTarget(mBackHdc, mHdc);
@@ -87,6 +91,7 @@ namespace ME
 	void Application::Release()
 	{
 		SceneManager::Release();
+		UIManager::Release();
 		Resources::Release();
 
 

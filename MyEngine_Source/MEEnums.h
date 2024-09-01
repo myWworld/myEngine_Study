@@ -32,7 +32,9 @@ namespace ME::enums
 
 	enum class eUIType
 	{
-
+		HpBar,
+		Score,
+		Button,
 		End,
 	};
 

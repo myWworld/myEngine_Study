@@ -32,6 +32,8 @@ namespace ME
 		Resources::Load<graphics::Texture>(L"COIN", L"..\\Resources\\Coin.png");
 		Resources::Load<graphics::Texture>(L"QBOX", L"..\\Resources\\Qbox.png");
 		Resources::Load<graphics::Texture>(L"USEDQBOX", L"..\\Resources\\Usedqbox.png");
+
+		Resources::Load<graphics::Texture>(L"HPBAR", L"..\\Resources\\Hpbar.png");
 	}
 
 }

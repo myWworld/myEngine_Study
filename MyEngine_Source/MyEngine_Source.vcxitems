@@ -45,6 +45,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)METime.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)METransform.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MEUIBase.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MEUIButton.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MEUIHUD.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MEUIManager.h" />
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +78,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)METime.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)METransform.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MEUIBase.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MEUIButton.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MEUIHUD.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MEUIManager.cpp" />
   </ItemGroup>
 </Project>
