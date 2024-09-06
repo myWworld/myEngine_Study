@@ -59,6 +59,7 @@ namespace ME
 
 
 			GameObject::eState state = gameObj->GetState();
+
 			if (state == GameObject::eState::Dead
 				|| state == GameObject::eState::Paused)
 			{

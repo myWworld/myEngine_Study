@@ -26,6 +26,9 @@ namespace ME
 		void OnCollisionExit(Collider* other) override;
 
 
+	private:
+		void CreateCoin(Collider* other);
+		void CreateStar(Collider* other);
 
 
 	private:

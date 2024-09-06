@@ -47,6 +47,12 @@ namespace ME
 		ePrevDirection GetPrevDirection() { return mPrevDirection; }
 
 		static void PlusScore() { PlayerScript::mScore += 10.0f; }
+		static float GetHp() { return mHp; }
+		static void ReSetHp(float hp) { mHp = hp; }
+		static void ReSetScore(int score) { mScore = score; }
+
+		void SetEffect(GameObject* effect) { mEffect = effect; }
+		static bool IsStar() { return mbIsStar; }
 
 	private:
 
@@ -57,19 +63,30 @@ namespace ME
 		void Attack();
 		void Die();
 
+		void PrintScore(HDC hdc);
+
+		
 		void PlayStandingAnimByPrevDirection();
 		void PlayBulletByPrveDirection(Animator* animator);
+		void PlayAuraAnimation();
+		GameObject* CreateAura();
+
+
 
 	private:
 		bool isJump;
 		float jumpSeconds;
-		float mHp;
-		static float mScore;
+		static float mHp;
+		static int mScore;
 
+		static bool mbIsStar;
+		float mStarTime;
+		
 		eState mState;
 		ePrevDirection mPrevDirection;
 
 		class Animator* mAnimator;
+		class GameObject* mEffect;
 	};
 }
 

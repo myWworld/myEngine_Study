@@ -24,6 +24,7 @@ namespace ME
 
 	private:
 		graphics::Texture* mTexture;
+
 		Event mOnClick;
 		
 	};

@@ -6,6 +6,8 @@
 #include "MECollisionManager.h"
 #include "MEUIManager.h"
 
+#include "MEFmod.h"
+
 
 namespace ME 
 {
@@ -34,7 +36,9 @@ namespace ME
 		 createBuffer(width, height);
 		 initializeEtc();
 		
+		 Fmod::Initialize();
 		 CollisionManager::Iniatialize();
+		 UIManager::Initailize();
 		 SceneManager::Initialize();
 		 
 	}

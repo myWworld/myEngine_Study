@@ -7,9 +7,6 @@
     <ClInclude Include="MEPlayScene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="MEPlayer.h">
-      <Filter>Contents</Filter>
-    </ClInclude>
     <ClInclude Include="MEEndScene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
@@ -17,14 +14,8 @@
       <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="LoadResources.h" />
-    <ClInclude Include="MEPlayerScript.h">
-      <Filter>Script</Filter>
-    </ClInclude>
     <ClInclude Include="MEGameOverScene.h">
       <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="MEMushRoom.h">
-      <Filter>Contents</Filter>
     </ClInclude>
     <ClInclude Include="MEMushRoomScript.h">
       <Filter>Script\Monsters</Filter>
@@ -32,35 +23,53 @@
     <ClInclude Include="MESkeletonScript.h">
       <Filter>Script\Monsters</Filter>
     </ClInclude>
-    <ClInclude Include="MESkeleton.h">
-      <Filter>Contents</Filter>
-    </ClInclude>
-    <ClInclude Include="MEBulletScript.h">
-      <Filter>Script</Filter>
-    </ClInclude>
-    <ClInclude Include="MEBullet.h">
-      <Filter>Contents</Filter>
-    </ClInclude>
     <ClInclude Include="METoolScene.h">
       <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="METile.h">
-      <Filter>Contents</Filter>
-    </ClInclude>
-    <ClInclude Include="MECameraScript.h">
-      <Filter>Script</Filter>
-    </ClInclude>
-    <ClInclude Include="MEFloorScript.h">
-      <Filter>Script</Filter>
-    </ClInclude>
-    <ClInclude Include="MEFloor.h">
-      <Filter>Contents</Filter>
     </ClInclude>
     <ClInclude Include="MECoinScript.h">
       <Filter>Script\Items</Filter>
     </ClInclude>
     <ClInclude Include="MEQboxScript.h">
       <Filter>Script\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="MEMushRoom.h">
+      <Filter>Contents\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="MESkeleton.h">
+      <Filter>Contents\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="MEPlayer.h">
+      <Filter>Contents\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="MECannon.h">
+      <Filter>Contents\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="MEFloor.h">
+      <Filter>Contents\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MEBullet.h">
+      <Filter>Contents\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="METile.h">
+      <Filter>Contents\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MECannoScript.h">
+      <Filter>Script\Monsters</Filter>
+    </ClInclude>
+    <ClInclude Include="MEStarScript.h">
+      <Filter>Script\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="MEBulletScript.h">
+      <Filter>Script\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="MEPlayerScript.h">
+      <Filter>Script\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="MECameraScript.h">
+      <Filter>Script\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="MEFloorScript.h">
+      <Filter>Script\Others</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -79,13 +88,28 @@
     <Filter Include="Script\Items">
       <UniqueIdentifier>{75d15f21-2897-4291-aa27-8a319bd451a9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Contents\Monster">
+      <UniqueIdentifier>{75c259b9-61fa-4688-ad32-2f18792e7340}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Map">
+      <UniqueIdentifier>{2382fb8e-e6cd-4692-a8ce-39c6bdfae09e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Others">
+      <UniqueIdentifier>{2a68a8dd-951b-4f9c-8c15-b5a76fc54e40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Player">
+      <UniqueIdentifier>{ef20ba6f-1bc8-47c8-b081-7fbe50109aec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Script\Player">
+      <UniqueIdentifier>{bf944f38-fcab-4e94-997a-02fa09c6d6ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Script\Others">
+      <UniqueIdentifier>{9d60996d-cdf5-4934-89a8-dd0212567add}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MEPlayScene.cpp">
       <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="MEPlayer.cpp">
-      <Filter>Contents</Filter>
     </ClCompile>
     <ClCompile Include="MEEndScene.cpp">
       <Filter>Scenes</Filter>
@@ -93,17 +117,11 @@
     <ClCompile Include="MEScoreScene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="MEPlayerScript.cpp">
-      <Filter>Script</Filter>
-    </ClCompile>
     <ClCompile Include="MEGameOverScene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="METitleScene.cpp">
       <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="MEMushRoom.cpp">
-      <Filter>Contents</Filter>
     </ClCompile>
     <ClCompile Include="MEMushRoomScript.cpp">
       <Filter>Script\Monsters</Filter>
@@ -111,35 +129,53 @@
     <ClCompile Include="MESkeletonScript.cpp">
       <Filter>Script\Monsters</Filter>
     </ClCompile>
-    <ClCompile Include="MESkeleton.cpp">
-      <Filter>Contents</Filter>
-    </ClCompile>
-    <ClCompile Include="MEBulletScript.cpp">
-      <Filter>Script</Filter>
-    </ClCompile>
-    <ClCompile Include="MeBullet.cpp">
-      <Filter>Contents</Filter>
-    </ClCompile>
     <ClCompile Include="METoolScene.cpp">
       <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="METile.cpp">
-      <Filter>Contents</Filter>
-    </ClCompile>
-    <ClCompile Include="MECameraScript.cpp">
-      <Filter>Script</Filter>
-    </ClCompile>
-    <ClCompile Include="MEFloorScript.cpp">
-      <Filter>Script</Filter>
-    </ClCompile>
-    <ClCompile Include="MEFloor.cpp">
-      <Filter>Contents</Filter>
     </ClCompile>
     <ClCompile Include="MECoinScript.cpp">
       <Filter>Script\Items</Filter>
     </ClCompile>
     <ClCompile Include="MEQboxScript.cpp">
       <Filter>Script\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="MEMushRoom.cpp">
+      <Filter>Contents\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="MESkeleton.cpp">
+      <Filter>Contents\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="MECannon.cpp">
+      <Filter>Contents\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="MEPlayer.cpp">
+      <Filter>Contents\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="MEFloor.cpp">
+      <Filter>Contents\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="METile.cpp">
+      <Filter>Contents\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="MeBullet.cpp">
+      <Filter>Contents\Others</Filter>
+    </ClCompile>
+    <ClCompile Include="MECannoScript.cpp">
+      <Filter>Script\Monsters</Filter>
+    </ClCompile>
+    <ClCompile Include="MEStarScript.cpp">
+      <Filter>Script\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="MEBulletScript.cpp">
+      <Filter>Script\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="MEPlayerScript.cpp">
+      <Filter>Script\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="MECameraScript.cpp">
+      <Filter>Script\Others</Filter>
+    </ClCompile>
+    <ClCompile Include="MEFloorScript.cpp">
+      <Filter>Script\Others</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -10,11 +10,13 @@
 #include "MEResources.h"
 #include "METransform.h"
 #include "MEApplication.h"
+#include "MEUIManager.h"
 
 extern ME::Application application;
 
 namespace ME
 {
+	GameObject* TitleScene::redTriangle = nullptr;
 
 	ME::TitleScene::TitleScene()
 	{
@@ -32,13 +34,22 @@ namespace ME
 		mCameraComp = camera->AddComponent<Camera>();
 		renderer::mainCamera = mCameraComp;
 
+		redTriangle = object::Instantiate<GameObject>(enums::eLayerType::BackGround,Vector2(375, 345));
+		SpriteRenderer* redTriangleSr = redTriangle->AddComponent<SpriteRenderer>();
+		graphics::Texture* redTriangleTex = Resources::Find<graphics::Texture>(L"REDTRIANGLE");
+		
+		redTriangleSr->SetTexture(redTriangleTex);
 
-		titleBg = object::Instantiate<GameObject>(enums::eLayerType::BackGround, Vector2(250, 60));
+
+		redTriangle->SetNoRender(false);
+
+		titleBg = object::Instantiate<GameObject>(enums::eLayerType::BackGround);
 
 		SpriteRenderer* sr = titleBg->AddComponent<SpriteRenderer>();
 
 		Transform* tr = titleBg->GetComponent<Transform>();
-		tr->SetScale(Vector2(1.5f, 1.5f));
+		tr->SetScale(Vector2(0.5f, 0.5f));
+		tr->SetPosition(Vector2(0, 300));
 
 		graphics::Texture* titleTexture = Resources::Find<graphics::Texture>(L"TITLE");
 		sr->SetTexture(titleTexture);
@@ -67,9 +78,7 @@ namespace ME
 	void ME::TitleScene::Render(HDC mHdc)
 	{
  		Scene::Render(mHdc);
-		wchar_t str[50] = L"시작하려면 Enter를 누르세요.";
-		UINT len = wcslen(str);
-		TextOut(mHdc, 380, 350, str, len);
+	
 	}
 
 	void TitleScene::OnEnter()
@@ -78,12 +87,17 @@ namespace ME
 		tr->SetPosition(Vector2(250, 60));
 
 		renderer::mainCamera = mCameraComp;
+
+		UIManager::Push(enums::eUIType::Button);
+		
 		Scene::OnEnter();
 
 	}
 
 	void TitleScene::OnExit()
 	{
+		UIManager::Pop(enums::eUIType::Button);
+
 		Scene::OnExit();
 
 	}

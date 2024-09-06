@@ -23,6 +23,8 @@
     <ClInclude Include="MEBullet.h" />
     <ClInclude Include="MEBulletScript.h" />
     <ClInclude Include="MECameraScript.h" />
+    <ClInclude Include="MECannon.h" />
+    <ClInclude Include="MECannoScript.h" />
     <ClInclude Include="MECoinScript.h" />
     <ClInclude Include="MEEndScene.h" />
     <ClInclude Include="MEFloor.h" />
@@ -38,6 +40,7 @@
     <ClInclude Include="MESkeletonScript.h" />
     <ClInclude Include="MEMushRoom.h" />
     <ClInclude Include="MEMushRoomScript.h" />
+    <ClInclude Include="MEStarScript.h" />
     <ClInclude Include="METile.h" />
     <ClInclude Include="METoolScene.h" />
   </ItemGroup>
@@ -45,6 +48,8 @@
     <ClCompile Include="MeBullet.cpp" />
     <ClCompile Include="MEBulletScript.cpp" />
     <ClCompile Include="MECameraScript.cpp" />
+    <ClCompile Include="MECannon.cpp" />
+    <ClCompile Include="MECannoScript.cpp" />
     <ClCompile Include="MECoinScript.cpp" />
     <ClCompile Include="MEEndScene.cpp" />
     <ClCompile Include="MEFloor.cpp" />
@@ -57,6 +62,7 @@
     <ClCompile Include="MEScoreScene.cpp" />
     <ClCompile Include="MESkeleton.cpp" />
     <ClCompile Include="MESkeletonScript.cpp" />
+    <ClCompile Include="MEStarScript.cpp" />
     <ClCompile Include="METile.cpp" />
     <ClCompile Include="METitleScene.cpp" />
     <ClCompile Include="MEMushRoom.cpp" />
@@ -157,6 +163,10 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)\External\Library\Fmod\Debug\fmodL.dll" "$(SolutionDir)\x64\Debug\" 
+copy "$(SolutionDir)\External\Library\Fmod\Debug\fmodstudioL.dll" "$(SolutionDir)\x64\Debug\" </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -174,6 +184,10 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)\External\Library\FmodLibrary\fmod.dll" "$(SolutionDir)\x64\Release\"
+copy "$(SolutionDir)\External\Library\Fmod\Release\fmodstudio.dll" "$(SolutionDir)\x64\Release\"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

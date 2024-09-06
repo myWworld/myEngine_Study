@@ -2,7 +2,11 @@
 #include "MEInput.h"
 #include "METransform.h"
 #include "METime.h"
+#include "MEAudioSource.h"
+#include "MEAudioClip.h"
+
 #include "MEGameObject.h"
+
 #include "MEBulletScript.h"
 #include "MEBullet.h"
 #include "MEObject.h"
@@ -18,14 +22,18 @@
 
 namespace ME
 {
-	float PlayerScript::mScore = 0.0f;
+	int PlayerScript::mScore = 0;
+	float PlayerScript::mHp = 100.0f;
+	bool PlayerScript::mbIsStar = false;
 
 	PlayerScript::PlayerScript()
 		:isJump(false)
 		, jumpSeconds(0)
 		, mState(PlayerScript::eState::Standing)
 		, mAnimator(nullptr)
-		,mHp(100.0f)
+		, mEffect(nullptr)
+		, mStarTime(0.0f)
+		
 		
 	{
 	}
@@ -47,6 +55,19 @@ namespace ME
 		if (mHp == 0)
 		{
 			mState = eState::Die;
+		}
+
+		if (mbIsStar == true)
+		{
+			mStarTime += Time::DeltaTime();
+			PlayAuraAnimation();
+
+			if (mStarTime > 10.0f)
+			{
+				mStarTime = 0.0f;
+				mbIsStar = false;
+				mEffect->SetDeath();
+			}
 		}
 
 
@@ -223,6 +244,20 @@ namespace ME
 		Vector2 pos = tr->GetPosition();
 		Rigidbody* rb = GetOwner()->GetComponent<Rigidbody>();
 
+		AudioSource* as = GetOwner()->GetComponent<AudioSource>();
+		AudioClip* ac = GetOwner()->GetComponent<AudioClip>();
+		ac = Resources::Find<AudioClip>(L"MARIOJUMPSOUND");
+
+		if (ac == nullptr)
+			return;
+
+		as->SetClip(ac);
+
+		if (as == nullptr)
+			return; 
+
+		as->Play();
+		
 		Vector2 velocity = rb->GetVelocity();
 		velocity.y = -300.0f;
 		rb->SetVelocity(velocity);
@@ -389,20 +424,52 @@ namespace ME
 
 	void PlayerScript::Render(HDC hdc)
 	{
+		PrintScore(hdc);
+	}
+
+	void PlayerScript::PrintScore(HDC hdc)
+	{
 		std::wstring wstr = std::to_wstring(mScore);
+	
+
+		HFONT hfont = CreateFont(40, 0, 0, 0, 0, 0, 0, 0, HANGEUL_CHARSET, 0, 0, 0, VARIABLE_PITCH | FF_ROMAN, TEXT("jejufont"));
+		HFONT oldfond = (HFONT)SelectObject(hdc, (HFONT)hfont);
+
+		SelectObject(hdc, oldfond);
+		DeleteObject(hfont);
 
 		wchar_t str[50];
-
-		wcsncpy_s(str, wstr.c_str(), 50);
-
+		wcsncpy_s(str, wstr.c_str(), 5);
+		
+		SetTextColor(hdc, 0x0000FF00);
+		SetBkMode(hdc, TRANSPARENT);
 		TextOut(hdc, 700, 0, str, wcslen(str));
+
 	}
+
+
 	void PlayerScript::OnCollisionEnter(Collider* other)
 	{
 		if (other->GetOwner()->GetLayerType() == enums::eLayerType::Monster)
 		{
 			GameObject* monster = other->GetOwner();
+			
+			if (mbIsStar == true)
+			{
+				Rigidbody* rb = other->GetOwner()->GetComponent<Rigidbody>();
 
+				Vector2 velocity = rb->GetVelocity();
+				velocity.y = -300.0f;
+				rb->SetVelocity(velocity);
+				rb->SetGround(false);
+			
+				if (other->GetName() == L"Cannon")
+				{
+					rb->SetNeedGravity(true);
+				}
+
+				return;
+			}
 
 			if (mHp != 0)
 			{
@@ -440,7 +507,7 @@ namespace ME
 					}
 				
 					Vector2 velocity = rb->GetVelocity();
-					velocity.x = 50.0f;
+					velocity.x = 100.0f;
 					rb->SetVelocity(velocity);
 				}
 				else
@@ -458,7 +525,7 @@ namespace ME
 					}
 				
 					Vector2 velocity = rb->GetVelocity();
-					velocity.x = -50.0f;
+					velocity.x = -100.0f;
 					rb->SetVelocity(velocity);
 				}
 
@@ -472,15 +539,55 @@ namespace ME
 			else if(mHp == 0)
 				return;
 		}
+
+		if (other->GetName() == L"Star")
+		{
+			mbIsStar = true;
+			mEffect = CreateAura();
+	
+		}
+
+		
 	}
 	void PlayerScript::OnCollisionStay(Collider* other)
 	{
-		Transform* tr = GetOwner()->GetComponent<Transform>();
-		Vector2 pos = tr->GetPosition();
-		tr->SetPosition(pos);
+		
 	}
 	void PlayerScript::OnCollisionExit(Collider* other)
 	{
+	}
+
+	void PlayerScript::PlayAuraAnimation()
+	{
+		Transform* tr = GetOwner()->GetComponent<Transform>();
+		Vector2 pos = tr->GetPosition();
+
+		if (mEffect == nullptr)
+			return;
+
+		Animator* effectAnimator = mEffect->GetComponent<Animator>();
+
+		Transform* effectTr = mEffect->GetComponent<Transform>();
+		
+		effectTr->SetPosition(Vector2(pos.x + 50, pos.y + 50));
+		effectTr->SetScale(Vector2(0.4f, 0.4f));
+
+		
+		effectAnimator->PlayAnimation(L"StarEffectR");
+	}
+
+	GameObject* PlayerScript::CreateAura()
+	{
+		GameObject* effect = object::Instantiate <GameObject> (enums::eLayerType::Aura);
+
+		Animator* effectAnimator = effect->AddComponent<Animator>();
+
+		graphics::Texture* effectTex = Resources::Find<graphics::Texture>(L"STAREFFECT");
+
+		effectAnimator->CreateAnimation(L"StarEffectR", effectTex, Vector2(0, 0), Vector2(196, 212), Vector2::Zero
+			, 0.01f, 5);
+
+		return effect;
 	}
 }
 

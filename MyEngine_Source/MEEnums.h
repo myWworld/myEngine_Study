@@ -9,6 +9,7 @@ namespace ME::enums
 		Tile,
 		Items,
 		Monster,
+		Aura,
 		Player,
 		Floor,
 		Particle,
@@ -47,6 +48,8 @@ namespace ME::enums
 		SpriteRenderer,
 		Animator,
 		Camera,
+		AudioListener,
+		AudioSource,
 		End,
 	};
 }

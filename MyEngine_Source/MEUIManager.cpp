@@ -16,8 +16,8 @@ namespace ME
 
 		UIButton* button = new UIButton();
 		mUIs.insert({ enums::eUIType::Button, button });
-
 	}
+
 	void UIManager::Render(HDC hdc)
 	{
 		std::stack<UIBase*> uiBases = mUIBases;
@@ -43,7 +43,7 @@ namespace ME
 		if (iter == mUIs.end())
 		{
 			OnFail();
-			return;
+			return;	
 		}
 
 		OnComplete(iter->second);

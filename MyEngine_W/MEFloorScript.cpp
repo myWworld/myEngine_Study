@@ -26,7 +26,9 @@ namespace ME
 	}
 	void FloorScript::OnCollisionEnter(Collider* other)
 	{
-		if (other->GetName() == L"Player" || other->GetName() == L"Item")
+		if (other->GetOwner()->GetLayerType() == enums::eLayerType::Player
+			 || other->GetOwner()->GetLayerType() == enums::eLayerType::Items
+			   || other->GetOwner()->GetLayerType() == enums::eLayerType::Monster)
 		{
 			Rigidbody* playerRb = other->GetOwner()->GetComponent<Rigidbody>();
 			Transform* playerTr = other->GetOwner()->GetComponent<Transform>();

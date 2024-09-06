@@ -29,11 +29,20 @@ namespace ME
 		void CreateMushRoomAnimation(Animator* animator, graphics::Texture* Rtexture, graphics::Texture* Ltexture);
 		void CreateSkeletonAnimation(Animator* animator, graphics::Texture* Rtexture, graphics::Texture* Ltexture);
 
+		void CreateCannon();
+		void CreateQbox(GameObject* qbox);
+		void CreateMushRoom(GameObject* mushroom);
+		void CreateSkeleton(GameObject* skeleton);
+
+
 		void playerInitialize();
 
 	private:
 
 		class GameObject* mPlayer;
+		class GameObject* mEffect;
 		class Camera* mCameraComp;
+
+		float mPlayTime;
 	};
 }

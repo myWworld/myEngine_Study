@@ -1,6 +1,14 @@
 #include "MEUIButton.h"
 #include "MEInput.h"
 
+#include "MESceneManager.h"
+#include "MEAnimator.h"
+#include "MEResources.h"
+
+#include "MESpriteRenderer.h"
+
+#include "../MyEngine_W/METitleScene.h"
+
 namespace ME
 {
 	UIButton::UIButton()
@@ -12,10 +20,14 @@ namespace ME
 	}
 	void UIButton::OnInit()
 	{
-		SetPos(Vector2(100, 250));
-		SetSize(Vector2(100, 204));
+		SetPos(Vector2(420, 340));
+		SetSize(Vector2(140,40));
+
+		mTexture = Resources::Find<graphics::Texture>(L"STARTBUTTON");
 
 		mOnClick = std::bind(&UIButton::ButtonClick, this);
+
+		
 
 	}
 	void UIButton::OnActive()
@@ -27,14 +39,21 @@ namespace ME
 	void UIButton::OnUpdate()
 	{
 		Vector2 mousePos = Input::GetMousePos();
+		GameObject* rT = TitleScene::GetRedTriangle();
+
+
 
 		if (mousePos.x >= mPosition.x && mousePos.x <= mPosition.x + mSize.x
 			&& mousePos.y >= mPosition.y && mousePos.y <= mPosition.y + mSize.y)
 		{
+			if(rT != nullptr)
+				rT->SetNoRender(true);
 			mbMouseOn = true;
 		}
 		else
 		{
+			if (rT != nullptr)
+				rT->SetNoRender(false);
 			mbMouseOn = false;
 		}
 
@@ -49,15 +68,55 @@ namespace ME
 	}
 	void UIButton::OnRender(HDC hdc)
 	{
-		Rectangle(hdc
-			, (int)mPosition.x, (int)mPosition.y
-			, mPosition.x + mSize.x, mPosition.y + mSize.y);
+		
+		if (mTexture->GetTextureType() == graphics::Texture::eTextureType::Png)
+		{
+			Gdiplus::ImageAttributes imgAtt = {};
+
+			imgAtt.SetColorKey(Gdiplus::Color(230, 230, 230), Gdiplus::Color(255, 255, 255));
+
+			Gdiplus::Graphics graphics(hdc);
+
+			if (mTexture->GetImage() == nullptr)
+				return;
+
+			graphics.DrawImage(mTexture->GetImage()
+				, Gdiplus::Rect
+				(
+					mPosition.x
+					, mPosition.y
+					,  mSize.x
+					, mSize.y
+				)
+				, 0, 0
+				, mTexture->GetWidth()
+				, mTexture->GetHeight()
+				, Gdiplus::UnitPixel
+				, nullptr
+			);
+		}
+		else if (mTexture->GetTextureType() == graphics::Texture::eTextureType::Bmp)
+		{
+			TransparentBlt(hdc
+				, mPosition.x, mPosition.y
+				, mPosition.x + mSize.x
+				, mPosition.y + mSize.y
+				, mTexture->GedHdc()
+				, 0, 0
+				, mTexture->GetWidth()
+				, mTexture->GetHeight()
+				, RGB(255, 0, 255));
+		}
 	}
 	void UIButton::OnClear()
 	{
 	}
 	void UIButton::ButtonClick()
 	{
-		int a = 0;
+		if (SceneManager::GetActiveScene()->GetName() == L"TitleScene")
+		{
+			SceneManager::LoadScene(L"PlayScene");
+		}
+		
 	}
 }

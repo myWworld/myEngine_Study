@@ -24,10 +24,19 @@ namespace ME
 
 		Vector2 GetVelocity(){return mVelocity;}
 		bool IsGround() { return mbGround; }
+
+		void SetNeedGravity(bool isAffected)
+		{
+			if (isAffected == false)
+				mbIsAffectedByGravity = false;
+			if (isAffected == true)
+				mbIsAffectedByGravity = true;
+		}
 		
 	private:
 	
 		bool mbGround;
+		bool mbIsAffectedByGravity;
 
 		float mMass;
 		float mFriction;

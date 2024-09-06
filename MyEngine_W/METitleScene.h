@@ -19,10 +19,13 @@ namespace ME
 		void OnEnter() override;
 		void OnExit() override;
 
+		static GameObject* GetRedTriangle() { return redTriangle; }
+
 	private:
 
 		class Camera* mCameraComp;
 		class GameObject* titleBg;
+		static GameObject* redTriangle;
 	};
 }
 

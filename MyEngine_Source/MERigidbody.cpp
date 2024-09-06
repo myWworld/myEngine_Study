@@ -11,10 +11,10 @@ namespace ME
 		, mFriction(10.0f)
 	, mForce(Vector2::Zero)
 	, mVelocity(Vector2::Zero)
-	, mLimitVelocity(Vector2(50.0f,1000.0f))
+	, mLimitVelocity(Vector2(1000.0f,1000.0f))
 	, mGravity(Vector2(0.0f, 800.0f))
 	, mAccelation(Vector2::Zero)
-
+		, mbIsAffectedByGravity(true)
 	{
 
 
@@ -31,6 +31,9 @@ namespace ME
 		mAccelation = mForce / mMass;
 
 		mVelocity += mAccelation * Time::DeltaTime();
+
+		if (mbIsAffectedByGravity == false)
+			mGravity = Vector2(0.0f,0.0f);
 
 		if (mbGround)
 		{

@@ -98,6 +98,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 ///DispatchMessage(&msg);
   //      }
    // }
+    RemoveFontResourceEx(L"..\\Resources\\jejufont.tff", FR_PRIVATE, 0);
+
     Gdiplus::GdiplusShutdown(gpToken);
     application.Release();
 
