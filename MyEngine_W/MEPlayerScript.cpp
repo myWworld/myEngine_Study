@@ -33,8 +33,9 @@ namespace ME
 		, mAnimator(nullptr)
 		, mEffect(nullptr)
 		, mStarTime(0.0f)
-		
-		
+		, mAttackTime(0.0f)
+		, mbIsRunningAttack(false)
+		, mbStillStartTime(false)	
 	{
 	}
 	PlayerScript::~PlayerScript()
@@ -76,8 +77,11 @@ namespace ME
 		case ME::PlayerScript::eState::Standing:
 			Standing();
 			break;
-		case ME::PlayerScript::eState::Attack:
-			Attack();
+		case ME::PlayerScript::eState::StandAttack:
+			StandingAttack();
+			break;
+		case ME::PlayerScript::eState::RunningAttack:
+			RunningAttack();
 			break;
 		case ME::PlayerScript::eState::Jump:
 			Jump();
@@ -104,320 +108,6 @@ namespace ME
 
 	}
 
-	void PlayerScript::Standing()
-	{
-
-		if (Input::GetKey(eKeyCode::Right) || Input::GetKey(eKeyCode::D))
-		{
-			
-			mState = eState::Walk;
-			mAnimator->PlayAnimation(L"RightWalkR");
-
-		}
-
-
-		if (Input::GetKey(eKeyCode::Left) || Input::GetKey(eKeyCode::A))
-		{
-			
-			mState = eState::Walk;
-			mAnimator->PlayAnimation(L"LeftWalkL");
-
-		}
-
-		if (Input::GetKey(eKeyCode::W) || Input::GetKey(eKeyCode::A))
-		{
-
-			mState = eState::Walk;
-			mAnimator->PlayAnimation(L"LeftWalkL");
-
-		}
-
-		if (Input::GetKey(eKeyCode::S) || Input::GetKey(eKeyCode::A))
-		{
-
-			mState = eState::Walk;
-			mAnimator->PlayAnimation(L"LeftWalkL");
-
-		}
-
-		Rigidbody* rb = GetOwner()->GetComponent<Rigidbody>();
-
-		if (Input::GetKey(eKeyCode::Space) && rb->IsGround())
-		{
-
-			mState = eState::Jump;
-			mAnimator->PlayAnimation(L"JumpR", false);
-
-		}
-
-		if (Input::GetKey(eKeyCode::T))
-		{
-			mState = eState::Attack;
-			if(mPrevDirection == ePrevDirection::Left)
-				mAnimator->PlayAnimation(L"StandAttackL");
-
-			if (mPrevDirection == ePrevDirection::Right)
-				mAnimator->PlayAnimation(L"StandAttackR");
-		}
-
-	}
-
-	void PlayerScript::Move()
-	{
-		
-
-		Transform* tr = GetOwner()->GetComponent<Transform>();
-		Vector2 pos = tr->GetPosition();
-		
-		Rigidbody* rb = GetOwner()->GetComponent<Rigidbody>();
-
-
-		if (Input::GetKey(eKeyCode::Right) || Input::GetKey(eKeyCode::D))
-		{
-
-		
-			mPrevDirection = ePrevDirection::Right;
-
-			pos += Vector2::Right * (90 * Time::DeltaTime());
-
-			if (Input::GetKey(eKeyCode::Shift))
-			{
-				mState = eState::Run;
-				mAnimator->PlayAnimation(L"RunR");
-			}
-
-
-			if (Input::GetKey(eKeyCode::T))
-			{
-				mState = eState::Attack;
-
-				mAnimator->PlayAnimation(L"RunningAttackR");
-			}
-
-		
-		}
-
-		if (Input::GetKey(eKeyCode::Left) || Input::GetKey(eKeyCode::A))
-		{
-				mPrevDirection = ePrevDirection::Left;
-
-				pos += Vector2::Left * (90 * Time::DeltaTime());
-
-			if (Input::GetKey(eKeyCode::Shift))
-			{
-				mState = eState::Run;
-				mAnimator->PlayAnimation(L"RunL");
-			}
-
-			if (Input::GetKey(eKeyCode::T))
-			{
-				mState = eState::Attack;
-				mAnimator->PlayAnimation(L"RunningAttackL");
-			}
-
-		}
-		
-
-		if (Input::GetKey(eKeyCode::Space) && rb->IsGround())
-		{
-			mState = eState::Jump;
-			mAnimator->PlayAnimation(L"JumpR", false);
-		}
-
-		tr->SetPosition(pos);
-
-		if ((Input::GetKeyUp(eKeyCode::Right) || Input::GetKeyUp(eKeyCode::D))
-			|| (Input::GetKeyUp(eKeyCode::Left) || Input::GetKeyUp(eKeyCode::A))
-			|| (Input::GetKeyUp(eKeyCode::Down) || Input::GetKeyUp(eKeyCode::S))
-			|| (Input::GetKeyUp(eKeyCode::Space)))
-		{
-			mState = eState::Standing;
-
-			PlayStandingAnimByPrevDirection();
-		}
-	}
-
-	void PlayerScript::Jump()
-	{
-
-		Transform* tr = GetOwner()->GetComponent<Transform>();
-		Vector2 pos = tr->GetPosition();
-		Rigidbody* rb = GetOwner()->GetComponent<Rigidbody>();
-
-		AudioSource* as = GetOwner()->GetComponent<AudioSource>();
-		AudioClip* ac = GetOwner()->GetComponent<AudioClip>();
-		ac = Resources::Find<AudioClip>(L"MARIOJUMPSOUND");
-
-		if (ac == nullptr)
-			return;
-
-		as->SetClip(ac);
-
-		if (as == nullptr)
-			return; 
-
-		as->Play();
-		
-		Vector2 velocity = rb->GetVelocity();
-		velocity.y = -300.0f;
-		rb->SetVelocity(velocity);
-
-		rb->SetGround(false);
-		
-
-		mState = eState::Standing;
-		
-	}
-
-	void PlayerScript::Run()
-	{
-		Transform* tr = GetOwner()->GetComponent<Transform>();
-		Vector2 pos = tr->GetPosition();
-		Rigidbody* rb = GetOwner()->GetComponent<Rigidbody>();
-
-
-		if (mPrevDirection == ePrevDirection::Left)
-		{
-			pos += Vector2::Left * (130 * Time::DeltaTime());
-		}
-		else if (mPrevDirection == ePrevDirection::Right)
-		{
-			pos += Vector2::Right * (130 * Time::DeltaTime());
-		}
-		
-		tr->SetPosition(pos);
-
-		if ((Input::GetKeyUp(eKeyCode::Right) || Input::GetKeyUp(eKeyCode::D))
-			|| (Input::GetKeyUp(eKeyCode::Left) || Input::GetKeyUp(eKeyCode::A))
-			|| Input::GetKeyUp(eKeyCode::Shift))
-		{
-			mState = eState::Standing;
-			PlayStandingAnimByPrevDirection();
-		}
-	}
-
-	void PlayerScript::Die()
-	{
-		GetOwner()->SetActive(false);
-		GetOwner()->SetDeath();
-		
-		renderer::mainCamera->SetTarget(nullptr);
-		
-
-		SceneManager::LoadScene(L"GameOverScene");
-	}
-	
-	void PlayerScript::Attack()
-	{
-
-		Transform* tr = GetOwner()->GetComponent<Transform>();
-		Vector2 pos = tr->GetPosition();
-		
-		if (Input::GetKey(eKeyCode::Right) || Input::GetKey(eKeyCode::D))
-		{
-			mPrevDirection = ePrevDirection::Right;
-			pos += Vector2::Right * (130 * Time::DeltaTime());
-			
-			if(mAnimator->IsComplete())
-				mAnimator->PlayAnimation(L"RunningAttackR");
-		}
-		else if (Input::GetKey(eKeyCode::Left) || Input::GetKey(eKeyCode::A))
-		{
-			mPrevDirection = ePrevDirection::Right;
-			pos += Vector2::Left * (130 * Time::DeltaTime());
-			
-			if (mAnimator->IsComplete())
-				mAnimator->PlayAnimation(L"RunningAttackL");
-
-		}
-		
-		tr->SetPosition(pos);
-
-		if (Input::GetKeyUp(eKeyCode::T)) 
-		{
-			mState = eState::Standing;
-			PlayStandingAnimByPrevDirection();
-		}
-
-	}
-
-	void PlayerScript::MakeBullet()
-	{
-		GameObject* bullet = object::Instantiate<Bullet>(enums::eLayerType::Particle);
-
-		bullet->AddComponent<BulletScript>();
-		Animator* bulletAnim = bullet->AddComponent<Animator>();
-		BoxCollider2D* bulletCollider = bullet->AddComponent<BoxCollider2D>();
-		bulletCollider->SetName(L"Bullet");
-
-		bulletCollider->SetSize(Vector2(0.05f, 0.05f));
-		bulletCollider->SetOffset(Vector2(-17, -20));
-
-		graphics::Texture* bulletRightTex = Resources::Find<graphics::Texture>(L"BULLETR");
-		graphics::Texture* bulletLeftTex = Resources::Find<graphics::Texture>(L"BULLETL");
-
-
-		Transform* bulletTr = bullet->GetComponent<Transform>();
-
-		Transform* playerTr = GetOwner()->GetComponent<Transform>();
-		Vector2 playerPos = playerTr->GetPosition();
-
-		Vector2 bulletPos = Vector2::Zero;
-
-		bulletAnim->CreateAnimation(L"BulletR", bulletRightTex, Vector2(0, 0)
-			, Vector2(50, 50), Vector2(0, 0), 0.3f, 1);
-		bulletAnim->CreateAnimation(L"BulletL", bulletLeftTex, Vector2(0, 0)
-			, Vector2(50, 50), Vector2(0, 0), 0.3f, 1);
-
-		if (mPrevDirection == ePrevDirection::Left)
-		{
-			bulletPos = playerTr->GetPosition() + Vector2(-27, 8);
-		}
-		else if (mPrevDirection == ePrevDirection::Right)
-		{
-			bulletPos = playerTr->GetPosition() + Vector2(26, 8);
-		}
-
-		bulletTr->SetPosition(bulletPos);
-		bulletTr->SetScale(Vector2(0.3f, 0.3f));
-
-		PlayBulletByPrveDirection(bulletAnim);
-
-		mState = eState::Standing;
-
-	}
-	
-	void PlayerScript::PlayStandingAnimByPrevDirection()
-	{
-		if (mPrevDirection == ePrevDirection::Left)
-		{
-			mAnimator->PlayAnimation(L"StandingL");
-		}
-		else if (mPrevDirection == ePrevDirection::Right)
-		{
-			mAnimator->PlayAnimation(L"StandingR");
-		}
-	}
-
-	void PlayerScript::PlayBulletByPrveDirection(Animator *animator)
-	{
-		Bullet* obj = static_cast<Bullet*>(animator->GetOwner());
-		
-
-		if (mPrevDirection == ePrevDirection::Left)
-		{
-			animator->PlayAnimation(L"BulletL",true);
-			obj->SetDirection(Bullet::eDirection::Left);
-			
-		}
-		else if (mPrevDirection == ePrevDirection::Right)
-		{
-			animator->PlayAnimation(L"BulletR",true);
-			obj->SetDirection(Bullet::eDirection::Right);
-		}
-	}
-	
-
 	void PlayerScript::LateUpdate()
 	{
 	}
@@ -425,26 +115,6 @@ namespace ME
 	void PlayerScript::Render(HDC hdc)
 	{
 		PrintScore(hdc);
-	}
-
-	void PlayerScript::PrintScore(HDC hdc)
-	{
-		std::wstring wstr = std::to_wstring(mScore);
-	
-
-		HFONT hfont = CreateFont(40, 0, 0, 0, 0, 0, 0, 0, HANGEUL_CHARSET, 0, 0, 0, VARIABLE_PITCH | FF_ROMAN, TEXT("jejufont"));
-		HFONT oldfond = (HFONT)SelectObject(hdc, (HFONT)hfont);
-
-		SelectObject(hdc, oldfond);
-		DeleteObject(hfont);
-
-		wchar_t str[50];
-		wcsncpy_s(str, wstr.c_str(), 5);
-		
-		SetTextColor(hdc, 0x0000FF00);
-		SetBkMode(hdc, TRANSPARENT);
-		TextOut(hdc, 700, 0, str, wcslen(str));
-
 	}
 
 
@@ -542,8 +212,17 @@ namespace ME
 
 		if (other->GetName() == L"Star")
 		{
-			mbIsStar = true;
-			mEffect = CreateAura();
+
+			if (mbIsStar == true)
+			{
+				mStarTime = 0.0f;
+			}
+			else
+			{
+				mbIsStar = true;
+				mEffect = CreateAura();
+			}
+	
 	
 		}
 
@@ -556,7 +235,387 @@ namespace ME
 	void PlayerScript::OnCollisionExit(Collider* other)
 	{
 	}
+	void PlayerScript::Standing()
+	{
 
+		if (Input::GetKey(eKeyCode::Right) || Input::GetKey(eKeyCode::D))
+		{
+
+			mState = eState::Walk;
+			mAnimator->PlayAnimation(L"RightWalkR");
+
+		}
+
+
+		if (Input::GetKey(eKeyCode::Left) || Input::GetKey(eKeyCode::A))
+		{
+
+			mState = eState::Walk;
+			mAnimator->PlayAnimation(L"LeftWalkL");
+
+		}
+
+		Rigidbody* rb = GetOwner()->GetComponent<Rigidbody>();
+
+		if (Input::GetKey(eKeyCode::Space) && rb->IsGround())
+		{
+
+			mState = eState::Jump;
+			mAnimator->PlayAnimation(L"JumpR", false);
+
+		}
+
+		if (Input::GetKey(eKeyCode::T))
+		{
+			mState = eState::StandAttack;
+
+			if (mPrevDirection == ePrevDirection::Left)
+				mAnimator->PlayAnimation(L"StandAttackL");
+
+			if (mPrevDirection == ePrevDirection::Right)
+				mAnimator->PlayAnimation(L"StandAttackR");
+		}
+
+	}
+
+	void PlayerScript::Move()
+	{
+
+
+		Transform* tr = GetOwner()->GetComponent<Transform>();
+		Vector2 pos = tr->GetPosition();
+
+		Rigidbody* rb = GetOwner()->GetComponent<Rigidbody>();
+
+
+		if (Input::GetKey(eKeyCode::Right) || Input::GetKey(eKeyCode::D))
+		{
+
+
+
+			mPrevDirection = ePrevDirection::Right;
+
+			pos += Vector2::Right * (90 * Time::DeltaTime());
+
+			if (Input::GetKey(eKeyCode::Shift))
+			{
+				mState = eState::Run;
+				mAnimator->PlayAnimation(L"RunR");
+			}
+
+
+			if (Input::GetKey(eKeyCode::T))
+			{
+				mState = eState::RunningAttack;
+				mAnimator->PlayAnimation(L"RunningAttackR");
+			}
+
+
+		}
+
+		if (Input::GetKey(eKeyCode::Left) || Input::GetKey(eKeyCode::A))
+		{
+			mPrevDirection = ePrevDirection::Left;
+
+			pos += Vector2::Left * (90 * Time::DeltaTime());
+
+			if (Input::GetKey(eKeyCode::Shift))
+			{
+				mState = eState::Run;
+				mAnimator->PlayAnimation(L"RunL");
+			}
+
+			if (Input::GetKey(eKeyCode::T))
+			{
+				mState = eState::RunningAttack;
+				mAnimator->PlayAnimation(L"RunningAttackL");
+			}
+
+		}
+
+
+		if (Input::GetKey(eKeyCode::Space) && rb->IsGround())
+		{
+			mState = eState::Jump;
+			mAnimator->PlayAnimation(L"JumpR", false);
+		}
+
+		tr->SetPosition(pos);
+
+		if ((Input::GetKeyUp(eKeyCode::Right) || Input::GetKeyUp(eKeyCode::D))
+			|| (Input::GetKeyUp(eKeyCode::Left) || Input::GetKeyUp(eKeyCode::A))
+			|| (Input::GetKeyUp(eKeyCode::Down) || Input::GetKeyUp(eKeyCode::S))
+			|| (Input::GetKeyUp(eKeyCode::Space)))
+		{
+			mState = eState::Standing;
+
+			PlayStandingAnimByPrevDirection();
+		}
+	}
+
+	void PlayerScript::Jump()
+	{
+
+		Transform* tr = GetOwner()->GetComponent<Transform>();
+		Vector2 pos = tr->GetPosition();
+		Rigidbody* rb = GetOwner()->GetComponent<Rigidbody>();
+
+		AudioSource* as = GetOwner()->GetComponent<AudioSource>();
+		AudioClip* ac = GetOwner()->GetComponent<AudioClip>();
+		ac = Resources::Find<AudioClip>(L"MARIOJUMPSOUND");
+
+		if (ac == nullptr)
+			return;
+
+		as->SetClip(ac);
+
+		if (as == nullptr)
+			return;
+
+		as->Play();
+
+		Vector2 velocity = rb->GetVelocity();
+		velocity.y = -300.0f;
+		rb->SetVelocity(velocity);
+
+		rb->SetGround(false);
+
+
+		mState = eState::Standing;
+
+	}
+
+	void PlayerScript::Run()
+	{
+		Transform* tr = GetOwner()->GetComponent<Transform>();
+		Vector2 pos = tr->GetPosition();
+		Rigidbody* rb = GetOwner()->GetComponent<Rigidbody>();
+
+
+		if (mPrevDirection == ePrevDirection::Left)
+		{
+			pos += Vector2::Left * (130 * Time::DeltaTime());
+		}
+		else if (mPrevDirection == ePrevDirection::Right)
+		{
+			pos += Vector2::Right * (130 * Time::DeltaTime());
+		}
+
+		tr->SetPosition(pos);
+
+		if ((Input::GetKeyUp(eKeyCode::Right) || Input::GetKeyUp(eKeyCode::D))
+			|| (Input::GetKeyUp(eKeyCode::Left) || Input::GetKeyUp(eKeyCode::A))
+			|| Input::GetKeyUp(eKeyCode::Shift))
+		{
+			mState = eState::Standing;
+			PlayStandingAnimByPrevDirection();
+		}
+	}
+
+	void PlayerScript::Die()
+	{
+		GetOwner()->SetActive(false);
+		GetOwner()->SetDeath();
+
+		renderer::mainCamera->SetTarget(nullptr);
+
+
+		SceneManager::LoadScene(L"GameOverScene");
+	}
+
+	void PlayerScript::StandingAttack()
+	{
+		if (Input::GetKeyUp(eKeyCode::T))
+		{
+			mState = eState::Standing;
+			PlayStandingAnimByPrevDirection();
+		}
+		if (Input::GetKey(eKeyCode::A) || Input::GetKey(eKeyCode::D))
+		{
+			mState = eState::RunningAttack;
+
+
+			if (Input::GetKey(eKeyCode::A))
+			{
+				mAnimator->PlayAnimation(L"RunningAttackL");
+			}
+
+			if (Input::GetKey(eKeyCode::D))
+			{
+				mAnimator->PlayAnimation(L"RunningAttackR");
+			}
+		}
+	}
+
+	void PlayerScript::RunningAttack()
+	{
+
+		Rigidbody* rb = GetOwner()->GetComponent<Rigidbody>();
+
+		Transform* tr = GetOwner()->GetComponent<Transform>();
+		Vector2 pos = tr->GetPosition();
+
+		if (Input::GetKey(eKeyCode::Right) || Input::GetKey(eKeyCode::D))
+		{
+			mPrevDirection = ePrevDirection::Right;
+			pos += Vector2::Right * (90 * Time::DeltaTime());
+			RunAttackTime();
+
+			if (Input::GetKey(eKeyCode::Space) && rb->IsGround())
+			{
+
+				mState = eState::Jump;
+				mAnimator->PlayAnimation(L"JumpR", false);
+
+			}
+		}
+
+		if (Input::GetKey(eKeyCode::Left) || Input::GetKey(eKeyCode::A))
+		{
+			mPrevDirection = ePrevDirection::Left;
+			pos += Vector2::Left * (90 * Time::DeltaTime());
+			RunAttackTime();
+
+			if (Input::GetKey(eKeyCode::Space) && rb->IsGround())
+			{
+
+				mState = eState::Jump;
+				mAnimator->PlayAnimation(L"JumpR", false);
+
+			}
+		}
+
+		tr->SetPosition(pos);
+
+
+
+		if (Input::GetKeyUp(eKeyCode::T))
+		{
+			mState = eState::Standing;
+			PlayStandingAnimByPrevDirection();
+		}
+
+		if (Input::GetKeyUp(eKeyCode::A) || Input::GetKeyUp(eKeyCode::D))
+		{
+			mState = eState::StandAttack;
+
+			if (mPrevDirection == ePrevDirection::Left)
+				mAnimator->PlayAnimation(L"StandAttackL");
+
+			if (mPrevDirection == ePrevDirection::Right)
+				mAnimator->PlayAnimation(L"StandAttackR");
+		}
+
+	}
+
+	void PlayerScript::MakeBullet(bool isRunning)
+	{
+		GameObject* bullet = object::Instantiate<Bullet>(enums::eLayerType::Particle);
+
+		BulletScript* bulletScript = bullet->AddComponent<BulletScript>();
+		bulletScript->SetPlayerIsRunningAttack(isRunning);
+
+		Animator* bulletAnim = bullet->AddComponent<Animator>();
+
+		BoxCollider2D* bulletCollider = bullet->AddComponent<BoxCollider2D>();
+		bulletCollider->SetName(L"Bullet");
+
+		bulletCollider->SetSize(Vector2(0.05f, 0.05f));
+		bulletCollider->SetOffset(Vector2(-17, -20));
+
+		graphics::Texture* bulletRightTex = Resources::Find<graphics::Texture>(L"BULLETR");
+		graphics::Texture* bulletLeftTex = Resources::Find<graphics::Texture>(L"BULLETL");
+
+
+		Transform* bulletTr = bullet->GetComponent<Transform>();
+
+		Transform* playerTr = GetOwner()->GetComponent<Transform>();
+		Vector2 playerPos = playerTr->GetPosition();
+
+		Vector2 bulletPos = Vector2::Zero;
+
+		bulletAnim->CreateAnimation(L"BulletR", bulletRightTex, Vector2(0, 0)
+			, Vector2(50, 50), Vector2(0, 0), 0.3f, 1);
+		bulletAnim->CreateAnimation(L"BulletL", bulletLeftTex, Vector2(0, 0)
+			, Vector2(50, 50), Vector2(0, 0), 0.3f, 1);
+
+		if (mPrevDirection == ePrevDirection::Left)
+		{
+			bulletPos = playerTr->GetPosition() + Vector2(-10, 8);
+		}
+		else if (mPrevDirection == ePrevDirection::Right)
+		{
+			bulletPos = playerTr->GetPosition() + Vector2(26, 8);
+		}
+
+		bulletTr->SetPosition(bulletPos);
+		bulletTr->SetScale(Vector2(0.3f, 0.3f));
+
+		PlayBulletByPrveDirection(bulletAnim);
+
+	}
+
+	void PlayerScript::RunAttackTime()
+	{
+		mAttackTime += Time::DeltaTime();
+
+		if (mAttackTime > 0.4f)
+		{
+			MakeBullet(true);
+			mAttackTime = 0.0f;
+		}
+	}
+
+	void PlayerScript::PlayStandingAnimByPrevDirection()
+	{
+		if (mPrevDirection == ePrevDirection::Left)
+		{
+			mAnimator->PlayAnimation(L"StandingL");
+		}
+		else if (mPrevDirection == ePrevDirection::Right)
+		{
+			mAnimator->PlayAnimation(L"StandingR");
+		}
+	}
+
+	void PlayerScript::PlayBulletByPrveDirection(Animator* animator)
+	{
+		Bullet* obj = static_cast<Bullet*>(animator->GetOwner());
+
+
+		if (mPrevDirection == ePrevDirection::Left)
+		{
+			animator->PlayAnimation(L"BulletL", true);
+			obj->SetDirection(Bullet::eDirection::Left);
+
+		}
+		else if (mPrevDirection == ePrevDirection::Right)
+		{
+			animator->PlayAnimation(L"BulletR", true);
+			obj->SetDirection(Bullet::eDirection::Right);
+		}
+	}
+
+
+	void PlayerScript::PrintScore(HDC hdc)
+	{
+		std::wstring wstr = std::to_wstring(mScore);
+
+
+		HFONT hfont = CreateFont(40, 0, 0, 0, 0, 0, 0, 0, HANGEUL_CHARSET, 0, 0, 0, VARIABLE_PITCH | FF_ROMAN, TEXT("jejufont"));
+		HFONT oldfond = (HFONT)SelectObject(hdc, (HFONT)hfont);
+
+		SelectObject(hdc, oldfond);
+		DeleteObject(hfont);
+
+		wchar_t str[50];
+		wcsncpy_s(str, wstr.c_str(), 5);
+
+		SetTextColor(hdc, 0x0000FF00);
+		SetBkMode(hdc, TRANSPARENT);
+		TextOut(hdc, 700, 0, str, wcslen(str));
+
+	}
 	void PlayerScript::PlayAuraAnimation()
 	{
 		Transform* tr = GetOwner()->GetComponent<Transform>();

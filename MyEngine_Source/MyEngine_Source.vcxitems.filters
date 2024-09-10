@@ -23,13 +23,13 @@
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MEResource.cpp">
-      <Filter>Scene\Resource</Filter>
+      <Filter>Resource</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MEResources.cpp">
-      <Filter>Scene\Resource</Filter>
+      <Filter>Resource</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)METexture.cpp">
-      <Filter>Scene\Resource\Texture</Filter>
+      <Filter>Resource\Texture</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MEScript.cpp">
       <Filter>Component\Script</Filter>
@@ -50,7 +50,7 @@
       <Filter>Component\Animator</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MEAnimation.cpp">
-      <Filter>Scene\Resource\Animation</Filter>
+      <Filter>Resource\Animation</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MECollider.cpp">
       <Filter>Component\Collider</Filter>
@@ -139,13 +139,13 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)MEResource.h">
-      <Filter>Scene\Resource</Filter>
+      <Filter>Resource</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)MEResources.h">
-      <Filter>Scene\Resource</Filter>
+      <Filter>Resource</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)METexture.h">
-      <Filter>Scene\Resource\Texture</Filter>
+      <Filter>Resource\Texture</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)MEScript.h">
       <Filter>Component\Script</Filter>
@@ -166,7 +166,7 @@
       <Filter>Component\Animator</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)MEAnimation.h">
-      <Filter>Scene\Resource\Animation</Filter>
+      <Filter>Resource\Animation</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)MECollider.h">
       <Filter>Component\Collider</Filter>
@@ -278,15 +278,6 @@
     <Filter Include="UI">
       <UniqueIdentifier>{07d269ef-de9f-40eb-b56c-0d107968cb6f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scene\Resource">
-      <UniqueIdentifier>{e6ab78fb-4086-42e2-bd09-5fcab82ce315}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scene\Resource\Texture">
-      <UniqueIdentifier>{ab9af308-f594-473d-a342-b4ec4f780af8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scene\Resource\Animation">
-      <UniqueIdentifier>{f108d414-a31d-49c1-9411-84a7ce1fa8e8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="UI\Button">
       <UniqueIdentifier>{6504640a-83c6-471b-8f66-eda7cb37b822}</UniqueIdentifier>
     </Filter>
@@ -298,6 +289,15 @@
     </Filter>
     <Filter Include="Component\Audio">
       <UniqueIdentifier>{c62cc7d6-89c4-43ec-bff1-6b02a1a72388}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{e6ab78fb-4086-42e2-bd09-5fcab82ce315}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Texture">
+      <UniqueIdentifier>{ab9af308-f594-473d-a342-b4ec4f780af8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Animation">
+      <UniqueIdentifier>{f108d414-a31d-49c1-9411-84a7ce1fa8e8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

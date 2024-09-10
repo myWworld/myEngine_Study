@@ -28,12 +28,22 @@ namespace ME
 		void OnCollisionExit( Collider* other) override;
 
 		void SetPlayer(GameObject* gameObj) { mPlayer = gameObj; }
-	
+		
+		void SetPlayerIsRunningAttack(bool run)
+		{
+			if (run == true)
+				mbIsPlayerRunning = true;
+			else
+				mbIsPlayerRunning = false;
+		}
 
 	private:
 
+		void MoveBulletByDirectionAndPlayerRunning();
 
 	private:
+
+		bool mbIsPlayerRunning;
 
 		GameObject* mPlayer;
 	};

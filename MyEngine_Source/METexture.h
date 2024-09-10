@@ -32,6 +32,8 @@ namespace ME::graphics
 
 		bool IsAlpha() { return mbAlpha; }
 
+		COLORREF GetPixel(int x, int y);
+
 	private:
 
 		eTextureType mType;

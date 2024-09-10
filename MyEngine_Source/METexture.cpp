@@ -107,4 +107,9 @@ namespace ME::graphics
 		return S_OK;
 	}
 
+	COLORREF Texture::GetPixel(int x, int y)
+	{
+		return ::GetPixel(mHdc, x, y);
+	}
+
 }

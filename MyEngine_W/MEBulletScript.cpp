@@ -17,6 +17,7 @@
 namespace ME
 {
 	BulletScript::BulletScript()
+		:mbIsPlayerRunning(false)
 	{
 	}
 	BulletScript::~BulletScript()
@@ -34,8 +35,6 @@ namespace ME
 
 		float time = bullet->GetBullletLastTime();
 
-		Transform* tr = bullet->GetComponent<Transform>();
-		Vector2 pos = tr->GetPosition();
 
 			if (2.0f < time)
 			{
@@ -44,22 +43,51 @@ namespace ME
 				bullet->SetDeath();
 			}
 
-			if (bullet->GetDirection() == Bullet::eDirection::Left)
-			{
-				pos.x -= 150.0f * Time::DeltaTime();
-			}
-			else if(bullet->GetDirection() == Bullet::eDirection::Right)
-				pos.x += 150.0f * Time::DeltaTime();
+			MoveBulletByDirectionAndPlayerRunning();
 
 
 			time += Time::DeltaTime();
 
 			
 			bullet->SetBulletTime(time);
-			tr->SetPosition(pos);
+		
 
 	}
 
+	void BulletScript::MoveBulletByDirectionAndPlayerRunning()
+	{
+
+		Bullet* bullet = static_cast<Bullet*>(GetOwner());
+
+		Transform* tr = bullet->GetComponent<Transform>();
+		Vector2 pos = tr->GetPosition();
+
+		if (bullet->GetDirection() == Bullet::eDirection::Left)
+		{
+			if (mbIsPlayerRunning == true)
+			{
+				pos.x -= 240.0f * Time::DeltaTime();
+			}
+			else
+			{
+				pos.x -= 150.0f * Time::DeltaTime();
+			}
+		}
+		else if (bullet->GetDirection() == Bullet::eDirection::Right)
+		{
+			if (mbIsPlayerRunning == true)
+			{
+				pos.x += 240.0f * Time::DeltaTime();
+			}
+			else
+			{
+				pos.x += 150.0f * Time::DeltaTime();
+			}
+		}
+	
+
+		tr->SetPosition(pos);
+	}
 
 
 	void BulletScript::LateUpdate()

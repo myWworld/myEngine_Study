@@ -259,11 +259,9 @@ namespace ME
 		animator->PlayAnimation(L"StandingR", true);
 
 
-		animator->GetCompleteEvent(L"StandAttackL") = std::bind(&PlayerScript::MakeBullet, playerScript);
-		animator->GetCompleteEvent(L"RunningAttackL") = std::bind(&PlayerScript::MakeBullet, playerScript);
+		animator->GetCompleteEvent(L"StandAttackL") = std::bind(&PlayerScript::MakeBullet, playerScript,false);
+		animator->GetCompleteEvent(L"StandAttackR") = std::bind(&PlayerScript::MakeBullet, playerScript,false);
 
-		animator->GetCompleteEvent(L"StandAttackR") = std::bind(&PlayerScript::MakeBullet, playerScript);
-		animator->GetCompleteEvent(L"RunningAttackR") = std::bind(&PlayerScript::MakeBullet, playerScript);
 		//				animator->GetStartEvent(L"RunningAttackR") = std::bind(&PlayerScript::MakeBullet, playerScript);
 
 	}
@@ -285,10 +283,10 @@ namespace ME
 		animator->CreateAnimation(L"StandingL", Ltexture, Vector2(55.0f, 10.0f), Vector2(50.0f, 50.0f), Vector2(0, 0), 0.3f, 2, 8);
 		
 		animator->CreateAnimation(L"StandAttackR", Rtexture, Vector2(0, 112), Vector2(50.0f, 50.0f), Vector2::Zero, 0.1f, 3);
-		animator->CreateAnimation(L"RunningAttackR", Rtexture, Vector2(245, 262), Vector2(50.0f, 50.0f), Vector2::Zero, 0.07f, 3, 8);
+		animator->CreateAnimation(L"RunningAttackR", Rtexture, Vector2(245, 262), Vector2(50.0f, 50.0f), Vector2::Zero, 0.1f, 3, 8);
 
 		animator->CreateAnimation(L"StandAttackL", Ltexture, Vector2(357, 112), Vector2(49.0f, 50.0f), Vector2::Zero, 0.1f, 3);
-		animator->CreateAnimation(L"RunningAttackL", Ltexture, Vector2(356, 262), Vector2(50.0f, 50.0f), Vector2::Zero, 0.07f, 3, 8);
+		animator->CreateAnimation(L"RunningAttackL", Ltexture, Vector2(100, 262), Vector2(50.0f, 50.0f), Vector2::Zero, 0.1f, 3, 8);
 
 		animator->CreateAnimation(L"HurtL", Ltexture, Vector2(54, 162), Vector2(50.0f, 50.0f), Vector2::Zero, 0.05f, 2);
 		animator->CreateAnimation(L"HurtR", Rtexture, Vector2(251, 162), Vector2(50.0f, 50.0f), Vector2::Zero, 0.05f, 2);

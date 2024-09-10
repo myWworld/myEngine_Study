@@ -61,16 +61,14 @@ namespace ME
 
 				int prob = rand() % 8;
 			
-			//if (prob < 3)
-			//{
-			//	CreateStar(other);
-			//}
-			//else
-			//{
-			//	CreateCoin(other);
-			//}
-
-			CreateStar(other);
+			if (prob < 3)
+			{
+				CreateStar(other);
+			}
+			else
+			{
+				CreateCoin(other);
+			}
 				
 		}
 			

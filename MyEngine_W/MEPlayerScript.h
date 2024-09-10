@@ -2,6 +2,7 @@
 #include "../MyEngine_Source/MEScript.h"
 #include "../MyEngine_Source/MEAnimator.h"
 #include "../MyEngine_Source/MECollider.h"
+#include "../MyEngine_Source/METexture.h"
 
 namespace ME
 {
@@ -13,7 +14,8 @@ namespace ME
 		enum class eState
 		{	
 			Standing,
-			Attack,
+			StandAttack,
+			RunningAttack,
 			Jump,
 			Run,
 			Walk,
@@ -42,7 +44,8 @@ namespace ME
 		void OnCollisionStay(Collider* other) override;
 		void OnCollisionExit(Collider* other) override;
 		
-		void MakeBullet();
+		void MakeBullet(bool isRunning = false);
+
 
 		ePrevDirection GetPrevDirection() { return mPrevDirection; }
 
@@ -54,17 +57,20 @@ namespace ME
 		void SetEffect(GameObject* effect) { mEffect = effect; }
 		static bool IsStar() { return mbIsStar; }
 
+		void SetPixelTexture(graphics::Texture* texture) { mPixelTexture = texture; }
+
 	private:
 
 		void Standing();
 		void Move();
 		void Jump();
 		void Run();
-		void Attack();
+		void RunningAttack();
+		void StandingAttack();
 		void Die();
 
 		void PrintScore(HDC hdc);
-
+		void RunAttackTime();
 		
 		void PlayStandingAnimByPrevDirection();
 		void PlayBulletByPrveDirection(Animator* animator);
@@ -76,17 +82,26 @@ namespace ME
 	private:
 		bool isJump;
 		float jumpSeconds;
+		float mAttackTime;
+		bool mbIsRunningAttack;
+		
+		static bool mbIsStar;
+		float mStarTime;
+		bool mbStillStartTime;
+
 		static float mHp;
 		static int mScore;
 
-		static bool mbIsStar;
-		float mStarTime;
-		
+			
 		eState mState;
 		ePrevDirection mPrevDirection;
 
 		class Animator* mAnimator;
 		class GameObject* mEffect;
+
+		graphics::Texture* mPixelTexture;
+
+
 	};
 }
 
