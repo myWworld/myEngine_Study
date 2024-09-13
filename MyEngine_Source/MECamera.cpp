@@ -30,14 +30,22 @@ namespace ME
 		{
 			Transform* tr = mTarget->GetComponent<Transform>();
 			mLookPosition = tr->GetPosition();
+			mLookPosition.y = mResolution.y / 2.0f;
+
+			if(mTarget->GetComponent<Transform>()->GetName() == L"Player")
+					mDistance = mLookPosition - Vector2(mResolution.x/2.0f,65);
+			else
+				mDistance = mLookPosition - (mResolution / 2.0f);
+			
 		}
 		else
 		{
 			Transform* cameraTr = GetOwner()->GetComponent<Transform>();
 			mLookPosition = cameraTr->GetPosition();
+			mDistance = mLookPosition - (mResolution / 2.0f);
 		}
 
-		mDistance = mLookPosition - (mResolution / 2.0f);
+	
 		
 	}
 

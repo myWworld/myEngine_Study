@@ -68,6 +68,7 @@ namespace ME
 	
 		if (renderer::mainCamera)
 		{
+
 			pos = renderer::mainCamera->CalculatePosition(pos);
 
 		}

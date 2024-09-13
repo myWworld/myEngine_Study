@@ -1,7 +1,7 @@
 #include "METitleScene.h"
 #include "MEInput.h"
 #include "MESceneManager.h"
-#include "MEPlayScene.h"
+#include "MEStage1.h"
 #include "MEObject.h"
 #include "MERenderer.h"
 #include "MESpriteRenderer.h"
@@ -70,7 +70,7 @@ namespace ME
 
 		if (Input::GetKeyDown(eKeyCode::Enter))
 		{
-			SceneManager::LoadScene(L"PlayScene");
+			SceneManager::LoadScene(L"Stage1");
 		}
 
 	}

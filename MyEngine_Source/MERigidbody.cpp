@@ -11,7 +11,7 @@ namespace ME
 		, mFriction(10.0f)
 	, mForce(Vector2::Zero)
 	, mVelocity(Vector2::Zero)
-	, mLimitVelocity(Vector2(1000.0f,1000.0f))
+	, mLimitVelocity(Vector2(40.0f,800.0f))
 	, mGravity(Vector2(0.0f, 800.0f))
 	, mAccelation(Vector2::Zero)
 		, mbIsAffectedByGravity(true)

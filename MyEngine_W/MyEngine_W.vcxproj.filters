@@ -4,7 +4,7 @@
     <ClInclude Include="MELoadScene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="MEPlayScene.h">
+    <ClInclude Include="MEStage1.h">
       <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="MEEndScene.h">
@@ -27,9 +27,6 @@
       <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="MECoinScript.h">
-      <Filter>Script\Items</Filter>
-    </ClInclude>
-    <ClInclude Include="MEQboxScript.h">
       <Filter>Script\Items</Filter>
     </ClInclude>
     <ClInclude Include="MEMushRoom.h">
@@ -68,8 +65,38 @@
     <ClInclude Include="MECameraScript.h">
       <Filter>Script\Others</Filter>
     </ClInclude>
+    <ClInclude Include="MEChimney.h">
+      <Filter>Contents\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MEFlag.h">
+      <Filter>Contents\Map</Filter>
+    </ClInclude>
     <ClInclude Include="MEFloorScript.h">
-      <Filter>Script\Others</Filter>
+      <Filter>Script\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MEChinmeyScript.h">
+      <Filter>Script\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MEFlagScript.h">
+      <Filter>Script\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MEQboxScript.h">
+      <Filter>Script\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MEBlock.h">
+      <Filter>Contents\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MEBlockScript.h">
+      <Filter>Script\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MELastDoorScript.h">
+      <Filter>Script\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MELastDoor.h">
+      <Filter>Contents\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MEStage2.h">
+      <Filter>Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -106,9 +133,12 @@
     <Filter Include="Script\Others">
       <UniqueIdentifier>{9d60996d-cdf5-4934-89a8-dd0212567add}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Script\Map">
+      <UniqueIdentifier>{2ba45f02-fe47-49cc-825b-ed0569d951e0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MEPlayScene.cpp">
+    <ClCompile Include="MEStage1.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="MEEndScene.cpp">
@@ -133,9 +163,6 @@
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="MECoinScript.cpp">
-      <Filter>Script\Items</Filter>
-    </ClCompile>
-    <ClCompile Include="MEQboxScript.cpp">
       <Filter>Script\Items</Filter>
     </ClCompile>
     <ClCompile Include="MEMushRoom.cpp">
@@ -174,8 +201,38 @@
     <ClCompile Include="MECameraScript.cpp">
       <Filter>Script\Others</Filter>
     </ClCompile>
+    <ClCompile Include="MEChimney.cpp">
+      <Filter>Contents\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="MEFlag.cpp">
+      <Filter>Contents\Map</Filter>
+    </ClCompile>
     <ClCompile Include="MEFloorScript.cpp">
-      <Filter>Script\Others</Filter>
+      <Filter>Script\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="MEChinmeyScript.cpp">
+      <Filter>Script\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="MEFlagScript.cpp">
+      <Filter>Script\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="MEQboxScript.cpp">
+      <Filter>Script\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="MEBlock.cpp">
+      <Filter>Contents\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="MEBlockScript.cpp">
+      <Filter>Script\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="MELastDoorScript.cpp">
+      <Filter>Script\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="MELastDoor.cpp">
+      <Filter>Contents\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="MEStage2.cpp">
+      <Filter>Scenes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

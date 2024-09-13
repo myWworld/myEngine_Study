@@ -3,6 +3,7 @@
 #include "../MyEngine_Source/MEAnimator.h"
 #include "../MyEngine_Source/MECollider.h"
 #include "../MyEngine_Source/METexture.h"
+#include "../MyEngine_Source/MERigidbody.h"
 
 namespace ME
 {
@@ -22,7 +23,8 @@ namespace ME
 			Fall,
 			GetDown,
 			Move,
-			Die
+			Die,
+			Clear,
 		};
 
 		enum class ePrevDirection
@@ -68,20 +70,28 @@ namespace ME
 		void RunningAttack();
 		void StandingAttack();
 		void Die();
+		void StageClear();
 
 		void PrintScore(HDC hdc);
 		void RunAttackTime();
 		
 		void PlayStandingAnimByPrevDirection();
 		void PlayBulletByPrveDirection(Animator* animator);
+		void PlayJumpAnimationByPrevDirection();
+
+		void HurtByMonster(Rigidbody* rb, float rightOrLeft);
 		void PlayAuraAnimation();
+
+
 		GameObject* CreateAura();
 
 
 
 	private:
+
 		bool isJump;
 		float jumpSeconds;
+
 		float mAttackTime;
 		bool mbIsRunningAttack;
 		
@@ -92,6 +102,7 @@ namespace ME
 		static float mHp;
 		static int mScore;
 
+		bool mbIsOnFlag;
 			
 		eState mState;
 		ePrevDirection mPrevDirection;

@@ -10,7 +10,9 @@ namespace ME
 	{
 		
 		Resources::Load<graphics::Texture>(L"TITLE", L"..\\Resources\\Title.png");
+
 		Resources::Load<graphics::Texture>(L"STAGE1_1", L"..\\Resources\\statge1_1.png");
+		Resources::Load<graphics::Texture>(L"STAGE2", L"..\\Resources\\stage2.png");
 
 		Resources::Load<graphics::Texture>(L"MEGAMANR", L"..\\Resources\\MegamanR.png");
 		Resources::Load<graphics::Texture>(L"MEGAMANL", L"..\\Resources\\MegamanL.png");

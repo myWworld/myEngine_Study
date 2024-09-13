@@ -8,6 +8,7 @@
 namespace ME
 {
 	CannonScript::CannonScript()
+		:mbIsBumpedWhenStarIsOn(false)
 	{
 	}
 	CannonScript::~CannonScript()
@@ -26,7 +27,13 @@ namespace ME
 			GetOwner()->SetDeath();
 		}
 
-		pos.x -= 100 * Time::DeltaTime();
+		if (mbIsBumpedWhenStarIsOn == true)
+		{
+			pos.x -= 100 * Time::DeltaTime();
+			pos.y -= 100 * Time::DeltaTime();
+		}
+		else
+			pos.x -= 100 * Time::DeltaTime();
 
 		tr->SetPosition(pos);
 	}
@@ -43,22 +50,31 @@ namespace ME
 	{
 		if (other->GetName() == L"Player")
 		{
-			if (PlayerScript::IsStar())
-				return; 
+			if (PlayerScript::IsStar() == true)
+			{
+				mbIsBumpedWhenStarIsOn = true;
+				return;
+			}
+
+			if (FlagScript::IsOnFlag() == true)
+			{
+				return;
+			}
 
 			GameObject* player = other->GetOwner();
 
 			Rigidbody *playerRb = player->GetComponent<Rigidbody>();
 
 			Vector2 velocity = playerRb->GetVelocity();
-			velocity.x = -1000.0f;
-			velocity.y = -600.0f;
+			velocity.x = -100.0f;
+			velocity.y = -800.0f;
 
 			playerRb->SetVelocity(velocity);
 
 			playerRb->SetGround(false);
 		}
 	}
+
 	void CannonScript::OnCollisionStay(Collider* other)
 	{
 	}

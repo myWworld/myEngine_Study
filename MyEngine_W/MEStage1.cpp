@@ -1,4 +1,4 @@
-#include "MEPlayScene.h"
+#include "MEStage1.h"
 #include "MEGameObject.h"
 
 #include "MEInput.h"
@@ -26,21 +26,10 @@
 #include "MEUIHUD.h"
 #include "MEUIButton.h"
 
-#include "MEPlayer.h"
-#include "MEPlayerScript.h"
-#include "MEMushRoom.h"
-#include "MEMushRoomScript.h"
-#include "MESkeleton.h"
-#include "MESkeletonScript.h"
-#include "MEBullet.h"
-#include "MEBulletScript.h"
-#include "METile.h"
 #include "METileMapRenderer.h"
-#include "MEFloor.h"
-#include "MEFloorScript.h"
-#include "MEQboxScript.h"
-#include "MECannon.h"
-#include "MECannoScript.h"
+
+#include "ContentAndScript.h"
+
 
 #include "MECollisionManager.h"
 
@@ -53,45 +42,33 @@ namespace ME
 {	
 	
 
-	PlayScene::PlayScene()
+	Stage1::Stage1()
 		:mPlayTime(0.0f)
 	{
 	}
 
-	PlayScene::~PlayScene()
+	Stage1::~Stage1()
 	{
 	}
 
-	void PlayScene::Initialize()
+	void Stage1::Initialize()
 	{
 		
 		//만약 타일맵 만들면 _wfopen_s함수로 불러온다음에 찍어내면됨 타일 렌더러 load함수에 있는거 가져다 쓰면됨.
 
 		Vector2 resolution = Vector2(application.GetWidth(), application.GetHeight());
 
-		GameObject* camera = object::Instantiate<GameObject>(enums::eLayerType::None, resolution / 2.0f);
+		GameObject* camera = object::Instantiate<GameObject>(enums::eLayerType::None, Vector2(resolution.x,resolution.y ));
 		mCameraComp = camera->AddComponent<Camera>();
-;
+
 		renderer::mainCamera = mCameraComp;
-
-
-
-		{
-	//		mEffect = object::Instantiate<GameObject>(enums::eLayerType::Aura);
-	//		Animator* effectAnimator = mEffect->AddComponent<Animator>();
-	//
-	//		graphics::Texture* effectTex = Resources::Find<graphics::Texture>(L"STAREFFECT");
-	//
-	//		effectAnimator->CreateAnimation(L"StarEffectR", effectTex, Vector2(0, 0), Vector2(196, 212), Vector2::Zero
-	//			, 0.1f, 5);
-		}
 		
 		{
 			GameObject* bg = object::Instantiate<GameObject>
-				(enums::eLayerType::BackGround, Vector2(0, 200));
+				(enums::eLayerType::BackGround, Vector2(0, 0));
 
 			SpriteRenderer* bgSr = bg->AddComponent<SpriteRenderer>();
-			bgSr->SetSize(Vector2(1.3f, 1.3f));
+
 
 
 			graphics::Texture* map = Resources::Find<graphics::Texture>(L"STAGE1_1");
@@ -100,39 +77,88 @@ namespace ME
 		}
 
 		{//qbox
-			GameObject* qbox1 = object::Instantiate<GameObject>(enums::eLayerType::Particle, Vector2(200, 430));
+			GameObject* qbox1 = object::Instantiate<GameObject>(enums::eLayerType::Particle, Vector2(200, 240));
 			CreateQbox(qbox1);
 
-			GameObject* qbox2 = object::Instantiate<GameObject>(enums::eLayerType::Particle, Vector2(600, 430));
+			GameObject* qbox2 = object::Instantiate<GameObject>(enums::eLayerType::Particle, Vector2(620, 240));
 			CreateQbox(qbox2);
 		}
 
 		{
-			Floor* floor = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(0, 420));
-			BoxCollider2D* floorCol = floor->AddComponent<BoxCollider2D>();
-			floor->AddComponent<FloorScript>();
-			floorCol->SetName(L"Floor");
-
-			floorCol->SetSize(Vector2(20.0f, 3.0f));
-			floorCol->SetOffset(Vector2(0, 0));
+			Floor* floor = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(0, 210));
+			CreateFloor(floor, 11);
+			Floor* floor1 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(1142, 210));
+			CreateFloor(floor1, 2.3);
+			Floor* floor2 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(1430, 210));
+			CreateFloor(floor2, 10);
+			Floor* floor3 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(2490, 210));
+			CreateFloor(floor3, 10);
 		}//floor
+
+		{
+			Chimney* chimney = object::Instantiate<Chimney>(enums::eLayerType::Chimney, Vector2(450, 175));
+			CreateChimney(chimney,0.30,0.35);
+
+			Chimney* chimney1 = object::Instantiate<Chimney>(enums::eLayerType::Chimney, Vector2(610, 160));
+			CreateChimney(chimney1, 0.30, 0.5);
+
+			Chimney* chimney2 = object::Instantiate<Chimney>(enums::eLayerType::Chimney, Vector2(738, 145));
+			CreateChimney(chimney2, 0.30, 0.65);
+		
+			Chimney* chimney3 = object::Instantiate<Chimney>(enums::eLayerType::Chimney, Vector2(915, 145));
+			CreateChimney(chimney3, 0.30, 0.65);
+
+			Chimney* chimney4 = object::Instantiate<Chimney>(enums::eLayerType::Chimney, Vector2(2610, 175));
+			CreateChimney(chimney4, 0.30, 0.35);
+
+			Chimney* chimney5 = object::Instantiate<Chimney>(enums::eLayerType::Chimney, Vector2(2867, 175));
+			CreateChimney(chimney5, 0.30, 0.35);
+
+
+		}//chimney
+
+		{
+			CreateStair(Vector2(2146, 195), 4, 4, 'R');
+			CreateStair(Vector2(2242, 195), 4, 4, 'L');
+
+			CreateStair(Vector2(2369, 195), 5, 4, 'R');
+			CreateStair(Vector2(2482, 195), 4, 4, 'L');
+
+			CreateStair(Vector2(2897, 195), 9, 8, 'R');
+		}//stair
+
+		{
+			Flag* flag = object::Instantiate<Flag>(enums::eLayerType::Flag, Vector2(3176, 50));
+			CreateFlag(flag, 0.01, 1.45);
+		}//flag
 		
 		{
-			GameObject* mushroom = object::Instantiate<MushRoom>(enums::eLayerType::Monster, Vector2(400, 425));
-			CreateMushRoom(mushroom);
-			
-			GameObject* mushroom1 = object::Instantiate<MushRoom>(enums::eLayerType::Monster, Vector2(700, 425));
-			CreateMushRoom(mushroom1);
+			Block* block = object::Instantiate<Block>(enums::eLayerType::Block, Vector2(3169,194));
+			CreateBlock(block, 0.16, 0.16);
+
+		}//blocks
+
+		{
+			LastDoor* lastdoor = object::Instantiate<LastDoor>(enums::eLayerType::Block,Vector2(3280,178));
+			CreateLastDoor(lastdoor, 0.16, 0.32);
+		}//LastDoor Just For Using Collider 
+
+		{
+	//		GameObject* mushroom = object::Instantiate<MushRoom>(enums::eLayerType::Monster, Vector2(400, 425));
+	//		CreateMushRoom(mushroom);
+	//		
+	//		GameObject* mushroom1 = object::Instantiate<MushRoom>(enums::eLayerType::Monster, Vector2(700, 425));
+	//		CreateMushRoom(mushroom1);
 		
 		}//mushroom
 
 		{
-			GameObject* skeleton = object::Instantiate<Skeleton>(enums::eLayerType::Monster
-				, Vector2(600, 406));
-
-			CreateSkeleton(skeleton);
-			
-
+	//		GameObject* skeleton = object::Instantiate<Skeleton>(enums::eLayerType::Monster
+	//			, Vector2(600, 406));
+	//
+	//		CreateSkeleton(skeleton);
+	//		
+	//
 		}//skeleton
 
 			
@@ -144,7 +170,7 @@ namespace ME
 
 	
 
-	void PlayScene::Update()
+	void Stage1::Update()
 	{
 		Scene::Update();
 		mPlayTime += Time::DeltaTime();
@@ -157,48 +183,46 @@ namespace ME
 
 	}
 
-	void PlayScene::LateUpdate()
+	void Stage1::LateUpdate()
 	{
 		Scene::LateUpdate();
-
-		if (Input::GetKeyDown(eKeyCode::N))
-		{
-			SceneManager::LoadScene(L"TitleScene");
-		}
-
-	//
-	//if (playerPos.x > application.GetWidth() 
-	//	|| playerPos.x < 0)
-	//{
-	//	SceneManager::LoadScene(L"GameOverScene");
-	//}
-	//
-	//
-	//if (playerPos.y < 0
-	//	|| playerPos.y > application.GetHeight())
-	//{
-	//	SceneManager::LoadScene(L"GameOverScene");
-	//}
 	}
 
-	void PlayScene::Render(HDC mHdc)
+
+	void Stage1::Render(HDC mHdc)
 	{
 		Scene::Render(mHdc);
 	}
 
-	void PlayScene::OnEnter()
+	void Stage1::OnEnter()
 	{
-		CollisionManager::CollisionLayerCheck(enums::eLayerType::Player, enums::eLayerType::Monster, true);
+		
 		CollisionManager::CollisionLayerCheck(enums::eLayerType::Particle, enums::eLayerType::Monster, true);
-		CollisionManager::CollisionLayerCheck(enums::eLayerType::Floor, enums::eLayerType::Player, true);
-
 		CollisionManager::CollisionLayerCheck(enums::eLayerType::Particle, enums::eLayerType::Player, true);
+	
+		
+		CollisionManager::CollisionLayerCheck(enums::eLayerType::Monster, enums::eLayerType::Floor, true);
+		CollisionManager::CollisionLayerCheck(enums::eLayerType::Monster, enums::eLayerType::Stair, true);
+		CollisionManager::CollisionLayerCheck(enums::eLayerType::Monster, enums::eLayerType::Chimney, true);
+		CollisionManager::CollisionLayerCheck(enums::eLayerType::Monster, enums::eLayerType::Block, true);
+
+		CollisionManager::CollisionLayerCheck(enums::eLayerType::Player, enums::eLayerType::Monster, true);
+		CollisionManager::CollisionLayerCheck(enums::eLayerType::Player, enums::eLayerType::Stair, true);
+		CollisionManager::CollisionLayerCheck(enums::eLayerType::Player, enums::eLayerType::Chimney, true);
+		CollisionManager::CollisionLayerCheck(enums::eLayerType::Player, enums::eLayerType::Block, true);
+		CollisionManager::CollisionLayerCheck(enums::eLayerType::Player, enums::eLayerType::Flag, true);
+		CollisionManager::CollisionLayerCheck(enums::eLayerType::Player, enums::eLayerType::Floor, true);
+
+		CollisionManager::CollisionLayerCheck(enums::eLayerType::Items, enums::eLayerType::Stair, true);
+		CollisionManager::CollisionLayerCheck(enums::eLayerType::Items, enums::eLayerType::Chimney, true);
+		CollisionManager::CollisionLayerCheck(enums::eLayerType::Items, enums::eLayerType::Block, true);
 		CollisionManager::CollisionLayerCheck(enums::eLayerType::Items, enums::eLayerType::Player, true);
 		CollisionManager::CollisionLayerCheck(enums::eLayerType::Items, enums::eLayerType::Floor, true);
-		CollisionManager::CollisionLayerCheck(enums::eLayerType::Monster, enums::eLayerType::Floor, true);
+	
+
 
 		mPlayer = object::Instantiate<Player>
-			(enums::eLayerType::Player, Vector2(100, 406));
+			(enums::eLayerType::Player, Vector2(100, 210));
 
 
 		renderer::mainCamera = mCameraComp;
@@ -213,16 +237,15 @@ namespace ME
 		Scene::OnEnter();
 
 	}
-	void PlayScene::OnExit()
+	void Stage1::OnExit()
 	{
 		UIManager::Pop(enums::eUIType::HpBar);
 		Scene::OnExit();
 	}
 
-	void PlayScene::playerInitialize()
+	void Stage1::playerInitialize()
 	{
 	
-
 
 		PlayerScript* playerScript = mPlayer->AddComponent<PlayerScript>();
 
@@ -230,7 +253,8 @@ namespace ME
 
 		PlayerScript::ReSetHp(100.0f);
 
-		mPlayer->GetComponent<Transform>()->SetScale(Vector2(0.7f, 0.7f));
+		mPlayer->GetComponent<Transform>()->SetScale(Vector2(0.5f, 0.5f));
+		mPlayer->GetComponent<Transform>()->SetName(L"Player");
 
 		mPlayer->AddComponent <Rigidbody>();
 
@@ -243,8 +267,8 @@ namespace ME
 		BoxCollider2D* playerBoxCollider = mPlayer->AddComponent<BoxCollider2D>();
 		playerBoxCollider->SetName(L"Player");
 
-		playerBoxCollider->SetOffset(Vector2(-20, -20));
-		playerBoxCollider->SetSize(Vector2(0.3f, 0.3f));
+		playerBoxCollider->SetOffset(Vector2(-17, -20));
+		playerBoxCollider->SetSize(Vector2(0.13f, 0.20f));
 
 		//	object::DontDestroyOnLoad(mPlayer);
 		
@@ -266,7 +290,7 @@ namespace ME
 
 	}
 
-	void PlayScene::CreatePlayerAnimation(Animator* animator
+	void Stage1::CreatePlayerAnimation(Animator* animator
 		,graphics::Texture* Rtexture
 		,graphics::Texture* Ltexture)
 	{
@@ -288,11 +312,13 @@ namespace ME
 		animator->CreateAnimation(L"StandAttackL", Ltexture, Vector2(357, 112), Vector2(49.0f, 50.0f), Vector2::Zero, 0.1f, 3);
 		animator->CreateAnimation(L"RunningAttackL", Ltexture, Vector2(100, 262), Vector2(50.0f, 50.0f), Vector2::Zero, 0.1f, 3, 8);
 
-		animator->CreateAnimation(L"HurtL", Ltexture, Vector2(54, 162), Vector2(50.0f, 50.0f), Vector2::Zero, 0.05f, 2);
-		animator->CreateAnimation(L"HurtR", Rtexture, Vector2(251, 162), Vector2(50.0f, 50.0f), Vector2::Zero, 0.05f, 2);
+		animator->CreateAnimation(L"HurtL", Ltexture, Vector2(54, 162), Vector2(50.0f, 50.0f), Vector2::Zero, 0.1f, 2);
+		animator->CreateAnimation(L"HurtR", Rtexture, Vector2(251, 162), Vector2(50.0f, 50.0f), Vector2::Zero, 0.1f, 2);
+
+		animator->CreateAnimation(L"ClearL", Rtexture, Vector2(152, 582), Vector2(48.0f, 50.0f), Vector2::Zero, 0.45f, 4);
 	}
 
-	void PlayScene::CreateMushRoomAnimation(Animator* animator
+	void Stage1::CreateMushRoomAnimation(Animator* animator
 		, graphics::Texture* Rtexture
 		, graphics::Texture* Ltexture)
 	{
@@ -306,7 +332,7 @@ namespace ME
 		animator->CreateAnimation(L"DeadR", Ltexture, Vector2(0, 1056), Vector2(202, 140), Vector2::Zero, 0.2f, 4, 2);
 	}
 
-	void PlayScene::CreateSkeletonAnimation(Animator* animator
+	void Stage1::CreateSkeletonAnimation(Animator* animator
 		, graphics::Texture* Rtexture
 		, graphics::Texture* Ltexture)
 	{
@@ -333,13 +359,13 @@ namespace ME
 	}
 
 
-	void PlayScene::CreateCannon()
+	void Stage1::CreateCannon()
 	{
 		Transform* playerTr = mPlayer->GetComponent<Transform>();
 		Vector2 playerPos = playerTr->GetPosition();
 
 
-		Cannon* cannon = object::Instantiate<Cannon>(enums::eLayerType::Monster, Vector2(playerPos.x + application.GetWidth()/2.0f, 406));
+		Cannon* cannon = object::Instantiate<Cannon>(enums::eLayerType::Monster, Vector2(playerPos.x + application.GetWidth()/2.0f, 206));
 
 		Rigidbody* cannonRb = cannon->AddComponent<Rigidbody>();
 		cannonRb->SetNeedGravity(false);
@@ -361,35 +387,7 @@ namespace ME
 		cannonAnimator->PlayAnimation(L"CannonL");
 	
 	}
-
-
-	void PlayScene::CreateQbox(GameObject* qbox)
-	{
-		BoxCollider2D* qboxCol = qbox->AddComponent<BoxCollider2D>();
-
-		qbox->AddComponent<QboxScript>();
-
-
-		qboxCol->SetOffset(Vector2(-100, -100));
-		qboxCol->SetSize(Vector2(0.2f, 0.2f));
-
-		Animator* qboxAnimator = qbox->AddComponent<Animator>();
-
-		qbox->GetComponent<Transform>()->SetScale(Vector2(0.1f, 0.1f));
-
-		graphics::Texture* qboxTex = Resources::Find<graphics::Texture>(L"QBOX");
-		graphics::Texture* usedQboxTex = Resources::Find<graphics::Texture>(L"USEDQBOX");
-
-		qboxAnimator->CreateAnimation(L"IdleR", qboxTex, Vector2(0, 0), Vector2(200, 200), Vector2::Zero
-			, 0.2f, 4);
-		qboxAnimator->CreateAnimation(L"UsedR", usedQboxTex, Vector2(0, 0), Vector2(240, 242), Vector2(17, 17)
-			, 0.2f, 1);
-
-		qboxAnimator->PlayAnimation(L"IdleR", true);
-
-	}
-
-	void PlayScene::CreateMushRoom(GameObject* mushroom)
+	void Stage1::CreateMushRoom(GameObject* mushroom)
 	{
 		MushRoomScript* mushroomScript = mushroom->AddComponent<MushRoomScript>();
 		Animator* mushroomAnimator = mushroom->AddComponent<Animator>();
@@ -412,8 +410,7 @@ namespace ME
 
 		mushroomAnimator->PlayAnimation(L"IdleL", false);
 	}
-
-	void PlayScene::CreateSkeleton(GameObject* skeleton)
+	void Stage1::CreateSkeleton(GameObject* skeleton)
 	{
 		BoxCollider2D* skeletonCollider = skeleton->AddComponent<BoxCollider2D>();
 		skeleton->AddComponent<Rigidbody>();
@@ -441,5 +438,120 @@ namespace ME
 		skeletonAnimator->PlayAnimation(L"SkeletonIdleR", false);
 	}
 
-	
+	void Stage1::CreateQbox(GameObject* qbox)
+	{
+		BoxCollider2D* qboxCol = qbox->AddComponent<BoxCollider2D>();
+
+		qbox->AddComponent<QboxScript>();
+
+
+		qboxCol->SetOffset(Vector2(-100, -100));
+		qboxCol->SetSize(Vector2(0.2f, 0.2f));
+
+		Animator* qboxAnimator = qbox->AddComponent<Animator>();
+
+		qbox->GetComponent<Transform>()->SetScale(Vector2(0.1f, 0.1f));
+
+		graphics::Texture* qboxTex = Resources::Find<graphics::Texture>(L"QBOX");
+		graphics::Texture* usedQboxTex = Resources::Find<graphics::Texture>(L"USEDQBOX");
+
+		qboxAnimator->CreateAnimation(L"IdleR", qboxTex, Vector2(0, 0), Vector2(200, 200), Vector2::Zero
+			, 0.2f, 4);
+		qboxAnimator->CreateAnimation(L"UsedR", usedQboxTex, Vector2(0, 0), Vector2(240, 242), Vector2(17, 17)
+			, 0.2f, 1);
+
+		qboxAnimator->PlayAnimation(L"IdleR", true);
+
+	}
+	void Stage1::CreateFloor(GameObject* floor, float xSize, float ySize, float xOffset,float yOffset)
+	{
+		BoxCollider2D* floorCol = floor->AddComponent<BoxCollider2D>();
+		floor->AddComponent<FloorScript>();
+		floorCol->SetName(L"Floor");
+
+		floorCol->SetSize(Vector2(xSize, ySize));
+		floorCol->SetOffset(Vector2(xOffset, yOffset));
+	}
+
+	void Stage1::CreateLastDoor(GameObject* lastdoor, float xSize, float ySize, float xOffset, float yOffset)
+	{
+		BoxCollider2D* lastDoorCol = lastdoor->AddComponent<BoxCollider2D>();
+		lastdoor->AddComponent<LastDoorScript>();
+		lastDoorCol->SetName(L"LastDoor");
+
+		lastDoorCol->SetSize(Vector2(xSize, ySize));
+		lastDoorCol->SetOffset(Vector2(xOffset, yOffset));
+	}
+
+
+	void Stage1::CreateChimney(GameObject* chimney, float xSize, float ySize, float xOffset, float yOffset)
+	{
+		BoxCollider2D* chimneyCol = chimney->AddComponent<BoxCollider2D>();
+		chimney->AddComponent<ChimneyScript>();
+		chimneyCol->SetName(L"Chimney");
+
+		chimneyCol->SetSize(Vector2(xSize, ySize));
+		chimneyCol->SetOffset(Vector2(xOffset, yOffset));
+	}
+	void Stage1::CreateStair(Vector2 startPos, int maxSteps, int height, char direction)
+	{
+		
+		int stairSize = 16;
+		float stairSizeForCol = stairSize / 100.0f;
+
+		if (direction == 'R')
+		{
+			for (int i = 0; i < height; i++)
+			{
+				Block* stair = object::Instantiate<Block>(enums::eLayerType::Block
+					, Vector2(startPos.x + stairSize * i, startPos.y - stairSize * i));
+
+				BoxCollider2D* stairCol = stair->AddComponent<BoxCollider2D>();
+				stair->AddComponent<BlockScript>();
+				stairCol->SetName(L"Stair");
+
+				stairCol->SetSize(Vector2(stairSizeForCol * (maxSteps - i), stairSizeForCol));
+
+			}
+		}
+		else if (direction == 'L')
+		{
+			for (int i = 0; i < height; i++)
+			{
+				Block* stair = object::Instantiate<Block>(enums::eLayerType::Stair
+					, Vector2(startPos.x, startPos.y - stairSize * i));
+
+				BoxCollider2D* stairCol = stair->AddComponent<BoxCollider2D>();
+				stair->AddComponent<BlockScript>();
+				stairCol->SetName(L"Stair");
+
+				stairCol->SetSize(Vector2(stairSizeForCol * (maxSteps - i), stairSizeForCol));
+
+			}
+		}
+
+		
+
+	}
+	void Stage1::CreateFlag(GameObject* flag, float xSize, float ySize, float xOffset, float yOffset)
+	{
+		BoxCollider2D* flagCol = flag->AddComponent<BoxCollider2D>();
+		flag->AddComponent<FlagScript>();
+		flagCol->SetName(L"Flag");
+		
+		flagCol->SetSize(Vector2(xSize, ySize));
+		flagCol->SetOffset(Vector2(xOffset, yOffset));
+	}
+	void Stage1::CreateBlock(GameObject* block, float xSize, float ySize, float xOffset, float yOffset)
+	{
+		BoxCollider2D* BlockCol = block->AddComponent<BoxCollider2D>();
+		block->AddComponent<BlockScript>();
+		BlockCol->SetName(L"Block");
+
+		BlockCol->SetSize(Vector2(xSize, ySize));
+		BlockCol->SetOffset(Vector2(xOffset, yOffset));
+	}
+
+
+
 }

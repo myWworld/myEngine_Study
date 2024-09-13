@@ -115,7 +115,7 @@ namespace ME
 	{
 		if (SceneManager::GetActiveScene()->GetName() == L"TitleScene")
 		{
-			SceneManager::LoadScene(L"PlayScene");
+			SceneManager::LoadScene(L"Stage1");
 		}
 		
 	}

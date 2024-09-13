@@ -7,12 +7,12 @@
 namespace ME
 {
 
-	class PlayScene : public Scene
+	class Stage1 : public Scene
 	{
 	public:
 	
-		PlayScene(); 
-		~PlayScene();
+		Stage1(); 
+		~Stage1();
 		
 
 	 void Initialize() override;
@@ -29,11 +29,18 @@ namespace ME
 		void CreateMushRoomAnimation(Animator* animator, graphics::Texture* Rtexture, graphics::Texture* Ltexture);
 		void CreateSkeletonAnimation(Animator* animator, graphics::Texture* Rtexture, graphics::Texture* Ltexture);
 
-		void CreateCannon();
-		void CreateQbox(GameObject* qbox);
+	
 		void CreateMushRoom(GameObject* mushroom);
 		void CreateSkeleton(GameObject* skeleton);
+		void CreateCannon();
 
+		void CreateQbox(GameObject* qbox);
+		void CreateFloor(GameObject* floor, float xSize= 1.0f, float ySize = 1.0f, float xOffset= 0.0f, float yOffset=0.0f);
+		void CreateChimney(GameObject* chimney, float xSize = 1.0f, float ySize = 1.0f, float xOffset = 0.0f, float yOffset = 0.0f);
+		void CreateStair(Vector2 startPos, int maxSteps, int height, char direction);
+		void CreateFlag(GameObject* flag, float xSize = 1.0f, float ySize = 1.0f, float xOffset = 0.0f, float yOffset = 0.0f);
+		void CreateBlock(GameObject* block, float xSize = 1.0f, float ySize = 1.0f, float xOffset = 0.0f, float yOffset = 0.0f);
+		void CreateLastDoor(GameObject* lastdoor, float xSize = 1.0f, float ySize = 1.0f, float xOffset = 0.0f, float yOffset = 0.0f);
 
 		void playerInitialize();
 

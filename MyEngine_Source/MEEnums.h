@@ -12,8 +12,12 @@ namespace ME::enums
 		Aura,
 		Player,
 		Floor,
+		Stair,
+		Chimney,
+		Flag,
+		Block,
 		Particle,
-		Max = 16
+		Max = 20
 	};
 
 	enum class eResourceType

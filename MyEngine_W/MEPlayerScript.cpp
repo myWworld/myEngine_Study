@@ -14,7 +14,6 @@
 #include "MEBoxCollider2D.h"
 #include "MESceneManager.h"
 #include "MEScenes.h"
-#include "MERigidbody.h"
 
 #include "CommonInclude.h"
 
@@ -36,6 +35,7 @@ namespace ME
 		, mAttackTime(0.0f)
 		, mbIsRunningAttack(false)
 		, mbStillStartTime(false)	
+		, mbIsOnFlag(false)
 	{
 	}
 	PlayerScript::~PlayerScript()
@@ -101,6 +101,9 @@ namespace ME
 		case ME::PlayerScript::eState::Die:
 			Die();
 			break;
+		case ME::PlayerScript::eState::Clear:
+			StageClear();
+			break;
 		default:
 			break;
 		}
@@ -123,6 +126,12 @@ namespace ME
 		if (other->GetOwner()->GetLayerType() == enums::eLayerType::Monster)
 		{
 			GameObject* monster = other->GetOwner();
+
+
+			if (mbIsOnFlag == true)
+			{
+				return;
+			}
 			
 			if (mbIsStar == true)
 			{
@@ -136,6 +145,7 @@ namespace ME
 				if (other->GetName() == L"Cannon")
 				{
 					rb->SetNeedGravity(true);
+					other->GetOwner()->GetComponent<Transform>()->SetRotation(25);
 				}
 
 				return;
@@ -162,44 +172,7 @@ namespace ME
 
 				Vector2 leftOrRight = playerCenterPos - monsterCenterPos;
 
-				if (leftOrRight.x >= 0)
-				{
-					if (mPrevDirection == ePrevDirection::Left)
-					{
-
-						mAnimator->PlayAnimation(L"HurtL", false);
-
-					}
-					else if (mPrevDirection == ePrevDirection::Right)
-					{
-						mAnimator->PlayAnimation(L"HurtR", false);
-
-					}
-				
-					Vector2 velocity = rb->GetVelocity();
-					velocity.x = 100.0f;
-					rb->SetVelocity(velocity);
-				}
-				else
-				{
-					if (mPrevDirection == ePrevDirection::Left)
-					{
-
-						mAnimator->PlayAnimation(L"HurtL", false);
-
-					}
-					else if (mPrevDirection == ePrevDirection::Right)
-					{
-						mAnimator->PlayAnimation(L"HurtR", false);
-
-					}
-				
-					Vector2 velocity = rb->GetVelocity();
-					velocity.x = -100.0f;
-					rb->SetVelocity(velocity);
-				}
-
-			
+				HurtByMonster(rb, leftOrRight.x);
 
 				tr->SetPosition(pos);
 
@@ -226,8 +199,22 @@ namespace ME
 	
 		}
 
+		if (other->GetName() == L"Flag")
+		{
+			mbIsOnFlag = true;
+			mState = eState::Clear;
+			mAnimator->PlayAnimation(L"RightWalkR");
+		}
+
+		if (other->GetName() == L"LastDoor")
+		{
+			mAnimator->PlayAnimation(L"ClearL", false);
+			mbIsOnFlag = false;
+
+		}
 		
 	}
+
 	void PlayerScript::OnCollisionStay(Collider* other)
 	{
 		
@@ -259,10 +246,7 @@ namespace ME
 
 		if (Input::GetKey(eKeyCode::Space) && rb->IsGround())
 		{
-
-			mState = eState::Jump;
-			mAnimator->PlayAnimation(L"JumpR", false);
-
+				PlayJumpAnimationByPrevDirection();
 		}
 
 		if (Input::GetKey(eKeyCode::T))
@@ -336,8 +320,7 @@ namespace ME
 
 		if (Input::GetKey(eKeyCode::Space) && rb->IsGround())
 		{
-			mState = eState::Jump;
-			mAnimator->PlayAnimation(L"JumpR", false);
+			PlayJumpAnimationByPrevDirection();
 		}
 
 		tr->SetPosition(pos);
@@ -375,7 +358,7 @@ namespace ME
 		as->Play();
 
 		Vector2 velocity = rb->GetVelocity();
-		velocity.y = -300.0f;
+		velocity.y = -200.0f;
 		rb->SetVelocity(velocity);
 
 		rb->SetGround(false);
@@ -401,6 +384,14 @@ namespace ME
 			pos += Vector2::Right * (130 * Time::DeltaTime());
 		}
 
+
+		if (Input::GetKey(eKeyCode::Space) && rb->IsGround())
+		{
+			PlayJumpAnimationByPrevDirection();
+		}
+
+
+
 		tr->SetPosition(pos);
 
 		if ((Input::GetKeyUp(eKeyCode::Right) || Input::GetKeyUp(eKeyCode::D))
@@ -421,6 +412,19 @@ namespace ME
 
 
 		SceneManager::LoadScene(L"GameOverScene");
+	}
+
+	void PlayerScript::StageClear()
+	{
+		Transform* tr = GetOwner()->GetComponent<Transform>();
+		Vector2 pos = tr->GetPosition();
+
+		pos.x += 70 * Time::DeltaTime();
+
+	
+		if(mbIsOnFlag == true)
+			tr->SetPosition(pos);
+
 	}
 
 	void PlayerScript::StandingAttack()
@@ -595,6 +599,41 @@ namespace ME
 			obj->SetDirection(Bullet::eDirection::Right);
 		}
 	}
+
+	void PlayerScript::PlayJumpAnimationByPrevDirection()
+	{
+		mState = eState::Jump;
+
+		if (mPrevDirection == ePrevDirection::Right)
+			mAnimator->PlayAnimation(L"JumpR", false);
+		else if(mPrevDirection == ePrevDirection::Left)
+			mAnimator->PlayAnimation(L"JumpL", false);
+	}
+
+	void PlayerScript::HurtByMonster(Rigidbody * rb, float rightOrLeft)
+	{
+		if (mPrevDirection == ePrevDirection::Left)
+		{
+
+			mAnimator->PlayAnimation(L"HurtL");
+
+		}
+		else if (mPrevDirection == ePrevDirection::Right)
+		{
+			mAnimator->PlayAnimation(L"HurtR");
+
+		}
+
+		Vector2 velocity = rb->GetVelocity();
+
+		if (rightOrLeft >= 0)
+			rb->AddForce(Vector2(1000, 0));
+		else
+			rb->AddForce(Vector2(-1000, 0));
+		
+		//rb->SetVelocity(velocity);
+	}
+
 
 
 	void PlayerScript::PrintScore(HDC hdc)

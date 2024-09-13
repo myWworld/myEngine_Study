@@ -79,8 +79,8 @@ namespace ME
 		Time::Render(mBackHdc);
 		
 		CollisionManager::Render(mBackHdc);
-		UIManager::Render(mBackHdc);
 		SceneManager::Render(mBackHdc);
+		UIManager::Render(mBackHdc);
 
 		CopyRenderTarget(mBackHdc, mHdc);
 		
