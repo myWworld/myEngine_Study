@@ -36,7 +36,7 @@ namespace ME
 		float time = bullet->GetBullletLastTime();
 
 
-			if (2.0f < time)
+			if (4.0f < time)
 			{
 				bullet->SetActive(false);
 				
@@ -66,7 +66,7 @@ namespace ME
 		{
 			if (mbIsPlayerRunning == true)
 			{
-				pos.x -= 240.0f * Time::DeltaTime();
+				pos.x -= 180.0f * Time::DeltaTime();
 			}
 			else
 			{
@@ -77,7 +77,7 @@ namespace ME
 		{
 			if (mbIsPlayerRunning == true)
 			{
-				pos.x += 240.0f * Time::DeltaTime();
+				pos.x += 180.0f * Time::DeltaTime();
 			}
 			else
 			{
@@ -101,66 +101,14 @@ namespace ME
 	}
 	void BulletScript::OnCollisionEnter(Collider* other)
 	{
-	
-		if (other->GetName() == L"Mushroom")
+		if (other->GetOwner()->GetLayerType() == enums::eLayerType::Block)
 		{
-			MushRoom* monster = static_cast<MushRoom*>(other->GetOwner());
-			MushRoomScript* script = monster->GetComponent<MushRoomScript>();
-			Animator* animator = monster->GetComponent<Animator>();
+			GetOwner()->SetActive(false);
 
-			MushRoomScript::eDirection direction = script->GetDirection();
-
-			
-			if (script->GetHp() > 0)
-			{
-
-				if (direction == MushRoomScript::eDirection::Left)
-				{
-					animator->PlayAnimation(L"HurtL", false);
-				}
-				else if (direction == MushRoomScript::eDirection::Right)
-				{
-					animator->PlayAnimation(L"HurtR", false);
-				}
-			}
-			else
-			{
-				return;
-
-			}
-				
+			GetOwner()->SetDeath();
 		}
-
-		if (other->GetName() == L"Skeleton")
-		{	
-			
-			Skeleton* monster = static_cast<Skeleton*>(other->GetOwner());
-
-			Animator* animator = monster->GetComponent<Animator>();
-			SkeletonScript* script = monster->GetComponent<SkeletonScript>();
-
-			SkeletonScript::eDirection direction = script->GetDirection();
-
-			if (script->GetHp() != 0)
-			{
-				if (direction == SkeletonScript::eDirection::Left)
-				{
-					animator->PlayAnimation(L"HurtL", false);
-				}
-				else if (direction == SkeletonScript::eDirection::Right)
-				{
-					animator->PlayAnimation(L"HurtR", false);
-				}
-			}
-			else
-			{
-				return;
-
-			}
-		}
-
-
 	}
+
 	void BulletScript::OnCollisionStay(Collider* other)
 	{
 	}

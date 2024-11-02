@@ -2,6 +2,7 @@
 #include "../MyEngine_Source/MEInput.h"
 #include "../MyEngine_Source/MEGameObject.h"
 #include "../MyEngine_Source/METime.h"
+#include "MEMonsters.h"
 #include "MEBullet.h"
 #include "MEPlayerScript.h"
 
@@ -13,6 +14,7 @@ namespace ME
 		, mRespawnTime(0.0f)
 		, mbIsDead(false)
 		, mbIsRespawn(false)
+		, mbIsHurtState(false)
 	{
 	}
 	MushRoomScript::~MushRoomScript()
@@ -34,7 +36,11 @@ namespace ME
 		if (mHp == 0)
 		{
 			mState = eState::Die;
+		}
 
+		if (mbIsHurtState == true)
+		{
+			mState = eState::Hurt;
 		}
 
 		switch (mState)
@@ -103,12 +109,14 @@ namespace ME
 
 		if (state == GameObject::eState::Active && mbIsDead == false)
 		{
+			mbIsDead = true;
+			mbIsRespawn = true;
+
+			static_cast<Monsters*>(GetOwner())->SetMonsterState(Monsters::eState::Dead);
 
 			mAnimator->PlayAnimation(L"DeadR", false);
 			PlayerScript::PlusScore();
 
-			mbIsDead = true;
-			mbIsRespawn = true;
 		}
 
 		if (state == GameObject::eState::NoRender)
@@ -116,13 +124,14 @@ namespace ME
 
 			mRespawnTime += Time::DeltaTime();
 
-			if (mRespawnTime > 5.0f)
+			if (mRespawnTime > 8.0f)
 			{
 
 				mRespawnTime = 0.0f;
 				mState = eState::Idle;
 
 				GetOwner()->SetNoRender(true);
+				static_cast<Monsters*>(GetOwner())->SetMonsterState(Monsters::eState::Alive);
 				mAnimator->PlayAnimation(L"idleL", true);
 
 
@@ -137,6 +146,18 @@ namespace ME
 	
 	void MushRoomScript::Hurt()
 	{
+		if (mAnimator->IsComplete())
+		{
+			if (mbIsHurtState == true)
+			{
+				Rigidbody* playerRb = GetOwner()->GetComponent<Rigidbody>();
+				playerRb->StopMoving();
+
+				mbIsHurtState = false;
+				mState = eState::Idle;
+				mAnimator->PlayAnimation(L"idleL");
+			}
+		}
 
 	}
 
@@ -198,6 +219,9 @@ namespace ME
 				bullet->SetActive(false);
 				bullet->SetDeath();
 
+				if(mbIsHurtState == false)
+					GotHitByBullet(bullet);
+
 				mHp -= 10;
 			}
 		}
@@ -215,4 +239,77 @@ namespace ME
 	void MushRoomScript::OnCollisionExit(Collider* other)
 	{
 	}
+
+	float MushRoomScript::DetermineLeftOrRightByVector(GameObject* obj)
+	{
+		Transform* objTr = obj->GetComponent<Transform>();
+
+		Transform* playerTr = GetOwner()->GetComponent<Transform>();
+		Rigidbody* playerRb = GetOwner()->GetComponent<Rigidbody>();
+
+		Vector2 playerColPos = playerTr->GetPosition() + GetOwner()->GetComponent<Collider>()->GetOffset();
+		Vector2 monsterColPos = objTr->GetPosition() + obj->GetComponent<Collider>()->GetOffset();
+
+		Vector2 playerColliderSize = GetOwner()->GetComponent<Collider>()->GetSize() * 100.0f;
+		Vector2 monsterColliderSize = obj->GetComponent<Collider>()->GetSize() * 100.0f;
+
+		Vector2 playerCenterColPos = playerColPos + (playerColliderSize / 2.0f);
+		Vector2 monsterCenterColPos = monsterColPos + (monsterColliderSize / 2.0f);
+
+		Vector2 leftOrRight = playerCenterColPos - monsterCenterColPos;
+
+		return leftOrRight.x;
+	}
+
+	void MushRoomScript::GotHitByBullet(GameObject* bullet)
+	{
+		Rigidbody* mushroomRb = GetOwner()->GetComponent<Rigidbody>();
+		Vector2 mushroomVelocity = mushroomRb->GetVelocity();
+
+		float leftOrRight = DetermineLeftOrRightByVector(bullet);
+
+		if (leftOrRight >= 0)
+		{
+			mushroomVelocity.x += 50.0f;
+		}
+		else
+		{
+			mushroomVelocity.x -= 50.0f;
+
+		}
+		mushroomVelocity.y -= 100.0f;
+
+		mushroomRb->SetVelocity(mushroomVelocity);
+		mushroomRb->SetGround(false);
+
+		mbIsHurtState = true;
+		PlayHurtAnimation();
+	}
+
+	void MushRoomScript::PlayHurtAnimation()
+	{
+		GameObject* monster = GetOwner();
+		MushRoomScript* script = monster->GetComponent<MushRoomScript>();
+		
+		if(mAnimator == nullptr )
+			mAnimator = monster->GetComponent<Animator>();
+
+		if (mHp > 0)
+		{
+			if (mDirection == eDirection::Left)
+			{
+				mAnimator->PlayAnimation(L"HurtL", false);
+			}
+			else if (mDirection == eDirection::Right)
+			{
+				mAnimator->PlayAnimation(L"HurtR", false);
+			}
+		}
+		else
+		{
+			return;
+
+		}
+	}
+
 }

@@ -58,7 +58,13 @@ namespace ME
 		void Die();
 		void Hurt();
 		
+		float DetermineLeftOrRightByVector(GameObject* obj);
+		void GotHitByBullet(GameObject* bullet);
+		void PlayHurtAnimation();
+
 		void PlayAnimationByStateAndDirection();
+
+
 
 	private:
 
@@ -68,8 +74,10 @@ namespace ME
 
 		float mRespawnTime;
 		float mHp;
+
 		bool mbIsDead;
 		bool mbISRespawn;
+		bool mbIsHurtState;
 
 		eState mSkeletonState;
 		eDirection mDirection;

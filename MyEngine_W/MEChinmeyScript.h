@@ -27,7 +27,7 @@ namespace ME
 
 	private:
 
-		void CannotMove(Collider* obj);
+		void CannotPass(Collider* obj);
 
 	private:
 

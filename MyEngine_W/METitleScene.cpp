@@ -34,10 +34,11 @@ namespace ME
 		mCameraComp = camera->AddComponent<Camera>();
 		renderer::mainCamera = mCameraComp;
 
-		redTriangle = object::Instantiate<GameObject>(enums::eLayerType::BackGround,Vector2(375, 345));
+		redTriangle = object::Instantiate<GameObject>(enums::eLayerType::BackGround,Vector2(243, 127));
 		SpriteRenderer* redTriangleSr = redTriangle->AddComponent<SpriteRenderer>();
 		graphics::Texture* redTriangleTex = Resources::Find<graphics::Texture>(L"REDTRIANGLE");
 		
+		redTriangle->GetComponent<Transform>()->SetScale(Vector2(0.3, 0.3));
 		redTriangleSr->SetTexture(redTriangleTex);
 
 
@@ -48,8 +49,8 @@ namespace ME
 		SpriteRenderer* sr = titleBg->AddComponent<SpriteRenderer>();
 
 		Transform* tr = titleBg->GetComponent<Transform>();
-		tr->SetScale(Vector2(0.5f, 0.5f));
-		tr->SetPosition(Vector2(0, 300));
+		tr->SetScale(Vector2(0.2f, 0.15f));
+
 
 		graphics::Texture* titleTexture = Resources::Find<graphics::Texture>(L"TITLE");
 		sr->SetTexture(titleTexture);
@@ -84,7 +85,7 @@ namespace ME
 	void TitleScene::OnEnter()
 	{
 		Transform* tr = titleBg->GetComponent<Transform>();
-		tr->SetPosition(Vector2(250, 60));
+		tr->SetPosition(Vector2(190, 30));
 
 		renderer::mainCamera = mCameraComp;
 

@@ -29,11 +29,15 @@ namespace ME
 	private:
 		void CreateCoin(Collider* other);
 		void CreateStar(Collider* other);
+		void CannotPass(Collider* obj);
 
 
 	private:
 
 		bool mbIsBroken;
+
+		bool mbIsOnQbox;
+		bool mbTouchQboxBottom;
 	};
 
 }

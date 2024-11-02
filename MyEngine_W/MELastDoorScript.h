@@ -22,11 +22,13 @@ namespace ME
 		void OnCollisionStay(Collider* other) override;
 		void OnCollisionExit(Collider* other) override;
 
-
+		static bool IsClearStage() { return mbIsClear; }
+		static void SetClearStage(bool isClear) { mbIsClear = isClear; }
 
 
 	private:
 
+		static bool mbIsClear;
 	};
 
 }

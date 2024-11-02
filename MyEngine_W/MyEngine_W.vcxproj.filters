@@ -86,9 +86,6 @@
     <ClInclude Include="MEBlock.h">
       <Filter>Contents\Map</Filter>
     </ClInclude>
-    <ClInclude Include="MEBlockScript.h">
-      <Filter>Script\Map</Filter>
-    </ClInclude>
     <ClInclude Include="MELastDoorScript.h">
       <Filter>Script\Map</Filter>
     </ClInclude>
@@ -97,6 +94,81 @@
     </ClInclude>
     <ClInclude Include="MEStage2.h">
       <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="MEBlockScript.h">
+      <Filter>Script\Map\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="MEVerticalMovingBlockScript.h">
+      <Filter>Script\Map\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="MEHorizonMovingBlockScript.h">
+      <Filter>Script\Map\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="METrampoline.h">
+      <Filter>Contents\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="METrampolineScript.h">
+      <Filter>Script\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MEPulleyBlockScript.h">
+      <Filter>Script\Map\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="MEOnlyDownBlockScript.h">
+      <Filter>Script\Map\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="MEMonsters.h">
+      <Filter>Contents\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="METurtle.h">
+      <Filter>Contents\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="METurtleScript.h">
+      <Filter>Script\Monsters</Filter>
+    </ClInclude>
+    <ClInclude Include="MEFlyingTurtleScript.h">
+      <Filter>Script\Monsters</Filter>
+    </ClInclude>
+    <ClInclude Include="MEHeadScript.h">
+      <Filter>Script\Monsters</Filter>
+    </ClInclude>
+    <ClInclude Include="MEHead.h">
+      <Filter>Contents\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="MEStage3.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="MECeilingScript.h">
+      <Filter>Script\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MEFireBarScript.h">
+      <Filter>Script\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MELaser.h">
+      <Filter>Contents\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MELavaBubble.h">
+      <Filter>Contents\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MELavaBubbleScript.h">
+      <Filter>Script\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MEKoopa.h">
+      <Filter>Contents\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="MEKoopaScript.h">
+      <Filter>Script\Monsters</Filter>
+    </ClInclude>
+    <ClInclude Include="MEFire.h">
+      <Filter>Contents\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="MEFireScript.h">
+      <Filter>Script\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="MEAxeScript.h">
+      <Filter>Script\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MEBridgeBlockScript.h">
+      <Filter>Script\Map\Blocks</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -135,6 +207,9 @@
     </Filter>
     <Filter Include="Script\Map">
       <UniqueIdentifier>{2ba45f02-fe47-49cc-825b-ed0569d951e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Script\Map\Blocks">
+      <UniqueIdentifier>{727ab405-f41a-4905-a72e-db006399375c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -222,9 +297,6 @@
     <ClCompile Include="MEBlock.cpp">
       <Filter>Contents\Map</Filter>
     </ClCompile>
-    <ClCompile Include="MEBlockScript.cpp">
-      <Filter>Script\Map</Filter>
-    </ClCompile>
     <ClCompile Include="MELastDoorScript.cpp">
       <Filter>Script\Map</Filter>
     </ClCompile>
@@ -233,6 +305,81 @@
     </ClCompile>
     <ClCompile Include="MEStage2.cpp">
       <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="MEBlockScript.cpp">
+      <Filter>Script\Map\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="MEVerticalMovingBlockScript.cpp">
+      <Filter>Script\Map\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="MEHorizonMovingBlockScript.cpp">
+      <Filter>Script\Map\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="METrampoline.cpp">
+      <Filter>Contents\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="MEPulleyBlockScript.cpp">
+      <Filter>Script\Map\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="METrampolineScript.cpp">
+      <Filter>Script\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="MeOnlyDownBlockScript.cpp">
+      <Filter>Script\Map\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="MEMonsters.cpp">
+      <Filter>Contents\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="METurtle.cpp">
+      <Filter>Contents\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="METurtleScript.cpp">
+      <Filter>Script\Monsters</Filter>
+    </ClCompile>
+    <ClCompile Include="MEFlyingTurtleScript.cpp">
+      <Filter>Script\Monsters</Filter>
+    </ClCompile>
+    <ClCompile Include="MEHeadScript.cpp">
+      <Filter>Script\Monsters</Filter>
+    </ClCompile>
+    <ClCompile Include="MEHead.cpp">
+      <Filter>Contents\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="MEStage3.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="MECeilingScript.cpp">
+      <Filter>Script\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="MEFireBarScript.cpp">
+      <Filter>Script\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="MELaser.cpp">
+      <Filter>Contents\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="MELavaBubble.cpp">
+      <Filter>Contents\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="MELavaBubbleScript.cpp">
+      <Filter>Script\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="MEKoopa.cpp">
+      <Filter>Contents\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="MEKoopaScript.cpp">
+      <Filter>Script\Monsters</Filter>
+    </ClCompile>
+    <ClCompile Include="MEFire.cpp">
+      <Filter>Contents\Others</Filter>
+    </ClCompile>
+    <ClCompile Include="MEFireScript.cpp">
+      <Filter>Script\Others</Filter>
+    </ClCompile>
+    <ClCompile Include="MEAxeScript.cpp">
+      <Filter>Script\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="MEBridgeBlockScript.cpp">
+      <Filter>Script\Map\Blocks</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

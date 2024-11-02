@@ -26,6 +26,14 @@ namespace ME
 
 
 	private:
+
+		void CannotPass(Collider* obj);
+
+	private:
+
+	
+		bool mbIsOnFloor;
+	
 	};
 
 }

@@ -71,6 +71,12 @@ namespace ME {
 			if (render == false) mState = eState::NoRender;
 		}
 
+		bool IsNoRender()
+		{
+			if (mState == eState::NoRender) return true;
+			else return false;
+		}
+
 		eState GetState() { return mState; }
 		
 		bool IsActive() { return mState == eState::Active;}

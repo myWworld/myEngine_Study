@@ -31,6 +31,7 @@ namespace ME
 		{
 			pos.x -= 100 * Time::DeltaTime();
 			pos.y -= 100 * Time::DeltaTime();
+			tr->SetRotation(20);
 		}
 		else
 			pos.x -= 100 * Time::DeltaTime();
@@ -56,7 +57,7 @@ namespace ME
 				return;
 			}
 
-			if (FlagScript::IsOnFlag() == true)
+			if (FlagScript::IsOnFlag() == true || PlayerScript::IsHurtState())
 			{
 				return;
 			}
@@ -66,8 +67,7 @@ namespace ME
 			Rigidbody *playerRb = player->GetComponent<Rigidbody>();
 
 			Vector2 velocity = playerRb->GetVelocity();
-			velocity.x = -100.0f;
-			velocity.y = -800.0f;
+			velocity.y = -500.0f;
 
 			playerRb->SetVelocity(velocity);
 

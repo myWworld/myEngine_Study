@@ -28,11 +28,12 @@ namespace ME
 		void CreatePlayerAnimation(Animator *animator, graphics::Texture* Rtexture, graphics::Texture* Ltexture);
 		void CreateMushRoomAnimation(Animator* animator, graphics::Texture* Rtexture, graphics::Texture* Ltexture);
 		void CreateSkeletonAnimation(Animator* animator, graphics::Texture* Rtexture, graphics::Texture* Ltexture);
-
-	
+		void CreateTurtleAnimation(Animator* animator, graphics::Texture* Rtexture, graphics::Texture* Ltexture);
+		
 		void CreateMushRoom(GameObject* mushroom);
 		void CreateSkeleton(GameObject* skeleton);
 		void CreateCannon();
+		void CreateTurtle(GameObject* turtle);
 
 		void CreateQbox(GameObject* qbox);
 		void CreateFloor(GameObject* floor, float xSize= 1.0f, float ySize = 1.0f, float xOffset= 0.0f, float yOffset=0.0f);

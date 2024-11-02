@@ -6,6 +6,7 @@
 #include "MEAudioClip.h"
 
 #include "MEGameObject.h"
+#include "MEMonsters.h"
 
 #include "MEBulletScript.h"
 #include "MEBullet.h"
@@ -19,11 +20,15 @@
 
 #include "MERenderer.h"
 
+#include "METurtle.h"
+#include "METurtleScript.h"
+
 namespace ME
 {
 	int PlayerScript::mScore = 0;
 	float PlayerScript::mHp = 100.0f;
 	bool PlayerScript::mbIsStar = false;
+	bool PlayerScript::mbIsHurtState = false;
 
 	PlayerScript::PlayerScript()
 		:isJump(false)
@@ -53,23 +58,13 @@ namespace ME
 			mAnimator = GetOwner()->GetComponent<Animator>();
 		}
 
-		if (mHp == 0)
+		if (mbIsHurtState)
 		{
-			mState = eState::Die;
+			mState = eState::Hurt;
 		}
 
-		if (mbIsStar == true)
-		{
-			mStarTime += Time::DeltaTime();
-			PlayAuraAnimation();
-
-			if (mStarTime > 10.0f)
-			{
-				mStarTime = 0.0f;
-				mbIsStar = false;
-				mEffect->SetDeath();
-			}
-		}
+		IsDie();
+		IsStarMode();
 
 
 		switch (mState)
@@ -101,6 +96,9 @@ namespace ME
 		case ME::PlayerScript::eState::Die:
 			Die();
 			break;
+		case ME::PlayerScript::eState::Hurt:
+			Hurt();
+			break;
 		case ME::PlayerScript::eState::Clear:
 			StageClear();
 			break;
@@ -123,17 +121,32 @@ namespace ME
 
 	void PlayerScript::OnCollisionEnter(Collider* other)
 	{
-		if (other->GetOwner()->GetLayerType() == enums::eLayerType::Monster)
+		if (mbIsHurtState == true)
+			return;
+
+	
+
+		if (other->GetOwner()->GetLayerType() == enums::eLayerType::Monster 
+				|| other->GetOwner()->GetLayerType() == enums::eLayerType::Obstacle)
 		{
-			GameObject* monster = other->GetOwner();
+			Monsters* monster =static_cast<Monsters*>(other->GetOwner());
+			enums::eLayerType layertype = other->GetOwner()->GetLayerType();
 
-
-			if (mbIsOnFlag == true)
+			if (other->GetName() == L"Cannon"
+				 || monster->IsMonsterDead()
+					|| mbIsOnFlag == true)
 			{
 				return;
 			}
+
+			if (other->GetName() == L"Head")
+			{
+				return;
+			}
+
 			
-			if (mbIsStar == true)
+			
+			if (mbIsStar == true && layertype == enums::eLayerType::Monster)
 			{
 				Rigidbody* rb = other->GetOwner()->GetComponent<Rigidbody>();
 
@@ -153,31 +166,29 @@ namespace ME
 
 			if (mHp != 0)
 			{
+
 				mHp -= 10;
-
-				Transform* MonsterTr = monster->GetComponent<Transform>();
-				Transform* tr = GetOwner()->GetComponent<Transform>();
-				Rigidbody *rb = GetOwner()->GetComponent<Rigidbody>();
-
-				Vector2 pos = tr->GetPosition();
-
-				Vector2 playerPos = tr->GetPosition() + GetOwner()->GetComponent<Collider>()->GetOffset();
-				Vector2 monsterPos =MonsterTr->GetPosition() + other->GetOffset();
-
-				Vector2 playerColliderSize = GetOwner()->GetComponent<Collider>()->GetSize() * 100.0f;
-				Vector2 monsterColliderSize = other->GetSize() * 100.0f;
+				Rigidbody* playerRb = GetOwner()->GetComponent<Rigidbody>();
+				Vector2 playerVelocity = playerRb->GetVelocity();
 				
-				Vector2 playerCenterPos = playerPos + (playerColliderSize / 2.0f);
-				Vector2 monsterCenterPos = monsterPos + (monsterColliderSize / 2.0f);
+				float leftOrRight = DetermineLeftOrRightByVector(monster);
 
-				Vector2 leftOrRight = playerCenterPos - monsterCenterPos;
+				if (leftOrRight >= 0)
+				{
+					playerVelocity.x += 50.0f;
+				}
+				else
+				{
+					playerVelocity.x -= 50.0f;
+					
+				}
+				playerVelocity.y -= 100.0f;
+			
+				playerRb->SetVelocity(playerVelocity);
+				playerRb->SetGround(false);
 
-				HurtByMonster(rb, leftOrRight.x);
-
-				tr->SetPosition(pos);
-
-				mState = eState::Standing;
-				PlayStandingAnimByPrevDirection();
+				PlayHurtAnimationByMonster(leftOrRight);
+			
 			}
 			else if(mHp == 0)
 				return;
@@ -193,7 +204,9 @@ namespace ME
 			else
 			{
 				mbIsStar = true;
-				mEffect = CreateAura();
+
+				if(mEffect == nullptr)
+					mEffect = CreateAura();
 			}
 	
 	
@@ -260,6 +273,7 @@ namespace ME
 				mAnimator->PlayAnimation(L"StandAttackR");
 		}
 
+
 	}
 
 	void PlayerScript::Move()
@@ -270,22 +284,23 @@ namespace ME
 		Vector2 pos = tr->GetPosition();
 
 		Rigidbody* rb = GetOwner()->GetComponent<Rigidbody>();
+		Vector2 velocity = rb->GetVelocity();
 
 
 		if (Input::GetKey(eKeyCode::Right) || Input::GetKey(eKeyCode::D))
 		{
 
-
-
 			mPrevDirection = ePrevDirection::Right;
 
-			pos += Vector2::Right * (90 * Time::DeltaTime());
+			DetermineMovingVelocity();
 
-			if (Input::GetKey(eKeyCode::Shift))
-			{
-				mState = eState::Run;
-				mAnimator->PlayAnimation(L"RunR");
-			}
+			rb->AddForce(Vector2(100, 0));
+
+		//if (Input::GetKey(eKeyCode::Shift))
+		//{
+		//	mState = eState::Run;
+		//	mAnimator->PlayAnimation(L"RunR");
+		//}
 
 
 			if (Input::GetKey(eKeyCode::T))
@@ -301,13 +316,13 @@ namespace ME
 		{
 			mPrevDirection = ePrevDirection::Left;
 
-			pos += Vector2::Left * (90 * Time::DeltaTime());
+			DetermineMovingVelocity();
 
-			if (Input::GetKey(eKeyCode::Shift))
-			{
-				mState = eState::Run;
-				mAnimator->PlayAnimation(L"RunL");
-			}
+			//if (Input::GetKey(eKeyCode::Shift)) //점프는 이 게임에선 필요없을 듯
+		//{
+		//	mState = eState::Run; 
+		//	mAnimator->PlayAnimation(L"RunL");
+		//}
 
 			if (Input::GetKey(eKeyCode::T))
 			{
@@ -327,12 +342,41 @@ namespace ME
 
 		if ((Input::GetKeyUp(eKeyCode::Right) || Input::GetKeyUp(eKeyCode::D))
 			|| (Input::GetKeyUp(eKeyCode::Left) || Input::GetKeyUp(eKeyCode::A))
-			|| (Input::GetKeyUp(eKeyCode::Down) || Input::GetKeyUp(eKeyCode::S))
 			|| (Input::GetKeyUp(eKeyCode::Space)))
 		{
 			mState = eState::Standing;
 
 			PlayStandingAnimByPrevDirection();
+		}
+	}
+
+	void PlayerScript::DetermineMovingVelocity()
+	{
+		Rigidbody* playerRb = GetOwner()->GetComponent<Rigidbody>();
+		Vector2 velocity = playerRb->GetVelocity();
+
+
+		if (mPrevDirection == ePrevDirection::Left)
+		{
+			if (velocity.x > 0)
+			{
+				playerRb->AddForce(Vector2(-350, 0)); //움직임 전환할 때 반대로 전환을 빠르게 하기 위해 속도 조절
+			}
+			else
+			{
+				playerRb->AddForce(Vector2(-160, 0));
+			}
+		}
+		if (mPrevDirection == ePrevDirection::Right)
+		{
+			if (velocity.x < 0)
+			{
+				playerRb->AddForce(Vector2(350, 0));
+			}
+			else
+			{
+				playerRb->AddForce(Vector2(160, 0));
+			}
 		}
 	}
 
@@ -343,28 +387,30 @@ namespace ME
 		Vector2 pos = tr->GetPosition();
 		Rigidbody* rb = GetOwner()->GetComponent<Rigidbody>();
 
-		AudioSource* as = GetOwner()->GetComponent<AudioSource>();
-		AudioClip* ac = GetOwner()->GetComponent<AudioClip>();
-		ac = Resources::Find<AudioClip>(L"MARIOJUMPSOUND");
-
-		if (ac == nullptr)
-			return;
-
-		as->SetClip(ac);
-
-		if (as == nullptr)
-			return;
-
-		as->Play();
+		//AudioSource* as = GetOwner()->GetComponent<AudioSource>();
+		//AudioClip* ac = GetOwner()->GetComponent<AudioClip>();
+		//ac = Resources::Find<AudioClip>(L"MARIOJUMPSOUND");
+		//
+		//if (ac == nullptr)
+		//	return;
+		//
+		//as->SetClip(ac);
+		//
+		//if (as == nullptr)
+		//	return;
+		//
+		//as->Play();
 
 		Vector2 velocity = rb->GetVelocity();
-		velocity.y = -200.0f;
+		velocity.y = -300.0f;
 		rb->SetVelocity(velocity);
 
 		rb->SetGround(false);
 
 
 		mState = eState::Standing;
+
+		
 
 	}
 
@@ -373,11 +419,12 @@ namespace ME
 		Transform* tr = GetOwner()->GetComponent<Transform>();
 		Vector2 pos = tr->GetPosition();
 		Rigidbody* rb = GetOwner()->GetComponent<Rigidbody>();
+		
 
 
 		if (mPrevDirection == ePrevDirection::Left)
 		{
-			pos += Vector2::Left * (130 * Time::DeltaTime());
+		
 		}
 		else if (mPrevDirection == ePrevDirection::Right)
 		{
@@ -412,6 +459,20 @@ namespace ME
 
 
 		SceneManager::LoadScene(L"GameOverScene");
+	}
+
+	void PlayerScript::Hurt()
+	{
+		
+		if (mAnimator->IsComplete())
+		{
+			Rigidbody* playerRb = GetOwner()->GetComponent<Rigidbody>();
+			playerRb->StopMoving();
+
+			mState = eState::Standing;
+			PlayStandingAnimByPrevDirection();
+			mbIsHurtState = false;
+		}
 	}
 
 	void PlayerScript::StageClear()
@@ -514,7 +575,7 @@ namespace ME
 
 	void PlayerScript::MakeBullet(bool isRunning)
 	{
-		GameObject* bullet = object::Instantiate<Bullet>(enums::eLayerType::Particle);
+		GameObject* bullet = object::Instantiate<Bullet>(enums::eLayerType::Bullet);
 
 		BulletScript* bulletScript = bullet->AddComponent<BulletScript>();
 		bulletScript->SetPlayerIsRunningAttack(isRunning);
@@ -524,7 +585,7 @@ namespace ME
 		BoxCollider2D* bulletCollider = bullet->AddComponent<BoxCollider2D>();
 		bulletCollider->SetName(L"Bullet");
 
-		bulletCollider->SetSize(Vector2(0.05f, 0.05f));
+		bulletCollider->SetSize(Vector2(0.039f, 0.039f));
 		bulletCollider->SetOffset(Vector2(-17, -20));
 
 		graphics::Texture* bulletRightTex = Resources::Find<graphics::Texture>(L"BULLETR");
@@ -545,15 +606,15 @@ namespace ME
 
 		if (mPrevDirection == ePrevDirection::Left)
 		{
-			bulletPos = playerTr->GetPosition() + Vector2(-10, 8);
+			bulletPos = playerTr->GetPosition() + Vector2(-10, 4);
 		}
 		else if (mPrevDirection == ePrevDirection::Right)
 		{
-			bulletPos = playerTr->GetPosition() + Vector2(26, 8);
+			bulletPos = playerTr->GetPosition() + Vector2(18, 4);
 		}
 
 		bulletTr->SetPosition(bulletPos);
-		bulletTr->SetScale(Vector2(0.3f, 0.3f));
+		bulletTr->SetScale(Vector2(0.2f, 0.2f));
 
 		PlayBulletByPrveDirection(bulletAnim);
 
@@ -610,31 +671,70 @@ namespace ME
 			mAnimator->PlayAnimation(L"JumpL", false);
 	}
 
-	void PlayerScript::HurtByMonster(Rigidbody * rb, float rightOrLeft)
+	void PlayerScript::PlayHurtAnimationByMonster( float rightOrLeft)
 	{
 		if (mPrevDirection == ePrevDirection::Left)
 		{
-
-			mAnimator->PlayAnimation(L"HurtL");
+			mAnimator->PlayAnimation(L"HurtL",false);
 
 		}
 		else if (mPrevDirection == ePrevDirection::Right)
 		{
-			mAnimator->PlayAnimation(L"HurtR");
+			mAnimator->PlayAnimation(L"HurtR", false);
 
 		}
 
-		Vector2 velocity = rb->GetVelocity();
+		mbIsHurtState = true;
 
-		if (rightOrLeft >= 0)
-			rb->AddForce(Vector2(1000, 0));
-		else
-			rb->AddForce(Vector2(-1000, 0));
-		
-		//rb->SetVelocity(velocity);
 	}
 
+	void PlayerScript::IsDie()
+	{
+		Transform* tr = GetOwner()->GetComponent<Transform>();
+		Vector2 pos = tr->GetPosition();
 
+		if (mHp == 0 )//|| pos.y >= 280)
+		{
+			mState = eState::Die;
+		}
+	}
+	
+	void PlayerScript::IsStarMode()
+	{
+		if (mbIsStar == true)
+		{
+			mStarTime += Time::DeltaTime();
+			PlayAuraAnimation();
+
+			if (mStarTime > 10.0f)
+			{
+				mStarTime = 0.0f;
+				mbIsStar = false;
+				mEffect->SetDeath();
+			}
+		}
+	}
+	
+	float PlayerScript::DetermineLeftOrRightByVector(GameObject *obj)
+	{
+		Transform* objTr = obj->GetComponent<Transform>();
+
+		Transform* playerTr = GetOwner()->GetComponent<Transform>();
+		Rigidbody* playerRb = GetOwner()->GetComponent<Rigidbody>();
+
+		Vector2 playerColPos = playerTr->GetPosition() + GetOwner()->GetComponent<Collider>()->GetOffset();
+		Vector2 monsterColPos = objTr->GetPosition() + obj->GetComponent<Collider>()->GetOffset();
+
+		Vector2 playerColliderSize = GetOwner()->GetComponent<Collider>()->GetSize() * 100.0f;
+		Vector2 monsterColliderSize = obj->GetComponent<Collider>()->GetSize() * 100.0f;
+
+		Vector2 playerCenterColPos = playerColPos + (playerColliderSize / 2.0f);
+		Vector2 monsterCenterColPos = monsterColPos + (monsterColliderSize / 2.0f);
+
+		Vector2 leftOrRight = playerCenterColPos - monsterCenterColPos;
+
+		return leftOrRight.x;
+	}
 
 	void PlayerScript::PrintScore(HDC hdc)
 	{
@@ -667,8 +767,8 @@ namespace ME
 
 		Transform* effectTr = mEffect->GetComponent<Transform>();
 		
-		effectTr->SetPosition(Vector2(pos.x + 50, pos.y + 50));
-		effectTr->SetScale(Vector2(0.4f, 0.4f));
+		effectTr->SetPosition(Vector2(pos.x + 65, pos.y + 70));
+		effectTr->SetScale(Vector2(0.2f, 0.2f));
 
 		
 		effectAnimator->PlayAnimation(L"StarEffectR");

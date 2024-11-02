@@ -5,6 +5,7 @@
 #include "MEBullet.h"
 #include "MEBulletScript.h"
 #include "MEPlayerScript.h"
+#include "MEMonsters.h"
 
 namespace ME
 {
@@ -51,7 +52,7 @@ namespace ME
 			Move();
 			break;
 		case ME::SkeletonScript::eState::Hurt:
-			Move();
+			Hurt();
 			break;
 		case ME::SkeletonScript::eState::Die:
 			Die();
@@ -60,6 +61,7 @@ namespace ME
 			break;
 		}
 	}
+
 	void SkeletonScript::Idle()
 	{
 		mTime += Time::DeltaTime();
@@ -86,6 +88,7 @@ namespace ME
 			mSkeletonState = eState::Idle;
 		}
 	}
+
 	void SkeletonScript::Attack()
 	{
 		if (mAnimator->IsComplete())
@@ -93,6 +96,7 @@ namespace ME
 			mSkeletonState = eState::Idle;
 		}
 	}
+	
 	void SkeletonScript::Move()
 	{
 		Transform* tr = GetOwner()->GetComponent<Transform>();
@@ -113,6 +117,11 @@ namespace ME
 	{
 		if (GetOwner()->GetState() == GameObject::eState::Active && mbIsDead == false)
 		{
+			mbIsDead = true;
+			mbISRespawn = true;
+
+			static_cast<Monsters*>(GetOwner())->SetMonsterState(Monsters::eState::Dead);
+
 			if (mDirection == SkeletonScript::eDirection::Left)
 			{
 				mAnimator->PlayAnimation(L"DeadL", false);
@@ -121,9 +130,6 @@ namespace ME
 			{
 				mAnimator->PlayAnimation(L"DeadR", false);
 			}
-
-			mbIsDead = true;
-			mbISRespawn = true;
 			PlayerScript::PlusScore();
 		}
 
@@ -132,7 +138,7 @@ namespace ME
 
 			mRespawnTime += Time::DeltaTime();
 
-			if (mRespawnTime > 5.0f)
+			if (mRespawnTime > 8.0f)
 			{
 
 				mRespawnTime = 0.0f;
@@ -140,6 +146,7 @@ namespace ME
 				
 				GetOwner()->SetNoRender(true);
 
+				static_cast<Monsters*>(GetOwner())->SetMonsterState(Monsters::eState::Alive);
 				mHp = 100.0f;
 				mbIsDead = false;
 				mbISRespawn = false;
@@ -148,6 +155,93 @@ namespace ME
 		}
 
 	
+	}
+
+	void SkeletonScript::Hurt()
+	{
+		if (mAnimator->IsComplete())
+		{
+			if (mbIsHurtState == true)
+			{
+				Rigidbody* playerRb = GetOwner()->GetComponent<Rigidbody>();
+				playerRb->StopMoving();
+
+				mbIsHurtState = false;
+				mSkeletonState = eState::Idle;
+				PlayAnimationByStateAndDirection();
+			}
+		}
+	}
+
+	float SkeletonScript::DetermineLeftOrRightByVector(GameObject* obj)
+	{
+		Transform* objTr = obj->GetComponent<Transform>();
+
+		Transform* playerTr = GetOwner()->GetComponent<Transform>();
+		Rigidbody* playerRb = GetOwner()->GetComponent<Rigidbody>();
+
+		Vector2 playerColPos = playerTr->GetPosition() + GetOwner()->GetComponent<Collider>()->GetOffset();
+		Vector2 monsterColPos = objTr->GetPosition() + obj->GetComponent<Collider>()->GetOffset();
+
+		Vector2 playerColliderSize = GetOwner()->GetComponent<Collider>()->GetSize() * 100.0f;
+		Vector2 monsterColliderSize = obj->GetComponent<Collider>()->GetSize() * 100.0f;
+
+		Vector2 playerCenterColPos = playerColPos + (playerColliderSize / 2.0f);
+		Vector2 monsterCenterColPos = monsterColPos + (monsterColliderSize / 2.0f);
+
+		Vector2 leftOrRight = playerCenterColPos - monsterCenterColPos;
+
+		return leftOrRight.x;
+	}
+
+	void SkeletonScript::GotHitByBullet(GameObject* bullet)
+	{
+		Rigidbody* skeletonRb = GetOwner()->GetComponent<Rigidbody>();
+		Vector2 skeletonVelocity = skeletonRb->GetVelocity();
+
+		float leftOrRight = DetermineLeftOrRightByVector(bullet);
+
+		if (leftOrRight >= 0)
+		{
+			skeletonVelocity.x += 50.0f;
+		}
+		else
+		{
+			skeletonVelocity.x -= 50.0f;
+
+		}
+		skeletonVelocity.y -= 100.0f;
+
+		skeletonRb->SetVelocity(skeletonVelocity);
+		skeletonRb->SetGround(false);
+
+		mbIsHurtState = true;
+		mSkeletonState = eState::Hurt;
+
+		PlayHurtAnimation();
+	}
+
+	void SkeletonScript::PlayHurtAnimation()
+	{
+		GameObject* monster = GetOwner();
+		SkeletonScript* script = monster->GetComponent<SkeletonScript>();
+
+		if (mHp > 0)
+		{
+			if (mDirection == eDirection::Left)
+			{
+				mAnimator->PlayAnimation(L"HurtL", false);
+			}
+			else if (mDirection == eDirection::Right)
+			{
+				mAnimator->PlayAnimation(L"HurtR", false);
+			}
+		}
+		else
+		{
+			return;
+
+		}
 	}
 
 	void SkeletonScript::Respawn()
@@ -241,6 +335,14 @@ namespace ME
 				bullet->SetActive(false);
 				bullet->SetDeath();
 				mHp -= 10;
+
+				if (mbIsHurtState == false)
+				{
+					GotHitByBullet(bullet);
+				}
+
+				int a = 0;
+
 			}
 			
 		}

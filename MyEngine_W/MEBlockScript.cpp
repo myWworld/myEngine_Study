@@ -44,7 +44,7 @@ namespace ME
 		if (other->GetName() == L"Cannon")
 			return;
 
-		CannotMove(other);
+		CannotPass(other);
 
 	}
 
@@ -63,7 +63,7 @@ namespace ME
 		}
 	}
 
-	void BlockScript::CannotMove(Collider *obj)
+	void BlockScript::CannotPass(Collider *obj)
 	{
 		Rigidbody* playerRb = obj->GetOwner()->GetComponent<Rigidbody>();
 		Transform* playerTr = obj->GetOwner()->GetComponent<Transform>();

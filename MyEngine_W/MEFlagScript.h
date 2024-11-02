@@ -24,6 +24,7 @@ namespace ME
 
 
 		static bool IsOnFlag() { return mbIsOnFlag; }
+		static void SetFlag(bool isFlag) { mbIsOnFlag = isFlag; }
 
 	private:
 

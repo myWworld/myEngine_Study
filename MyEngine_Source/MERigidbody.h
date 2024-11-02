@@ -23,15 +23,23 @@ namespace ME
 		void SetVelocity(Vector2 velocity) { mVelocity = velocity; }
 
 		Vector2 GetVelocity(){return mVelocity;}
+		Vector2 GetForce() { return mForce; }
 		bool IsGround() { return mbGround; }
 
-		void SetNeedGravity(bool isAffected)
+		void StopMoving();
+
+		void SetNeedGravity(bool isAffected, Vector2 gravity = Vector2(0,0))
 		{
 			if (isAffected == false)
 				mbIsAffectedByGravity = false;
+			
 			if (isAffected == true)
 				mbIsAffectedByGravity = true;
+				
+			mGravity = gravity;
+
 		}
+
 		
 	private:
 	

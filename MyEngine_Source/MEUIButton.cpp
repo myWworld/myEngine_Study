@@ -20,8 +20,8 @@ namespace ME
 	}
 	void UIButton::OnInit()
 	{
-		SetPos(Vector2(420, 340));
-		SetSize(Vector2(140,40));
+		SetPos(Vector2(255, 120));
+		SetSize(Vector2(70,20));
 
 		mTexture = Resources::Find<graphics::Texture>(L"STARTBUTTON");
 

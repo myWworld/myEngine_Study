@@ -40,6 +40,21 @@ namespace ME
 		void CreateStair(Vector2 startPos, int maxSteps, int height, char direction);
 		void CreateFlag(GameObject* flag, float xSize = 1.0f, float ySize = 1.0f, float xOffset = 0.0f, float yOffset = 0.0f);
 		void CreateBlock(GameObject* block, float xSize = 1.0f, float ySize = 1.0f, float xOffset = 0.0f, float yOffset = 0.0f);
+		void CreateMovingBlock(GameObject* block, char direction
+			, float maxRangeVal, float minRangeVal
+			, float xSize = 1.0f, float ySize = 1.0f, float xOffset = 0.0f, float yOffset = 0.0f);
+		
+		void CreatePulleyBlock(GameObject* left, GameObject* right
+			, float xLeftSize = 1.0f, float yLeftSize = 1.0f, float xRightSize = 1.0f, float yRightSize = 1.0f
+			, float xLeftOffset = 0.0f, float yLeftOffset = 0.0f, float xRightOffset = 0.0f, float yRightOffset = 0.0f);
+		
+		void CreateOnlyDownBlock(GameObject* block, float xSize = 1.0f, float ySize = 1.0f, float xOffset = 0.0f, float yOffset = 0.0f);
+		
+		void CreateTrampoline(GameObject* trampoline
+			, float xSize = 1.0f, float ySize = 1.0f, float xOffset = 0.0f, float yOffset = 0.0f);
+		
+		
+		
 		void CreateLastDoor(GameObject* lastdoor, float xSize = 1.0f, float ySize = 1.0f, float xOffset = 0.0f, float yOffset = 0.0f);
 
 		void playerInitialize();
@@ -51,6 +66,8 @@ namespace ME
 		class Camera* mCameraComp;
 
 		float mPlayTime;
+
+		float mCannonLaunchTime;
 	};
 }
 

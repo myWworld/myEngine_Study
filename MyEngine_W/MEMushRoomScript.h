@@ -57,6 +57,12 @@ namespace ME
 		void PlayAnimationByDirection(eDirection direction);
 		void Translate(Transform* tr);
 
+		float DetermineLeftOrRightByVector(GameObject* obj);
+		void GotHitByBullet(GameObject* bullet);
+		void PlayHurtAnimation();
+
+	
+
 	private:
 
 		eState mState;
@@ -69,8 +75,10 @@ namespace ME
 
 		float mRespawnTime;
 		float mHp;
+
 		bool mbIsDead;
 		bool mbIsRespawn;
+		bool mbIsHurtState;
 	};
 
 }

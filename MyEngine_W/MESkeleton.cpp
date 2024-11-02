@@ -4,18 +4,18 @@ namespace ME
 {
 	void Skeleton::Initialize()
 	{
-		GameObject::Initialize();
+		Monsters::Initialize();
 	}
 	void Skeleton::Update()
 	{
-		GameObject::Update();
+		Monsters::Update();
 	}
 	void Skeleton::LateUpdate()
 	{
-		GameObject::LateUpdate();
+		Monsters::LateUpdate();
 	}
 	void Skeleton::Render(HDC hdc)
 	{
-		GameObject::Render(hdc);
+		Monsters::Render(hdc);
 	}
 }

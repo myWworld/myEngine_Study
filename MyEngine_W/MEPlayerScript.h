@@ -23,6 +23,7 @@ namespace ME
 			Fall,
 			GetDown,
 			Move,
+			Hurt,
 			Die,
 			Clear,
 		};
@@ -48,6 +49,8 @@ namespace ME
 		
 		void MakeBullet(bool isRunning = false);
 
+		void PlayStandingAnimByPrevDirection();
+
 
 		ePrevDirection GetPrevDirection() { return mPrevDirection; }
 
@@ -56,8 +59,10 @@ namespace ME
 		static void ReSetHp(float hp) { mHp = hp; }
 		static void ReSetScore(int score) { mScore = score; }
 
-		void SetEffect(GameObject* effect) { mEffect = effect; }
 		static bool IsStar() { return mbIsStar; }
+		static bool IsHurtState() { return mbIsHurtState; }
+
+		void SetEffect(GameObject* effect) { mEffect = effect; }
 
 		void SetPixelTexture(graphics::Texture* texture) { mPixelTexture = texture; }
 
@@ -65,22 +70,28 @@ namespace ME
 
 		void Standing();
 		void Move();
+		void DetermineMovingVelocity();
+
 		void Jump();
 		void Run();
 		void RunningAttack();
 		void StandingAttack();
 		void Die();
+		void Hurt();
 		void StageClear();
 
 		void PrintScore(HDC hdc);
 		void RunAttackTime();
 		
-		void PlayStandingAnimByPrevDirection();
+	
 		void PlayBulletByPrveDirection(Animator* animator);
 		void PlayJumpAnimationByPrevDirection();
-
-		void HurtByMonster(Rigidbody* rb, float rightOrLeft);
+		void PlayHurtAnimationByMonster(float rightOrLeft);
 		void PlayAuraAnimation();
+
+		void IsDie();
+		void IsStarMode();
+		float DetermineLeftOrRightByVector(GameObject* obj);
 
 
 		GameObject* CreateAura();
@@ -101,9 +112,10 @@ namespace ME
 
 		static float mHp;
 		static int mScore;
+		static bool mbIsHurtState;
 
 		bool mbIsOnFlag;
-			
+	
 		eState mState;
 		ePrevDirection mPrevDirection;
 

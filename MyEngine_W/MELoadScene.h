@@ -8,6 +8,7 @@
 #include "MEGameOverScene.h"
 #include "METoolScene.h"
 #include "MEStage2.h"
+#include "MEStage3.h"
 
 namespace ME
 {
@@ -18,12 +19,13 @@ namespace ME
  		SceneManager::CreateScene<TitleScene>(L"TitleScene");
 		SceneManager::CreateScene<Stage1>(L"Stage1");
 		SceneManager::CreateScene<Stage2>(L"Stage2");
+		SceneManager::CreateScene<Stage3>(L"Stage3");
 		SceneManager::CreateScene<GameOverScene>(L"GameOverScene");
 	
 
-	//	SceneManager::LoadScene(L"TitleScene");
+		SceneManager::LoadScene(L"Stage3");
 
-		SceneManager::LoadScene(L"Stage2");
+		//SceneManager::LoadScene(L"TitleScene");
 	
 
 	}

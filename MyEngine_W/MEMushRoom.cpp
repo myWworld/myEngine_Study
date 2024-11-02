@@ -1,6 +1,7 @@
 #include "MEMushRoom.h"
 #include "METransform.h"
 
+
 namespace ME
 {
 	MushRoom::MushRoom()
@@ -11,18 +12,19 @@ namespace ME
 	}
 	void MushRoom::Initialize()
 	{
-		GameObject::Initialize();
+		Monsters::Initialize();
 	}
 	void MushRoom::Update()
 	{
-		GameObject::Update();
+		Monsters::Update();
 	}
 	void MushRoom::LateUpdate()
 	{
-		GameObject::LateUpdate();
+		Monsters::LateUpdate();
 	}
 	void MushRoom::Render(HDC hdc)
 	{
-		GameObject::Render(hdc);
+		Monsters::Render(hdc);
 	}
+
 }

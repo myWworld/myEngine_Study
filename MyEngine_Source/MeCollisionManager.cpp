@@ -2,6 +2,7 @@
 #include "MEScenes.h"
 #include "MESceneManager.h"
 #include "MECollider.h"
+#include "MEBoxCollider2D.h"
 
 namespace ME
 {
@@ -162,6 +163,8 @@ namespace ME
 		Vector2 leftSize = left->GetSize() * 100.0f;
 		Vector2 rightSize = right->GetSize() * 100.0f;
 
+		BoxCollider2D* leftBC = (static_cast<BoxCollider2D*>(left));
+		BoxCollider2D* rightBC = (static_cast<BoxCollider2D*>(right));
 
 		enums::eColliderType leftType = left->GetColliderType();
 		enums::eColliderType rightType = right->GetColliderType();
@@ -171,6 +174,24 @@ namespace ME
 		{
 			Vector2 leftCenterPos = leftPos  + (leftSize / 2.0f);
 			Vector2 rightCenterPos = rightPos + (rightSize / 2.0f);
+
+			if (leftBC->IsRotate())
+			{
+		
+				leftCenterPos = leftBC->GetCentralPoint();
+
+				leftSize.y =  leftBC->GetHeight();
+				leftSize.x =  leftBC->GetWidth();
+				
+			}
+
+			if (rightBC->IsRotate())
+			{
+				rightCenterPos = rightBC->GetCentralPoint();
+
+				rightSize.y = rightBC->GetHeight();
+				rightSize.x = rightBC->GetWidth();
+			}
 
 			//AABB Ãæµ¹ rect-rect
 			if (fabs(leftCenterPos.x - rightCenterPos.x) < fabs(leftSize.x / 2.0f + rightSize.x / 2.0f)

@@ -4,11 +4,14 @@
 
 namespace ME
 {
+	bool LastDoorScript::mbIsClear = false;
+
 	LastDoorScript::LastDoorScript()
 	{
 	}
 	LastDoorScript::~LastDoorScript()
 	{
+		
 	}
 	void LastDoorScript::Initialize()
 	{
@@ -32,7 +35,8 @@ namespace ME
 		if (other->GetName() == L"Player")
 		{
 			if (other->GetOwner()->GetComponent<Animator>()->IsComplete())
-				SceneManager::LoadScene(L"Stage2");
+				mbIsClear = true;
+				
 		}
 	}
 	void LastDoorScript::OnCollisionExit(Collider* other)

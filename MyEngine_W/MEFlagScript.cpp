@@ -11,6 +11,7 @@ namespace ME
 	bool FlagScript::mbIsOnFlag = false;
 
 	FlagScript::FlagScript()
+		
 	{
 	}
 	FlagScript::~FlagScript()
@@ -31,11 +32,10 @@ namespace ME
 	}
 	void FlagScript::OnCollisionEnter(Collider* other)
 	{
+
+
 		if (other->GetName() == L"Player")
 		{
-			Transform* playerTr = other->GetOwner()->GetComponent<Transform>();
-			Vector2 playerPos = playerTr->GetPosition();
-
 			mbIsOnFlag = true;
 		}
 	}

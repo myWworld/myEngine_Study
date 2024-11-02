@@ -33,23 +33,27 @@ namespace ME
 	}
 	void ChimneyScript::OnCollisionEnter(Collider* other)
 	{
-		if (other->GetName() == L"Cannon")
+		if (other->GetName() == L"Cannon"
+				|| other->GetName() == L"Bullet")
 			return;
-
-		CannotMove(other);
+	
+		
+		CannotPass(other);
 
 		
 	}
 	void ChimneyScript::OnCollisionStay(Collider* other)
 	{
-		if (mbIsOnChimney == true)
-		{
-			if (Input::GetKey(eKeyCode::S))
-				SceneManager::LoadScene(L"GameOverScene");
-		}
-		
-		
+		if (other->GetName() == L"Cannon")
+			return;
+
+		if (Input::GetKey(eKeyCode::Space))
+			return;
+
+		CannotPass(other);
 	}
+		
+		
 	void ChimneyScript::OnCollisionExit(Collider* other)
 	{
 		Rigidbody* rb = other->GetOwner()->GetComponent<Rigidbody>();
@@ -62,7 +66,7 @@ namespace ME
 	
 	}
 
-	void ChimneyScript::CannotMove(Collider* obj)
+	void ChimneyScript::CannotPass(Collider* obj)
 	{
 		Rigidbody* playerRb = obj->GetOwner()->GetComponent<Rigidbody>();
 		Transform* playerTr = obj->GetOwner()->GetComponent<Transform>();
@@ -84,7 +88,7 @@ namespace ME
 		float playerBottom = playerCenterPos.y + (playerColSize.y / 2.0f);
    		float chimneyTop = ChimneyCenterPos.y - (ChimneyColSize.y / 2.0f);
 
-		if ( fabs(playerBottom - chimneyTop) <= 8)
+		if (fabs(playerBottom - chimneyTop) <= 5)
 		{
    			float len = fabs(playerCenterPos.y - ChimneyCenterPos.y);
 			float scale = fabs(playerColSize.y / 2.0f + ChimneyColSize.y / 2.0f);
@@ -109,11 +113,11 @@ namespace ME
 
 			if (direct <= 0)
 			{
-				playerPos.x -= 3.0f;			
+				playerPos.x -= 1.5f ;			
 			}
 			else
 			{
-				playerPos.x += 3.0f;
+				playerPos.x += 1.5f;
 
 			}
 
