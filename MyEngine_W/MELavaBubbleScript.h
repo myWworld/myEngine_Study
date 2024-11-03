@@ -23,6 +23,9 @@ namespace ME
 		void OnCollisionExit(Collider* other) override;
 
 		void SetLauchPos(Vector2 pos) { mLauchPos = pos; }
+		void SetLauchStartTime(float start) { mStartStandard = start; }
+
+		void SetLauchHeight(float height) { mLauchHeight = height; }
 
 	private:
 
@@ -30,7 +33,12 @@ namespace ME
 
 	private:
 
+		float mStartStandard;
+		float mStartTime;
+
 		float mLauchTime;
+
+		float mLauchHeight;
 
 		Vector2 mLauchPos;
 

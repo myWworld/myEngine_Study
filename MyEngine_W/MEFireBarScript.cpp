@@ -15,6 +15,7 @@ namespace ME
 {
 	FireBarScript::FireBarScript()
 		:mRotateTime(0.0f)
+		, mStartTime(0.0f)
 	{
 	}
 	FireBarScript::~FireBarScript()
@@ -29,20 +30,29 @@ namespace ME
 		BoxCollider2D* col = GetOwner()->GetComponent<BoxCollider2D>();
 		
 		mRotateTime += Time::DeltaTime();
+		mStartTime += Time::DeltaTime();
 
-		if (mRotateTime > 0.107f)
+		if (mStartTime > mRotateStart)
 		{
-			mCurRot -= mRot;
-			col->SetRotation(mCurRot);
-
-			mRotateTime = 0;
-
-			if (mCurRot <= -360)
+			if (mRotateTime > 0.107f)
 			{
-				mCurRot = 0;
+				mCurRot -= mRot;
+				tr->SetRotation(mCurRot);
+				col->SetRotation(mCurRot);
+
+				mRotateTime = 0;
+
+				if (mCurRot <= -360)
+				{
+					mCurRot = 0;
+				}
 			}
 		}
 
+		if (mStartTime > 1e9)
+		{
+			mStartTime = mRotateStart;
+		}
 
 	}
 	void FireBarScript::LateUpdate()

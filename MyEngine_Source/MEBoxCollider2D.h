@@ -16,7 +16,7 @@ namespace ME
 		void Initialize() override;
 		void Update()override;
 		void LateUpdate()override;
-		 void Render(HDC hdc)override;
+		void Render(HDC hdc)override;
 
 		 
 		 void SetRotation(float rot) { mRot = rot; }
@@ -26,9 +26,11 @@ namespace ME
 		 float GetHeight() { return mHeight; }
 		 float GetWidth() { return mWidth; }
 
+		 POINT* GetPoint() { return mPoint; }
+
 	private:
 	
-		Vector2 RotateCollider(float rot, int x, int y, int width, int height, HDC hdc);
+		Vector2 RotateCollider(float rot, int x, int y, int width, int height);
 	
 	private:
 		
@@ -38,6 +40,7 @@ namespace ME
 		float mWidth, mHeight;
 
 		bool mbIsRotate;
+		POINT* mPoint;
 
 	};
 

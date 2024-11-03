@@ -23,6 +23,8 @@ namespace ME
 		void OnCollisionStay(Collider* other) override;
 		void OnCollisionExit(Collider* other) override;
 
+		void SetRotateStart(float start) { mRotateStart = start; }
+
 		void SetRotation(float rot) { mRot = rot; }
 
 	private:
@@ -32,6 +34,8 @@ namespace ME
 	private:
 
 		float mRotateTime;
+		float mRotateStart;
+		float mStartTime;
 
 		float mCurRot;
 		float mRot;

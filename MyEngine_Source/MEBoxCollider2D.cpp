@@ -22,6 +22,17 @@ namespace ME
 	}
 	void BoxCollider2D::Update()
 	{
+		Transform* tr = GetOwner()->GetComponent<Transform>();
+		Vector2 pos = tr->GetPosition();
+
+		Vector2 offset = GetOwner()->GetComponent<BoxCollider2D>()->GetOffset();
+		float width = (100.0f * GetSize().x);
+		float height = (100.0f * GetSize().y);
+
+
+
+		if (mRot != 0)
+			mCentralPoint = RotateCollider(mRot, pos.x + offset.x, pos.y + offset.y, width, height);
 	}
 	void BoxCollider2D::LateUpdate()
 	{
@@ -37,7 +48,7 @@ namespace ME
 			pos = renderer::mainCamera->CalculatePosition(pos);
 		}
 
-		Vector2 offset = GetOffset();
+		Vector2 offset = GetOwner()->GetComponent<BoxCollider2D>()->GetOffset();
 
 		HBRUSH transparentBrush = (HBRUSH)GetStockObject(NULL_BRUSH);
 		HBRUSH oldBrush = (HBRUSH)SelectObject(hdc, transparentBrush);
@@ -54,8 +65,7 @@ namespace ME
 
 		if (mRot != 0)
 		{
-			mCentralPoint = RotateCollider(mRot, pos.x + offset.x, pos.y + offset.y, width,height,hdc);
-			Rectangle(hdc, mCentralPoint.x,mCentralPoint.y, mCentralPoint.x + mWidth /2.0f, mCentralPoint.y + mHeight /2.0f);
+			Polygon(hdc, mPoint, 4);
 			mbIsRotate = true;
 		}
 		else
@@ -70,7 +80,7 @@ namespace ME
 		DeleteObject(greenPen);
 	}
 
-	Vector2 BoxCollider2D::RotateCollider(float rot, int x ,int y, int width,int height, HDC hdc)
+	Vector2 BoxCollider2D::RotateCollider(float rot, int x ,int y, int width,int height)//, HDC hdc)
 	{
 		
 		float radian = rot * (3.14159265f / 180.0f);
@@ -93,18 +103,21 @@ namespace ME
 		points[3].y = y + (int)(height * cos(radian));
 
 		// 회전된 사각형 그리기
-		Polygon(hdc, points, 4);
+		//Polygon(hdc, points, 4);
 
 
 		float midx = (points[0].x + points[1].x + points[2].x + points[3].x) / 4;
 		float midy = (points[0].y + points[1].y + points[2].y + points[3].y) / 4;
 
-		mWidth = max(fabs(points[0].x - points[2].x), fabs(points[1].x - points[3].x));
-		mHeight = max(fabs(points[0].y - points[2].y), fabs(points[1].y - points[3].y));
+		mWidth = max(fabs(points[1].x - points[2].x), fabs(points[0].x - points[3].x));
+
+		mHeight = max(fabs(points[1].y - points[2].y), fabs(points[0].y - points[3].y));
+
+	
+		mPoint =  points;
 
 		Vector2 centralPoint = Vector2(midx, midy);
 
 		return centralPoint;
-
 	}
 }

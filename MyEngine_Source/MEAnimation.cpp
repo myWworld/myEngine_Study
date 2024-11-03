@@ -59,7 +59,12 @@ namespace ME
 
 		GameObject * gameObj = mAnimator->GetOwner();
 		Transform* tr = gameObj->GetComponent<Transform>();
+		
+
 		Vector2 pos = tr->GetPosition();
+
+
+
 		Vector2 scale = tr->GetScale();
 		float rot = tr->GetRotation();
 

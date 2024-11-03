@@ -26,6 +26,7 @@ namespace ME
 			Hurt,
 			Die,
 			Clear,
+			End,
 		};
 
 		enum class ePrevDirection
@@ -91,6 +92,7 @@ namespace ME
 
 		void IsDie();
 		void IsStarMode();
+		void IsAxeBroken();
 		float DetermineLeftOrRightByVector(GameObject* obj);
 
 
@@ -102,6 +104,9 @@ namespace ME
 
 		bool isJump;
 		float jumpSeconds;
+
+		float mAxeTime;
+		bool mbIsAxeGone;
 
 		float mAttackTime;
 		bool mbIsRunningAttack;

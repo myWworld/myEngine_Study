@@ -72,33 +72,27 @@ namespace ME
 		{
 			MakeFloor();
 			MakeCeiling();
-		//	MakeFireBar();
+			MakeFireBar();
 			CreateBridgeBlocks();
 			
+			MakeLavaBubble();
 
-			LavaBubble* lavabubble1 = object::Instantiate<LavaBubble>(enums::eLayerType::Obstacle, Vector2(220, 132));
-			CreateLavaBubble(lavabubble1,0.15,0.17,-4,47);
-
-			LavaBubble* lavabubble2 = object::Instantiate<LavaBubble>(enums::eLayerType::Obstacle, Vector2(434, 152));
-			CreateLavaBubble(lavabubble2, 0.15, 0.17, -4, 47);
-
-			LavaBubble* lavabubble3 = object::Instantiate<LavaBubble>(enums::eLayerType::Obstacle, Vector2(531, 152));
-			CreateLavaBubble(lavabubble3, 0.15, 0.17, -4, 47);
+		
 
 
 
 		}
 		
 		{
-			Koopa* koopa = object::Instantiate<Koopa>(enums::eLayerType::Monster,Vector2(150,60) ); //Vector2(1247, 160)
+			Koopa* koopa = object::Instantiate<Koopa>(enums::eLayerType::Monster,Vector2(2150,80)); //Vector2(1247, 160)
 			CreateKoopa(koopa);
 		}
 
 		{
-			Flag* flag = object::Instantiate<Flag>(enums::eLayerType::Block, Vector2(2679, 193));
-			CreateFlag(flag, 0.04, 1.7, 0, -143);
+			Flag* flag = object::Instantiate<Flag>(enums::eLayerType::Block, Vector2(2414, 195));
+			CreateFlag(flag, 0.2, 0.26, -10, -15);
 
-			LastDoor* lastdoor = object::Instantiate<LastDoor>(enums::eLayerType::Block, Vector2(2797, 167));
+			LastDoor* lastdoor = object::Instantiate<LastDoor>(enums::eLayerType::Block, Vector2(2500, 165));
 			CreateLastDoor(lastdoor, 0.27, 0.4);
 		}
 
@@ -123,11 +117,13 @@ namespace ME
 
 	void ME::Stage3::LateUpdate()
 	{
-		//if (LastDoorScript::IsClearStage())
-		//{
-		//	LastDoorScript::SetClearStage(false);
-		//	SceneManager::LoadScene(L"GameOverScene");
-		//}
+		if (LastDoorScript::IsClearStage())
+		{
+			LastDoorScript::SetClearStage(false);
+			SceneManager::LoadScene(L"GameOverScene");
+		}
+
+
 		Scene::LateUpdate();
 	}
 
@@ -326,10 +322,18 @@ namespace ME
 	{
 		BoxCollider2D* flagCol = flag->AddComponent<BoxCollider2D>();
 		flag->AddComponent<FlagScript>();
+		
 		flagCol->SetName(L"Flag");
-
 		flagCol->SetSize(Vector2(xSize, ySize));
 		flagCol->SetOffset(Vector2(xOffset, yOffset));
+		
+		graphics::Texture* tex = Resources::Find<graphics::Texture>(L"STAGE3MAPS");
+
+		Animator* flagAnimator = flag->AddComponent<Animator>();
+
+		flagAnimator->CreateAnimation(L"IdleR", tex, Vector2(0, 0), Vector2(20, 26), Vector2::Zero, 0.1f, 1);
+		flagAnimator->PlayAnimation(L"IdleR");
+
 	}
 	void Stage3::CreateBlock(GameObject* block, float xSize, float ySize, float xOffset, float yOffset)
 	{
@@ -341,14 +345,16 @@ namespace ME
 		BlockCol->SetSize(Vector2(xSize, ySize));
 		BlockCol->SetOffset(Vector2(xOffset, yOffset));
 	}
-	void Stage3::CreateFireBar(GameObject* firebar, float xSize, float ySize, float xOffset, float yOffset)
+	void Stage3::CreateFireBar(GameObject* firebar, float xSize, float ySize, float xOffset, float yOffset
+		, float startTime)
 	{
 		
 		FireBarScript* firebarscript = firebar->AddComponent<FireBarScript>();
-		firebarscript->SetRotation(11.25f);
+		firebarscript->SetRotation(12.f);
+		firebarscript->SetRotateStart(startTime);
 
 		Transform* firebarTr = firebar->GetComponent<Transform>();
-		firebarTr->SetScale(Vector2(0.48, 0.48));
+		//firebarTr->SetScale(Vector2(0.48, 0.48));
 		
 
 		BoxCollider2D* firebarCol = firebar->AddComponent<BoxCollider2D>();
@@ -361,15 +367,18 @@ namespace ME
 		Animator* fireBarAnimator = firebar->AddComponent<Animator>();
 
 		graphics::Texture* fireBarTex = Resources::Find<graphics::Texture>(L"SHORTFIREBAR");
-		fireBarAnimator->CreateAnimation(L"IdleR", fireBarTex, Vector2(0,0), Vector2(176, 176)
-			, Vector2(54,53), 0.05f, 64);
+		fireBarAnimator->CreateAnimation(L"IdleR", fireBarTex, Vector2(0,0), Vector2(8, 96)
+			, Vector2(0,0), 0.1f,1);
 		fireBarAnimator->PlayAnimation(L"IdleR");
 
 	}
-	void Stage3::CreateLavaBubble(GameObject* lavabubble, float xSize, float ySize, float xOffset, float yOffset)
+	void Stage3::CreateLavaBubble(GameObject* lavabubble, float xSize, float ySize, float xOffset, float yOffset, float StartTime,float launchHeight)
 	{
 
 		LavaBubbleScript* lavabubblescript = lavabubble->AddComponent<LavaBubbleScript>();
+		lavabubblescript->SetLauchStartTime(StartTime);
+		lavabubblescript->SetLauchHeight(launchHeight);
+
 		Rigidbody* rb = lavabubble->AddComponent<Rigidbody>();
 		rb->SetNeedGravity(false);
 
@@ -517,36 +526,47 @@ namespace ME
 	}
 	void Stage3::MakeFireBar()
 	{
-		Laser* fireBar1 = object::Instantiate<Laser>(enums::eLayerType::Obstacle, Vector2(368, 98));
-		CreateFireBar(fireBar1, 0.01, 0.44, 8.5, 7.5);
+		Laser* fireBar1 = object::Instantiate<Laser>(enums::eLayerType::Obstacle, Vector2(376, 104));
+		CreateFireBar(fireBar1,0.03,0.46,-1,1.5);
 
-		Laser* fireBar2 = object::Instantiate<Laser>(enums::eLayerType::Obstacle, Vector2(592, 98));
-		CreateFireBar(fireBar2, 0.01, 0.44, 8.5, 7.5);
+		Laser* fireBar2 = object::Instantiate<Laser>(enums::eLayerType::Obstacle, Vector2(600, 104));
+		CreateFireBar(fireBar2, 0.03, 0.46, -1, 1.5);
 
-		Laser* fireBar3 = object::Instantiate<Laser>(enums::eLayerType::Obstacle, Vector2(784, 98));
-		CreateFireBar(fireBar3, 0.01, 0.44, 8.5, 7.5);
+		Laser* fireBar3 = object::Instantiate<Laser>(enums::eLayerType::Obstacle, Vector2(792, 104));
+		CreateFireBar(fireBar3, 0.03, 0.46, -1, 1.5,2.0f);
 
-		Laser* fireBar4 = object::Instantiate<Laser>(enums::eLayerType::Obstacle, Vector2(960, 98));
-		CreateFireBar(fireBar4, 0.01, 0.44, 8.5, 7.5);
+		Laser* fireBar4 = object::Instantiate<Laser>(enums::eLayerType::Obstacle, Vector2(968, 104));
+		CreateFireBar(fireBar4, 0.01, 0.44, -1, 1.5);
 
-		Laser* fireBar5 = object::Instantiate<Laser>(enums::eLayerType::Obstacle, Vector2(1071, 98));
-		CreateFireBar(fireBar5, 0.01, 0.44, 8.5, 7.5);
+		Laser* fireBar5 = object::Instantiate<Laser>(enums::eLayerType::Obstacle, Vector2(1079, 104));
+		CreateFireBar(fireBar5, 0.03, 0.46, -1, 1.5, 2.0f);
 
-		Laser* fireBar6 = object::Instantiate<Laser>(enums::eLayerType::Obstacle, Vector2(1214, 145));
-		CreateFireBar(fireBar6, 0.01, 0.44, 8.5, 7.5);
+		Laser* fireBar6 = object::Instantiate<Laser>(enums::eLayerType::Obstacle, Vector2(1222, 151));
+		CreateFireBar(fireBar6, 0.03, 0.46, -1, 1.5);
 
-		Laser* fireBar7 = object::Instantiate<Laser>(enums::eLayerType::Obstacle, Vector2(1278, 65));
-		CreateFireBar(fireBar7, 0.01, 0.44, 8.5, 7.5);
+		Laser* fireBar7 = object::Instantiate<Laser>(enums::eLayerType::Obstacle, Vector2(1286, 71));
+		CreateFireBar(fireBar7, 0.03, 0.46, -1, 1.5, 2.0f);
 
-		Laser* fireBar8 = object::Instantiate<Laser>(enums::eLayerType::Obstacle, Vector2(1342, 145));
-		CreateFireBar(fireBar8, 0.01, 0.44, 8.5, 7.5);
+		Laser* fireBar8 = object::Instantiate<Laser>(enums::eLayerType::Obstacle, Vector2(1350, 151));
+		CreateFireBar(fireBar8, 0.03, 0.46, -1, 1.5, 2.0f);
 
-		Laser* fireBar9 = object::Instantiate<Laser>(enums::eLayerType::Obstacle, Vector2(1406, 65));
-		CreateFireBar(fireBar9, 0.01, 0.44, 8.5, 7.5);
+		Laser* fireBar9 = object::Instantiate<Laser>(enums::eLayerType::Obstacle, Vector2(1414, 71));
+		CreateFireBar(fireBar9, 0.03, 0.46, -1, 1.5);
 
-		Laser* fireBar10 = object::Instantiate<Laser>(enums::eLayerType::Obstacle, Vector2(1470, 145));
-		CreateFireBar(fireBar10, 0.01, 0.44, 8.5, 7.5);
+		Laser* fireBar10 = object::Instantiate<Laser>(enums::eLayerType::Obstacle, Vector2(1478, 151));
+		CreateFireBar(fireBar10, 0.03, 0.46, -1, 1.5, 2.0f);
 
+	}
+	void Stage3::MakeLavaBubble()
+	{
+		LavaBubble* lavabubble1 = object::Instantiate<LavaBubble>(enums::eLayerType::Obstacle, Vector2(220, 132));
+		CreateLavaBubble(lavabubble1, 0.15, 0.17, -4, 47);
+
+		LavaBubble* lavabubble2 = object::Instantiate<LavaBubble>(enums::eLayerType::Obstacle, Vector2(434, 152));
+		CreateLavaBubble(lavabubble2, 0.15, 0.17, -4, 47,2.0f,200.0f);
+
+		LavaBubble* lavabubble3 = object::Instantiate<LavaBubble>(enums::eLayerType::Obstacle, Vector2(531, 152));
+		CreateLavaBubble(lavabubble3, 0.15, 0.17, -4, 47,2.5f,200.0f);
 	}
 
 	void ME::Stage3::playerInitialize()

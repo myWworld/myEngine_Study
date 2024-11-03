@@ -175,30 +175,39 @@ namespace ME
 			Vector2 leftCenterPos = leftPos  + (leftSize / 2.0f);
 			Vector2 rightCenterPos = rightPos + (rightSize / 2.0f);
 
-			if (leftBC->IsRotate())
-			{
-		
-				leftCenterPos = leftBC->GetCentralPoint();
+	
+				if (leftBC->IsRotate())
+				{
 
-				leftSize.y =  leftBC->GetHeight();
-				leftSize.x =  leftBC->GetWidth();
-				
-			}
+					leftCenterPos = leftBC->GetCentralPoint();
 
-			if (rightBC->IsRotate())
-			{
-				rightCenterPos = rightBC->GetCentralPoint();
+					leftSize.y = leftBC->GetHeight();
+					leftSize.x = leftBC->GetWidth();
 
-				rightSize.y = rightBC->GetHeight();
-				rightSize.x = rightBC->GetWidth();
-			}
+				}
 
-			//AABB 충돌 rect-rect
-			if (fabs(leftCenterPos.x - rightCenterPos.x) < fabs(leftSize.x / 2.0f + rightSize.x / 2.0f)
-				&& fabs(leftCenterPos.y - rightCenterPos.y) < fabs(leftSize.y / 2.0f + rightSize.y / 2.0f))
-			{
-				return true;
-			}
+				if (rightBC->IsRotate())
+				{
+					rightCenterPos = rightBC->GetCentralPoint();
+
+					rightSize.y = rightBC->GetHeight();
+					rightSize.x = rightBC->GetWidth();
+
+				}
+
+			
+
+				//AABB 충돌 rect-rect
+				if (fabs(leftCenterPos.x - rightCenterPos.x) < fabs(leftSize.x / 2.0f + rightSize.x / 2.0f)
+					&& fabs(leftCenterPos.y - rightCenterPos.y) < fabs(leftSize.y / 2.0f + rightSize.y / 2.0f))
+				{
+					return true;
+				}
+			
+
+
+
+
 		}
 
 		if (leftType == enums::eColliderType::Circle2D

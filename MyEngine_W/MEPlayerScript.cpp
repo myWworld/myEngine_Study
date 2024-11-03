@@ -22,6 +22,8 @@
 
 #include "METurtle.h"
 #include "METurtleScript.h"
+#include "MEAxeScript.h"
+
 
 namespace ME
 {
@@ -41,6 +43,8 @@ namespace ME
 		, mbIsRunningAttack(false)
 		, mbStillStartTime(false)	
 		, mbIsOnFlag(false)
+		, mAxeTime(0.0f)
+		, mbIsAxeGone(false)
 	{
 	}
 	PlayerScript::~PlayerScript()
@@ -66,6 +70,7 @@ namespace ME
 		IsDie();
 		IsStarMode();
 
+		IsAxeBroken();
 
 		switch (mState)
 		{
@@ -478,6 +483,13 @@ namespace ME
 	void PlayerScript::StageClear()
 	{
 		Transform* tr = GetOwner()->GetComponent<Transform>();
+		Rigidbody* rb = GetOwner()->GetComponent<Rigidbody>();
+
+		Vector2 velocity = rb->GetVelocity();
+
+		if (velocity != Vector2::Zero)
+			rb->StopMoving();
+
 		Vector2 pos = tr->GetPosition();
 
 		pos.x += 70 * Time::DeltaTime();
@@ -711,6 +723,25 @@ namespace ME
 				mStarTime = 0.0f;
 				mbIsStar = false;
 				mEffect->SetDeath();
+			}
+		}
+	}
+
+	void PlayerScript::IsAxeBroken()
+	{
+		if (AxeScript::IsTrigger() && mbIsAxeGone == false)
+		{
+			mAxeTime += Time::DeltaTime();
+			mState = eState::End;
+			Rigidbody* rb = GetOwner()->GetComponent<Rigidbody>();
+			rb->SetNeedGravity(false);
+
+			if (mAxeTime > 1.7f)
+			{
+				rb->SetNeedGravity(true, Vector2(0.0f, 800.0f));
+				rb->StopMoving();
+				mState = eState::Standing;
+				mbIsAxeGone = true;
 			}
 		}
 	}

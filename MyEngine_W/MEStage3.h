@@ -38,15 +38,17 @@ namespace ME
 	
 		void CreateLastDoor(GameObject* lastdoor, float xSize = 1.0f, float ySize = 1.0f, float xOffset = 0.0f, float yOffset = 0.0f);
 
-		void CreateFireBar(GameObject* firebar, float xSize = 1.0f, float ySize = 1.0f, float xOffset = 0.0f, float yOffset = 0.0f);
+		void CreateFireBar(GameObject* firebar, float xSize = 1.0f, float ySize = 1.0f, float xOffset = 0.0f, float yOffset = 0.0f, float startTime = 1.0f);
 
-		void CreateLavaBubble(GameObject* lavabubble, float xSize = 1.0f, float ySize = 1.0f, float xOffset = 0.0f, float yOffset = 0.0f);
+		void CreateLavaBubble(GameObject* lavabubble, float xSize = 1.0f, float ySize = 1.0f, float xOffset = 0.0f, float yOffset = 0.0f, float startTime = 1.0f, float lauchTime = 160.0f);
 
 		void CreateBridgeBlocks();
 
 		void MakeFloor();
 		void MakeCeiling();
 		void MakeFireBar();
+		void MakeLavaBubble();
+
 
 		void playerInitialize();
 

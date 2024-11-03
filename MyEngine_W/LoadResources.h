@@ -42,7 +42,7 @@ namespace ME
 		Resources::Load<graphics::Texture>(L"USEDQBOX", L"..\\Resources\\Usedqbox.png");
 		Resources::Load<graphics::Texture>(L"STAR", L"..\\Resources\\Star.png");
 		Resources::Load<graphics::Texture>(L"TRAMPOLINE", L"..\\Resources\\trampoline.png");
-		Resources::Load<graphics::Texture>(L"SHORTFIREBAR", L"..\\Resources\\shortfirebar.png");
+		Resources::Load<graphics::Texture>(L"SHORTFIREBAR", L"..\\Resources\\firebar.png");
 		Resources::Load<graphics::Texture>(L"LAVABUBBLEUP", L"..\\Resources\\lavabubbleUp.png");
 		Resources::Load<graphics::Texture>(L"LAVABUBBLEDOWN", L"..\\Resources\\lavabubbleDown.png");
 		Resources::Load<graphics::Texture>(L"STAGE3MAPS", L"..\\Resources\\maps.png");
