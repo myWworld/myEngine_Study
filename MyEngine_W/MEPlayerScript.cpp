@@ -45,6 +45,8 @@ namespace ME
 		, mbIsOnFlag(false)
 		, mAxeTime(0.0f)
 		, mbIsAxeGone(false)
+		, mHurtCount(0.0f)
+		, mbHurtCountStart(false)
 	{
 	}
 	PlayerScript::~PlayerScript()
@@ -65,7 +67,23 @@ namespace ME
 		if (mbIsHurtState)
 		{
 			mState = eState::Hurt;
+
+			if(mbHurtCountStart == false)
+				mbHurtCountStart = true;
 		}
+
+		if (mbHurtCountStart == true)
+		{
+			mHurtCount += Time::DeltaTime();
+
+			if (mHurtCount > 3.0f)
+			{
+				mHurtCount = 0.0f;
+				mbHurtCountStart = false;
+			}
+		}
+
+
 
 		IsDie();
 		IsStarMode();
@@ -126,15 +144,14 @@ namespace ME
 
 	void PlayerScript::OnCollisionEnter(Collider* other)
 	{
-		if (mbIsHurtState == true)
+		if (mbIsHurtState == true || mbHurtCountStart == true)
 			return;
 
 	
 
-		if (other->GetOwner()->GetLayerType() == enums::eLayerType::Monster 
-				|| other->GetOwner()->GetLayerType() == enums::eLayerType::Obstacle)
+		if (other->GetOwner()->GetLayerType() == enums::eLayerType::Monster)
 		{
-			Monsters* monster =static_cast<Monsters*>(other->GetOwner());
+			Monsters* monster = static_cast<Monsters*>(other->GetOwner());
 			enums::eLayerType layertype = other->GetOwner()->GetLayerType();
 
 			if (other->GetName() == L"Cannon"
@@ -148,8 +165,6 @@ namespace ME
 			{
 				return;
 			}
-
-			
 			
 			if (mbIsStar == true && layertype == enums::eLayerType::Monster)
 			{
@@ -171,31 +186,23 @@ namespace ME
 
 			if (mHp != 0)
 			{
-
-				mHp -= 10;
-				Rigidbody* playerRb = GetOwner()->GetComponent<Rigidbody>();
-				Vector2 playerVelocity = playerRb->GetVelocity();
-				
-				float leftOrRight = DetermineLeftOrRightByVector(monster);
-
-				if (leftOrRight >= 0)
-				{
-					playerVelocity.x += 50.0f;
-				}
-				else
-				{
-					playerVelocity.x -= 50.0f;
-					
-				}
-				playerVelocity.y -= 100.0f;
-			
-				playerRb->SetVelocity(playerVelocity);
-				playerRb->SetGround(false);
-
-				PlayHurtAnimationByMonster(leftOrRight);
+				GetHurtAccordingToHp(monster);
 			
 			}
 			else if(mHp == 0)
+				return;
+		}
+
+		if (other->GetOwner()->GetLayerType() == enums::eLayerType::Obstacle)
+		{
+			GameObject* obstacle = other->GetOwner();
+
+			if (mHp != 0)
+			{
+				GetHurtAccordingToHp(obstacle);
+
+			}
+			else if (mHp == 0)
 				return;
 		}
 
@@ -468,7 +475,7 @@ namespace ME
 
 	void PlayerScript::Hurt()
 	{
-		
+
 		if (mAnimator->IsComplete())
 		{
 			Rigidbody* playerRb = GetOwner()->GetComponent<Rigidbody>();
@@ -803,6 +810,31 @@ namespace ME
 
 		
 		effectAnimator->PlayAnimation(L"StarEffectR");
+	}
+
+	void PlayerScript::GetHurtAccordingToHp(GameObject* obj)
+	{
+		mHp -= 10;
+		Rigidbody* playerRb = GetOwner()->GetComponent<Rigidbody>();
+		Vector2 playerVelocity = playerRb->GetVelocity();
+
+		float leftOrRight = DetermineLeftOrRightByVector(obj);
+
+		if (leftOrRight >= 0)
+		{
+			playerVelocity.x += 50.0f;
+		}
+		else
+		{
+			playerVelocity.x -= 50.0f;
+
+		}
+		playerVelocity.y -= 100.0f;
+
+		playerRb->SetVelocity(playerVelocity);
+		playerRb->SetGround(false);
+
+		PlayHurtAnimationByMonster(leftOrRight);
 	}
 
 	GameObject* PlayerScript::CreateAura()

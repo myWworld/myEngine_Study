@@ -63,16 +63,6 @@ namespace ME
 	}
 	void FireBarScript::OnCollisionEnter(Collider* other)
 	{
-		if (other->GetName() == L"Player")
-		{
-			Rigidbody* playerRb = other->GetOwner()->GetComponent<Rigidbody>();
-			Vector2 velocity = playerRb->GetVelocity();
-
-			velocity += Vector2(100, -150);
-			
-
-			playerRb->SetVelocity(velocity);
-		}
 	}
 	void FireBarScript::OnCollisionStay(Collider* other)
 	{

@@ -17,6 +17,7 @@ namespace ME
 	KoopaScript::KoopaScript()
 		:mTime(0.0f)
 		,mState(eState::Idle)
+		,mPlayer(nullptr)
 	{
 	}
 	KoopaScript::~KoopaScript()
@@ -32,7 +33,7 @@ namespace ME
 	
 		mFireTime += Time::DeltaTime();
 
-	
+		FollowingCharacterDirection();
 		
 		switch (mState)
 		{
@@ -243,5 +244,34 @@ namespace ME
 	}
 	void KoopaScript::PlayHurtAnimation()
 	{
+	}
+
+	void KoopaScript::FollowingCharacterDirection()
+	{
+
+		if (mPlayer == nullptr)
+			return;
+
+		Transform* playerTr = mPlayer->GetComponent<Transform>();
+		Transform* koopaTr = GetOwner()->GetComponent<Transform>();
+
+		Vector2 playerPos = playerTr->GetPosition();
+		Vector2 koopaPos = koopaTr->GetPosition();
+
+		float distance = fabs(playerPos.x - koopaPos.x);
+
+		if (distance < 100.0f)
+		{
+			float direction = playerPos.x - koopaPos.x;
+
+			if (direction < 0)
+			{
+				mDirection = eDirection::Left;
+			}
+			else
+			{
+				mDirection = eDirection::Right;
+			}
+		}
 	}
 }

@@ -61,6 +61,7 @@ namespace ME
 			if (Input::GetKey(eKeyCode::Space))
 				mbIsOnFloor = false;
 		}
+		
 
 		if (mbIsOnFloor == true)
 			CannotPass(other);

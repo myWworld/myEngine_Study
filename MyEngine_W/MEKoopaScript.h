@@ -42,6 +42,8 @@ namespace ME
 		void OnCollisionStay(Collider* other) override;
 		void OnCollisionExit(Collider* other) override;
 
+		void SetEnemey(GameObject* player) { mPlayer = player; }
+
 		eDirection GetDirection() { return mDirection; }
 
 		float GetHp() { return mHp; }
@@ -67,7 +69,7 @@ namespace ME
 		void GotHitByBullet(GameObject* bullet);
 		void PlayHurtAnimation();
 
-
+		void FollowingCharacterDirection();
 
 	private:
 
@@ -77,6 +79,7 @@ namespace ME
 		float mTime;
 		float mFireTime;
 		
+		GameObject* mPlayer;
 
 		class Animator* mAnimator;
 

@@ -120,7 +120,7 @@ namespace ME
 		if (LastDoorScript::IsClearStage())
 		{
 			LastDoorScript::SetClearStage(false);
-			SceneManager::LoadScene(L"GameOverScene");
+			SceneManager::LoadScene(L"TitleScene");
 		}
 
 
@@ -200,6 +200,8 @@ namespace ME
 	void Stage3::CreateKoopa(GameObject* koopa)
 	{
 		KoopaScript* koopaScript = koopa->AddComponent<KoopaScript>();
+		koopaScript->SetEnemey(mPlayer);
+
 		Animator* animator = koopa->AddComponent<Animator>();
 		Rigidbody* rb = koopa->AddComponent<Rigidbody>();
 		BoxCollider2D* col = koopa->AddComponent<BoxCollider2D>();

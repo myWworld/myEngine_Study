@@ -95,6 +95,8 @@ namespace ME
 		void IsAxeBroken();
 		float DetermineLeftOrRightByVector(GameObject* obj);
 
+		void GetHurtAccordingToHp(GameObject* obj);
+
 
 		GameObject* CreateAura();
 
@@ -118,6 +120,9 @@ namespace ME
 		static float mHp;
 		static int mScore;
 		static bool mbIsHurtState;
+
+		float mHurtCount;
+		bool mbHurtCountStart;
 
 		bool mbIsOnFlag;
 	
