@@ -25,7 +25,7 @@ namespace ME::math
 		{
 
 		}
-		
+
 		Vector2(float _x, float _y)
 			: x(_x)
 			, y(_y)
@@ -51,8 +51,8 @@ namespace ME::math
 
 		Vector2 operator-()
 		{
-			return Vector2(-x,-y);
-			
+			return Vector2(-x, -y);
+
 		}
 
 		Vector2 operator+(Vector2 other)
@@ -66,7 +66,7 @@ namespace ME::math
 
 		void operator+=(Vector2 pos)
 		{
-			
+
 			x = x + pos.x;
 			y = y + pos.y;
 
@@ -130,7 +130,7 @@ namespace ME::math
 
 		bool operator==(Vector2 pos)
 		{
-		
+
 
 			if (x == pos.x && y == pos.y)
 				return true;
@@ -147,7 +147,7 @@ namespace ME::math
 
 		float length()
 		{
-			return sqrtf(x*x + y * y);
+			return sqrtf(x * x + y * y);
 		}
 
 		Vector2 normalize()
@@ -194,6 +194,5 @@ namespace ME::math
 
 
 
-	
-}
 
+}

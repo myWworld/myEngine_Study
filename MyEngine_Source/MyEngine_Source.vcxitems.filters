@@ -4,9 +4,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)MEEntity.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)MEMath.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MEGameObject.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
@@ -106,15 +103,15 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)MEDontDestroyOnLoad.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MEMath.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)CommonInclude.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)MEEntity.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)MEMath.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)MEGameObject.h">
@@ -226,6 +223,9 @@
       <Filter>Component\Audio</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)ContentAndScript.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MEMath.h">
       <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
