@@ -35,6 +35,15 @@ namespace ME
 		if (mAnimator == nullptr)
 			mAnimator = GetOwner()->GetComponent<Animator>();
 
+		if (mbIsHurtState)
+		{
+			mbIsHurtState = false;
+		}
+
+		if (mHead != nullptr)
+		{
+			AdjustHeadAfterHurt();
+		}
 
 		switch (mState)
 		{
@@ -125,10 +134,12 @@ namespace ME
 	}
 	void TurtleScript::Hurt()
 	{
+
 	}
 	void TurtleScript::Idle()
 	{
 		mTime += Time::DeltaTime();
+
 
 		if (mTime > 1.0f)
 		{
@@ -270,6 +281,15 @@ namespace ME
 		Rigidbody* mushroomRb = GetOwner()->GetComponent<Rigidbody>();
 		Vector2 mushroomVelocity = mushroomRb->GetVelocity();
 
+		Rigidbody* headRb = nullptr;
+		Vector2 headVelocity = Vector2::Zero;
+
+		if (mHead != nullptr)
+		{
+			headRb = mHead->GetComponent<Rigidbody>();
+			headVelocity = headRb->GetVelocity();
+		}
+
 		float leftOrRight = DetermineLeftOrRightByVector(bullet);
 
 		if (leftOrRight >= 0)
@@ -279,15 +299,18 @@ namespace ME
 		else
 		{
 			mushroomVelocity.x -= 50.0f;
-
 		}
 		mushroomVelocity.y -= 100.0f;
 
+
+		if (headRb != nullptr)
+			headRb->SetVelocity(headVelocity);
+		
 		mushroomRb->SetVelocity(mushroomVelocity);
 		mushroomRb->SetGround(false);
 
 		mbIsHurtState = true;
-		//PlayHurtAnimation();
+	//	PlayHurtAnimation();
 	}
 
 	void TurtleScript::PlayHurtAnimation()
@@ -296,10 +319,10 @@ namespace ME
 		switch (mDirection)
 		{
 		case ME::TurtleScript::eDirection::Left:
-			mAnimator->PlayAnimation(L"HurtL");
+			mAnimator->PlayAnimation(L"WalkL");
 			break;
 		case ME::TurtleScript::eDirection::Right:
-			mAnimator->PlayAnimation(L"HurtR");
+			mAnimator->PlayAnimation(L"WalkR");
 			break;
 		}
 	}
@@ -362,5 +385,18 @@ namespace ME
 	}
 
 
-	
+	void TurtleScript::AdjustHeadAfterHurt()
+	{
+		Collider* headCol = mHead->GetComponent<Collider>();
+		Vector2 colOffset = headCol->GetOffset();
+
+		Vector2 pos = GetOwner()->GetComponent<Transform>()->GetPosition();
+
+		Transform* headTr = mHead->GetComponent<Transform>();
+
+		Vector2 headPos = headTr->GetPosition();
+		headPos.x = pos.x + colOffset.x - 7;
+
+		headTr->SetPosition(headPos);
+	}
 }

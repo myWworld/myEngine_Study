@@ -54,6 +54,7 @@ namespace ME
 			Animator* tramAnimator = GetOwner()->GetComponent<Animator>();
 				
 			CannotPass(other);
+		
 
 			if(mbIsOnTrampoline == true)
 				tramAnimator->PlayAnimation(L"PressedR", false);
@@ -74,18 +75,19 @@ namespace ME
 			{
 				CannotPass(other);
 
-				if (Input::GetKey(eKeyCode::Space))
-				{
-					mbIsOnTrampoline = false;
-				}
-
 				if (tramAnimator->IsComplete() && mbIsOnTrampoline == true)
 				{
 					Vector2 playerVel = playerRb->GetVelocity();
-					playerVel.y -= 125;
-					playerRb->SetVelocity(playerVel);
+					playerVel.y -= 135;
 
 					playerRb->SetGround(false);
+					playerRb->SetVelocity(playerVel);
+				}
+
+
+				if (Input::GetKey(eKeyCode::Space))
+				{
+					mbIsOnTrampoline = false;
 				}
 			}
 			
@@ -105,7 +107,6 @@ namespace ME
 			{
 				mbIsOnTrampoline = false;
 				playerRb->SetGround(false);
-				
 			}
 			tramAnimator->PlayAnimation(L"IdleR");
 		}

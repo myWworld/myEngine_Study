@@ -59,6 +59,9 @@ namespace ME
 
 		void playerInitialize();
 
+		void MovingBlocks();
+		void Floors();
+
 	private:
 
 		class GameObject* mPlayer;

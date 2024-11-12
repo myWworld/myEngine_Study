@@ -83,6 +83,8 @@ namespace ME
 		void GetCenterPos(GameObject* player);
 		void MakePlayerBounce(Collider* player);
 
+		void AdjustHeadAfterHurt();
+
 
 	private:
 

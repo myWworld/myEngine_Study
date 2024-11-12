@@ -306,13 +306,7 @@ namespace ME
 
 			DetermineMovingVelocity();
 
-			rb->AddForce(Vector2(100, 0));
-
-		//if (Input::GetKey(eKeyCode::Shift))
-		//{
-		//	mState = eState::Run;
-		//	mAnimator->PlayAnimation(L"RunR");
-		//}
+			rb->AddForce(Vector2(130, 0));
 
 
 			if (Input::GetKey(eKeyCode::T))
@@ -330,7 +324,9 @@ namespace ME
 
 			DetermineMovingVelocity();
 
-			//if (Input::GetKey(eKeyCode::Shift)) //점프는 이 게임에선 필요없을 듯
+			rb->AddForce(Vector2(-130, 0));
+
+			//if (Input::GetKey(eKeyCode::Shift)) //run는 이 게임에선 필요없을 듯
 		//{
 		//	mState = eState::Run; 
 		//	mAnimator->PlayAnimation(L"RunL");
@@ -414,7 +410,7 @@ namespace ME
 		//as->Play();
 
 		Vector2 velocity = rb->GetVelocity();
-		velocity.y = -300.0f;
+		velocity.y = -325.0f;
 		rb->SetVelocity(velocity);
 
 		rb->SetGround(false);
@@ -497,6 +493,8 @@ namespace ME
 		if (velocity != Vector2::Zero)
 			rb->StopMoving();
 
+		rb->SetNeedGravity(true, Vector2(0, 1200));
+
 		Vector2 pos = tr->GetPosition();
 
 		pos.x += 70 * Time::DeltaTime();
@@ -542,7 +540,7 @@ namespace ME
 		if (Input::GetKey(eKeyCode::Right) || Input::GetKey(eKeyCode::D))
 		{
 			mPrevDirection = ePrevDirection::Right;
-			pos += Vector2::Right * (90 * Time::DeltaTime());
+			rb->AddForce(Vector2(130, 0));
 			RunAttackTime();
 
 			if (Input::GetKey(eKeyCode::Space) && rb->IsGround())
@@ -557,7 +555,7 @@ namespace ME
 		if (Input::GetKey(eKeyCode::Left) || Input::GetKey(eKeyCode::A))
 		{
 			mPrevDirection = ePrevDirection::Left;
-			pos += Vector2::Left * (90 * Time::DeltaTime());
+			rb->AddForce(Vector2(-130, 0));
 			RunAttackTime();
 
 			if (Input::GetKey(eKeyCode::Space) && rb->IsGround())
@@ -569,8 +567,7 @@ namespace ME
 			}
 		}
 
-		tr->SetPosition(pos);
-
+	
 
 
 		if (Input::GetKeyUp(eKeyCode::T))

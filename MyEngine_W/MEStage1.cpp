@@ -150,8 +150,6 @@ namespace ME
 		GameObject* mushroom1 = object::Instantiate<MushRoom>(enums::eLayerType::Monster, Vector2(700, 190));
 		CreateMushRoom(mushroom1);
 
-		GameObject* mushroom2 = object::Instantiate<MushRoom>(enums::eLayerType::Monster, Vector2(1400, 190));
-		CreateMushRoom(mushroom2);
 	
 	}//mushroom
 	
@@ -160,9 +158,6 @@ namespace ME
 			, Vector2(600, 190));
 		CreateSkeleton(skeleton);
 
-		GameObject* skeleton1 = object::Instantiate<Skeleton>(enums::eLayerType::Monster
-			, Vector2(2400, 190));
-		CreateSkeleton(skeleton1);
 		
 	
 		}//skeleton
@@ -484,6 +479,9 @@ namespace ME
 		Head* head = object::Instantiate<Head>(enums::eLayerType::Monster,leftTopPos);
 			
 		BoxCollider2D* headCol = head->AddComponent<BoxCollider2D>();
+		Rigidbody* headRb = head->AddComponent<Rigidbody>();
+		headRb->SetNeedGravity(false);
+
 		HeadScript* headScript = head->AddComponent<HeadScript>();
 		headScript->SetHeadOwner(turtle);
 

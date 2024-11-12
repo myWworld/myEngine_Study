@@ -44,8 +44,8 @@ namespace ME
 				//tr->SetPosition(pos);
 				//otherTr->SetPosition(otherPos);
 
-				rb->AddForce(Vector2(0, 60.0f));
-				otherRb->AddForce(Vector2(0, -60.0f));
+				rb->AddForce(Vector2(0, 100.0f));
+				otherRb->AddForce(Vector2(0, -100.0f));
 			}
 			else
 			{

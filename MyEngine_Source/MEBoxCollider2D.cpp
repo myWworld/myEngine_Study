@@ -65,12 +65,12 @@ namespace ME
 
 		if (mRot != 0)
 		{
-			Polygon(hdc, mPoint, 4);
+		//	Polygon(hdc, mPoint, 4);
 			mbIsRotate = true;
 		}
 		else
 		{
-			Rectangle(hdc, pos.x + offset.x, pos.y + offset.y, rightBottom.x, rightBottom.y);
+		//	Rectangle(hdc, pos.x + offset.x, pos.y + offset.y, rightBottom.x, rightBottom.y);
 			mbIsRotate = false;
 		}
 			

@@ -67,118 +67,10 @@ namespace ME
 			backgroundSr->SetTexture(backgroundTex);
 
 		}
-		{
-			Floor* floor = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(0, 210));
-			CreateFloor(floor, 2.56);
-
-			Floor* whiteFloor1 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(289, 210));
-			CreateFloor(whiteFloor1, 0.48,0.04);
-			Floor* whiteFloor2 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(337, 147));
-			CreateFloor(whiteFloor2, 0.48, 0.04);
-			Floor* whiteFloor3 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(385, 210));
-			CreateFloor(whiteFloor3, 0.48, 0.04);
-
-			Floor* whiteFloor4 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(496, 147));
-			CreateFloor(whiteFloor4, 0.62, 0.04);
-
-			Floor* whiteFloor5 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(593, 210));
-			CreateFloor(whiteFloor5, 0.48, 0.04);
-			Floor* whiteFloor6 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(689, 210));
-			CreateFloor(whiteFloor6, 0.48, 0.04);
-
-			Floor* whiteFloor7 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(785, 180));
-			CreateFloor(whiteFloor7, 0.62, 0.04);
-
-			Floor* whiteFloor8 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(1041, 147));
-			CreateFloor(whiteFloor8, 0.80, 0.04);
-
-			Floor* whiteFloor9 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(1363, 163));
-			CreateFloor(whiteFloor9, 0.62, 0.04);
-			Floor* whiteFloor10 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(1363, 50));
-			CreateFloor(whiteFloor10, 0.48, 0.04);
-
-			Floor* whiteFloor11 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(1443, 131));
-			CreateFloor(whiteFloor11, 0.48, 0.04);
-
-			Floor* whiteFloor12 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(1489, 210));
-			CreateFloor(whiteFloor12, 0.48, 0.04);
-			Floor* whiteFloor13 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(1555, 210));
-			CreateFloor(whiteFloor13, 0.62, 0.04);
-			Floor* whiteFloor14 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(1650, 210));
-			CreateFloor(whiteFloor14, 0.48, 0.04);
-
-
-			Floor* whiteFloor15 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(1713, 148));
-			CreateFloor(whiteFloor15, 0.79, 0.04);
-
-			Floor* whiteFloor16 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(1809, 210));
-			CreateFloor(whiteFloor16, 0.79, 0.04);
-			Floor* whiteFloor17 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(1969, 210));
-			CreateFloor(whiteFloor17, 0.48, 0.04);
-
-			Floor* whiteFloor18 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(2113, 210));
-			CreateFloor(whiteFloor18, 0.60, 0.04);
-			Floor* whiteFloor19 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(2113, 84));
-			CreateFloor(whiteFloor19, 0.48, 0.04);
-
-			Floor* whiteFloor20 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(2159, 148));
-			CreateFloor(whiteFloor20, 0.60, 0.04);
-
-			Floor* whiteFloor21 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(2494, 84));
-			CreateFloor(whiteFloor21, 0.48, 0.04);
-
-			Floor* floor1 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(2564, 210));
-			CreateFloor(floor1, 3);
 		
-		}
+		Floors();
+		MovingBlocks();
 
-		{
-			Block* verticalMovingBlock1 = object::Instantiate<Block>(enums::eLayerType::Block, Vector2(448, 208));
-			CreateMovingBlock(verticalMovingBlock1, 'V',155,215, 0.3,0.07);
-
-			Block* verticalMovingBlock2 = object::Instantiate<Block>(enums::eLayerType::Block, Vector2(960, 198));
-			CreateMovingBlock(verticalMovingBlock2, 'V', 104, 215, 0.3, 0.07);
-
-			Block* horizontalMovingBlock1 = object::Instantiate<Block>(enums::eLayerType::Block, Vector2(687,88 ));
-			CreateMovingBlock(horizontalMovingBlock1, 'H', 704, 630, 0.3, 0.07);
-
-			Block* horizontalMovingBlock2 = object::Instantiate<Block>(enums::eLayerType::Block, Vector2(768, 118));
-			CreateMovingBlock(horizontalMovingBlock2, 'H', 802, 719, 0.3, 0.07);
-
-			Block* horizontalMovingBlock3 = object::Instantiate<Block>(enums::eLayerType::Block, Vector2(880, 104));
-			CreateMovingBlock(horizontalMovingBlock3, 'H', 904, 825, 0.3, 0.07);
-
-			Block* horizontalMovingBlock4 = object::Instantiate<Block>(enums::eLayerType::Block, Vector2(1937, 85));
-			CreateMovingBlock(horizontalMovingBlock4, 'H', 1951, 1874, 0.3, 0.07);
-
-
-			Block* pulleyLeftBlock1 = object::Instantiate<Block>(enums::eLayerType::Block, Vector2(1134, 83));
-			Block* pulleyRightBlock1 = object::Instantiate<Block>(enums::eLayerType::Block, Vector2(1191, 154));
-			CreatePulleyBlock(pulleyLeftBlock1, pulleyRightBlock1,
-				0.3, 0.07, 0.3, 0.07);
-
-			Block* pulleyLeftBlock2 = object::Instantiate<Block>(enums::eLayerType::Block, Vector2(1262, 83));
-			Block* pulleyRightBlock2 = object::Instantiate<Block>(enums::eLayerType::Block, Vector2(1307, 154));
-			CreatePulleyBlock(pulleyLeftBlock2, pulleyRightBlock2,
-				0.3, 0.07, 0.3, 0.07);
-
-			Block* pulleyLeftBlock3 = object::Instantiate<Block>(enums::eLayerType::Block, Vector2(2024, 98));
-			Block* pulleyRightBlock3 = object::Instantiate<Block>(enums::eLayerType::Block, Vector2(2071, 147));
-			CreatePulleyBlock(pulleyLeftBlock3, pulleyRightBlock3,
-				0.3, 0.07, 0.3, 0.07);
-
-			Block* onlyDownBlock1 = object::Instantiate<Block>(enums::eLayerType::Block, Vector2(2256, 108));
-			CreateOnlyDownBlock(onlyDownBlock1, 0.3, 0.07);
-
-			Block* onlyDownBlock2 = object::Instantiate<Block>(enums::eLayerType::Block, Vector2(2320, 92));
-			CreateOnlyDownBlock(onlyDownBlock2, 0.3, 0.07);
-
-			Block* onlyDownBlock3 = object::Instantiate<Block>(enums::eLayerType::Block, Vector2(2385, 124));
-			CreateOnlyDownBlock(onlyDownBlock3, 0.3, 0.07);
-
-			Block* onlyDownBlock4 = object::Instantiate<Block>(enums::eLayerType::Block, Vector2(2449, 108));
-			CreateOnlyDownBlock(onlyDownBlock4, 0.3, 0.07);
-		}
 
 		{
 			GameObject* qbox1 = object::Instantiate<GameObject>(enums::eLayerType::Block, Vector2(990, 147));
@@ -255,7 +147,7 @@ namespace ME
 		CollisionManager::CollisionLayerCheck(enums::eLayerType::Bullet, enums::eLayerType::Block, true);
 
 		mPlayer = object::Instantiate<Player>
-			(enums::eLayerType::Player, Vector2(2600, 250));
+			(enums::eLayerType::Player, Vector2(150, 100));
 
 
 		renderer::mainCamera = mCameraComp;
@@ -509,7 +401,7 @@ namespace ME
 		TrampolineCol->SetSize(Vector2(xSize, ySize));
 		TrampolineCol->SetOffset(Vector2(xOffset, yOffset));
 
-		trampolineAnimator->PlayAnimation(L"IdleR");
+		trampolineAnimator->PlayAnimation(L"IdleR",false);
 	}
 
 	void Stage2::CreatePulleyBlock(GameObject* left, GameObject* right
@@ -634,6 +526,120 @@ namespace ME
 
 		animator->GetCompleteEvent(L"StandAttackL") = std::bind(&PlayerScript::MakeBullet, playerScript, false);
 		animator->GetCompleteEvent(L"StandAttackR") = std::bind(&PlayerScript::MakeBullet, playerScript, false);
+	}
+
+	void Stage2::MovingBlocks()
+	{
+		Block* verticalMovingBlock1 = object::Instantiate<Block>(enums::eLayerType::Block, Vector2(448, 208));
+		CreateMovingBlock(verticalMovingBlock1, 'V', 155, 215, 0.3, 0.07);
+
+		Block* verticalMovingBlock2 = object::Instantiate<Block>(enums::eLayerType::Block, Vector2(960, 198));
+		CreateMovingBlock(verticalMovingBlock2, 'V', 104, 215, 0.3, 0.07);
+
+		Block* horizontalMovingBlock1 = object::Instantiate<Block>(enums::eLayerType::Block, Vector2(687, 88));
+		CreateMovingBlock(horizontalMovingBlock1, 'H', 704, 630, 0.3, 0.07);
+
+		Block* horizontalMovingBlock2 = object::Instantiate<Block>(enums::eLayerType::Block, Vector2(768, 118));
+		CreateMovingBlock(horizontalMovingBlock2, 'H', 802, 719, 0.3, 0.07);
+
+		Block* horizontalMovingBlock3 = object::Instantiate<Block>(enums::eLayerType::Block, Vector2(880, 104));
+		CreateMovingBlock(horizontalMovingBlock3, 'H', 904, 825, 0.3, 0.07);
+
+		Block* horizontalMovingBlock4 = object::Instantiate<Block>(enums::eLayerType::Block, Vector2(1937, 85));
+		CreateMovingBlock(horizontalMovingBlock4, 'H', 1951, 1874, 0.3, 0.07);
+
+
+		Block* pulleyLeftBlock1 = object::Instantiate<Block>(enums::eLayerType::Block, Vector2(1134, 83));
+		Block* pulleyRightBlock1 = object::Instantiate<Block>(enums::eLayerType::Block, Vector2(1191, 154));
+		CreatePulleyBlock(pulleyLeftBlock1, pulleyRightBlock1,
+			0.3, 0.07, 0.3, 0.07);
+
+		Block* pulleyLeftBlock2 = object::Instantiate<Block>(enums::eLayerType::Block, Vector2(1262, 83));
+		Block* pulleyRightBlock2 = object::Instantiate<Block>(enums::eLayerType::Block, Vector2(1307, 154));
+		CreatePulleyBlock(pulleyLeftBlock2, pulleyRightBlock2,
+			0.3, 0.07, 0.3, 0.07);
+
+		Block* pulleyLeftBlock3 = object::Instantiate<Block>(enums::eLayerType::Block, Vector2(2024, 98));
+		Block* pulleyRightBlock3 = object::Instantiate<Block>(enums::eLayerType::Block, Vector2(2071, 147));
+		CreatePulleyBlock(pulleyLeftBlock3, pulleyRightBlock3,
+			0.3, 0.07, 0.3, 0.07);
+
+		Block* onlyDownBlock1 = object::Instantiate<Block>(enums::eLayerType::Block, Vector2(2256, 108));
+		CreateOnlyDownBlock(onlyDownBlock1, 0.3, 0.07);
+
+		Block* onlyDownBlock2 = object::Instantiate<Block>(enums::eLayerType::Block, Vector2(2320, 92));
+		CreateOnlyDownBlock(onlyDownBlock2, 0.3, 0.07);
+
+		Block* onlyDownBlock3 = object::Instantiate<Block>(enums::eLayerType::Block, Vector2(2385, 124));
+		CreateOnlyDownBlock(onlyDownBlock3, 0.3, 0.07);
+
+		Block* onlyDownBlock4 = object::Instantiate<Block>(enums::eLayerType::Block, Vector2(2449, 108));
+		CreateOnlyDownBlock(onlyDownBlock4, 0.3, 0.07);
+	}
+
+	void Stage2::Floors()
+	{
+		Floor* floor = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(0, 210));
+		CreateFloor(floor, 2.56);
+
+		Floor* whiteFloor1 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(289, 210));
+		CreateFloor(whiteFloor1, 0.48, 0.04);
+		Floor* whiteFloor2 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(337, 147));
+		CreateFloor(whiteFloor2, 0.48, 0.04);
+		Floor* whiteFloor3 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(385, 210));
+		CreateFloor(whiteFloor3, 0.48, 0.04);
+
+		Floor* whiteFloor4 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(496, 147));
+		CreateFloor(whiteFloor4, 0.62, 0.04);
+
+		Floor* whiteFloor5 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(593, 210));
+		CreateFloor(whiteFloor5, 0.48, 0.04);
+		Floor* whiteFloor6 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(689, 210));
+		CreateFloor(whiteFloor6, 0.48, 0.04);
+
+		Floor* whiteFloor7 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(785, 180));
+		CreateFloor(whiteFloor7, 0.62, 0.04);
+
+		Floor* whiteFloor8 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(1041, 147));
+		CreateFloor(whiteFloor8, 0.80, 0.04);
+
+		Floor* whiteFloor9 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(1363, 163));
+		CreateFloor(whiteFloor9, 0.62, 0.04);
+		Floor* whiteFloor10 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(1363, 50));
+		CreateFloor(whiteFloor10, 0.48, 0.04);
+
+		Floor* whiteFloor11 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(1443, 131));
+		CreateFloor(whiteFloor11, 0.48, 0.04);
+
+		Floor* whiteFloor12 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(1489, 210));
+		CreateFloor(whiteFloor12, 0.48, 0.04);
+		Floor* whiteFloor13 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(1555, 210));
+		CreateFloor(whiteFloor13, 0.62, 0.04);
+		Floor* whiteFloor14 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(1650, 210));
+		CreateFloor(whiteFloor14, 0.48, 0.04);
+
+
+		Floor* whiteFloor15 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(1713, 148));
+		CreateFloor(whiteFloor15, 0.79, 0.04);
+
+		Floor* whiteFloor16 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(1809, 210));
+		CreateFloor(whiteFloor16, 0.79, 0.04);
+		Floor* whiteFloor17 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(1969, 210));
+		CreateFloor(whiteFloor17, 0.48, 0.04);
+
+		Floor* whiteFloor18 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(2113, 210));
+		CreateFloor(whiteFloor18, 0.60, 0.04);
+		Floor* whiteFloor19 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(2113, 84));
+		CreateFloor(whiteFloor19, 0.48, 0.04);
+
+		Floor* whiteFloor20 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(2159, 148));
+		CreateFloor(whiteFloor20, 0.60, 0.04);
+
+		Floor* whiteFloor21 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(2494, 84));
+		CreateFloor(whiteFloor21, 0.48, 0.04);
+
+		Floor* floor1 = object::Instantiate<Floor>(enums::eLayerType::Floor, Vector2(2564, 210));
+		CreateFloor(floor1, 3);
 	}
 
 }

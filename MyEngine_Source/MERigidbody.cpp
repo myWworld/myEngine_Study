@@ -8,7 +8,7 @@ namespace ME
 		:Component(enums::eComponentType::Rigidbody)
 		, mbGround(false)
 		, mMass(1.0f)
-		, mFriction(50.0f)
+		, mFriction(70.0f)
 	, mForce(Vector2::Zero)
 	, mVelocity(Vector2::Zero)
 	, mLimitVelocity(Vector2(130.0f,800.0f))

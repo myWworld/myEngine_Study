@@ -32,6 +32,7 @@ namespace ME
 			mLookPosition = tr->GetPosition();
 			mLookPosition.y = mResolution.y / 2.0f;
 
+
 			if(mTarget->GetComponent<Transform>()->GetName() == L"Player")
 					mDistance = mLookPosition - Vector2(mResolution.x/2.0f,100);
 			else

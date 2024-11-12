@@ -22,11 +22,6 @@ namespace ME
 		Transform* tr = GetOwner()->GetComponent<Transform>();
 		Vector2 pos = tr->GetPosition();
 
-		if (pos.x < 0)
-		{
-			GetOwner()->SetDeath();
-		}
-
 		if (mbIsBumpedWhenStarIsOn == true)
 		{
 			pos.x -= 100 * Time::DeltaTime();
@@ -37,6 +32,11 @@ namespace ME
 			pos.x -= 100 * Time::DeltaTime();
 
 		tr->SetPosition(pos);
+
+		if (pos.x < 0)
+		{
+			GetOwner()->SetDeath();
+		}
 	}
 	void CannonScript::LateUpdate()
 	{

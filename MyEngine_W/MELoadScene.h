@@ -21,10 +21,8 @@ namespace ME
 		SceneManager::CreateScene<Stage2>(L"Stage2");
 		SceneManager::CreateScene<Stage3>(L"Stage3");
 		SceneManager::CreateScene<GameOverScene>(L"GameOverScene");
-	
 
 		SceneManager::LoadScene(L"Stage3");
-
 		//SceneManager::LoadScene(L"TitleScene");
 	
 
