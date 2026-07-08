@@ -123,7 +123,7 @@ namespace ME
 					playerPos.x += overlapX - 1.0f; // 오른쪽으로 밀어냄
 				}
 
-				// 옆에서 박았을 때 벽에 붙어서 안 떨어지는 현상을 막으려면 X축 속도를 0으로 만들어 줍니다.
+				// 옆에서 박았을 때 벽에 붙어서 안 떨어지는 현상을 막기위해 X축 속도를 0으로 만들어 줍니다.
 				playerRb->SetVelocity(Vector2(0.0f, playerRb->GetVelocity().y));
 			}
 

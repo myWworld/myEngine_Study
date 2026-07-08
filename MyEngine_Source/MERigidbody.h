@@ -18,7 +18,7 @@ namespace ME
 		void Render(HDC hdc)  override;
 
 		void SetMass(float mass) { mMass = mass; }
-		void AddForce(Vector2 force) { mForce = force; }
+		void AddForce(Vector2 force) { mForce += force; }
 		void SetGround(bool ground) { mbGround = ground; }
 		void SetVelocity(Vector2 velocity) { mVelocity = velocity; }
 

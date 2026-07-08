@@ -306,7 +306,7 @@ namespace ME
 
 			DetermineMovingVelocity();
 
-			rb->AddForce(Vector2(130, 0)); //이동 방향으로 
+			//rb->AddForce(Vector2(130, 0)); //이동 방향으로 
 
 
 			if (Input::GetKey(eKeyCode::T))
@@ -324,7 +324,7 @@ namespace ME
 
 			DetermineMovingVelocity();
 
-			rb->AddForce(Vector2(-130, 0));
+			//rb->AddForce(Vector2(-10, 0));
 
 			//if (Input::GetKey(eKeyCode::Shift)) //run는 이 게임에선 필요없을 듯
 		//{
@@ -368,22 +368,22 @@ namespace ME
 		{
 			if (velocity.x > 0)
 			{
-				playerRb->AddForce(Vector2(-350, 0)); //움직임 전환할 때 반대로 전환을 빠르게 하기 위해 속도 조절
+				playerRb->AddForce(Vector2(-300, 0)); //움직임 전환할 때 반대로 전환을 빠르게 하기 위해 속도 조절
 			}
 			else
 			{
-				playerRb->AddForce(Vector2(-160, 0));
+				playerRb->AddForce(Vector2(-150, 0));
 			}
 		}
 		if (mPrevDirection == ePrevDirection::Right)
 		{
 			if (velocity.x < 0)
 			{
-				playerRb->AddForce(Vector2(350, 0));
+				playerRb->AddForce(Vector2(300, 0));
 			}
 			else
 			{
-				playerRb->AddForce(Vector2(160, 0));
+				playerRb->AddForce(Vector2(150, 0));
 			}
 		}
 	}

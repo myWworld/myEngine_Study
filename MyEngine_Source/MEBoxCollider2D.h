@@ -1,47 +1,44 @@
 #pragma once
 #include "MECollider.h"
+#include <array>
+#include <Windows.h>
 
 namespace ME
 {
+    class BoxCollider2D : public Collider
+    {
+    public:
+        BoxCollider2D();
+        virtual ~BoxCollider2D();
 
+        virtual void Initialize() override;
+        virtual void Update() override;
+        virtual void LateUpdate() override;
+        virtual void Render(HDC hdc) override;
 
-	class BoxCollider2D:public Collider
-	{
-	public:
+        void SetRotation(float rot);
+        float GetRotation() const { return mRot; }
 
+        bool IsRotate() const { return mbIsRotate; }
 
-		BoxCollider2D();
-		~BoxCollider2D();
+        Vector2 GetCentralPoint() const { return mCentralPoint; }
+        float GetWidth() const { return mWidth; }
+        float GetHeight() const { return mHeight; }
 
-		void Initialize() override;
-		void Update()override;
-		void LateUpdate()override;
-		void Render(HDC hdc)override;
+    private:
+        void RefreshBounds();
+        Vector2 RotateCollider(float rot, float x, float y, float width, float height);
 
-		 
-		 void SetRotation(float rot) { mRot = rot; }
-		 Vector2 GetCentralPoint() { return mCentralPoint; }
+    private:
+        float mRot;
+        bool mbIsRotate;
 
-		 bool IsRotate() { return mbIsRotate; }
-		 float GetHeight() { return mHeight; }
-		 float GetWidth() { return mWidth; }
+        float mWidth;
+        float mHeight;
 
-		 POINT* GetPoint() { return mPoint; }
+        Vector2 mCentralPoint;
 
-	private:
-	
-		Vector2 RotateCollider(float rot, int x, int y, int width, int height);
-	
-	private:
-		
-		float mRot;
-		Vector2 mCentralPoint;
-
-		float mWidth, mHeight;
-
-		bool mbIsRotate;
-		POINT* mPoint;
-
-	};
-
+        // 회전된 꼭짓점 저장용
+        std::array<POINT, 4> mPoints;
+    };
 }
