@@ -54,7 +54,7 @@ namespace ME
 
 			GameObject* camera = object::Instantiate<GameObject>(enums::eLayerType::None, resolution / 2.0f);
 			mCameraComp = camera->AddComponent<Camera>();
-
+			mCameraComp->SetMapTotalWidth(2560.0f);
 			renderer::mainCamera = mCameraComp;
 
 		}

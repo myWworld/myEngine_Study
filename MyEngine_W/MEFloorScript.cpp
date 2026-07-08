@@ -4,6 +4,7 @@
 #include "METransform.h"
 #include "MECollider.h"
 #include "MEInput.h"
+#include "../MyEngine_Source/METime.h"
 
 namespace ME
 {
@@ -75,25 +76,23 @@ namespace ME
 		Vector2 playerCenterPos = (playerTr->GetPosition() + playerCol->GetOffset()) + playerColSize / 2.0f;
 		Vector2 floorCenterPos = (floorTr->GetPosition() + floorCol->GetOffset()) + floorColSize / 2.0f;
 
-		float floorTop = floorCenterPos.y - (floorColSize.y / 2.0f);
+		float overlapX = (playerColSize.x / 2.0f + floorColSize.x / 2.0f) - fabs(playerCenterPos.x - floorCenterPos.x);
+		float overlapY = (playerColSize.y / 2.0f + floorColSize.y / 2.0f) - fabs(playerCenterPos.y - floorCenterPos.y);
 
-		if (playerCenterPos.y > floorTop)
-			return;
-	
-		
-		float len = fabs(playerCenterPos.y - floorCenterPos.y);
-		float scale = fabs(playerColSize.y / 2.0f + floorColSize.y / 2.0f);
-
-		if (len < scale)
+		// 실제로 충돌(겹침)이 발생했는지 확인
+		if (overlapX > 0 && overlapY > 0)
 		{
-			Vector2 playerPos = playerTr->GetPosition();
-			playerPos.y -= (scale - len) - 1.0f;
 
-			mbIsOnFloor = true;
-			playerTr->SetPosition(playerPos);
+			// Y축으로 더 적게 겹쳤고(위/아래 충돌), 플레이어가 바닥보다 위에 있을 때 (위에서 밟았을 때)
+			if (overlapX > overlapY && playerCenterPos.y < floorCenterPos.y)
+			{
+				Vector2 playerPos = playerTr->GetPosition();
+				playerPos.y -= overlapY - 1.0f; // 겹친 만큼 정확히 위로 밀어냄 (-1.0f는 진동 방지)
+				playerTr->SetPosition(playerPos);
+
+				mbIsOnFloor = true;
+				playerRb->SetGround(true);
+			}
 		}
-
-
-		playerRb->SetGround(true);
 	}
 }

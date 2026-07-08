@@ -306,7 +306,7 @@ namespace ME
 
 			DetermineMovingVelocity();
 
-			rb->AddForce(Vector2(130, 0));
+			rb->AddForce(Vector2(130, 0)); //이동 방향으로 
 
 
 			if (Input::GetKey(eKeyCode::T))

@@ -54,12 +54,13 @@ namespace ME
 	void Stage1::Initialize()
 	{
 		
-		//만약 타일맵 만들면 _wfopen_s함수로 불러온다음에 찍어내면됨 타일 렌더러 load함수에 있는거 가져다 쓰면됨.
+		//만약 타일맵 만들면 _wfopen_s함수로 불러온다음에 찍어내면됨 타일 렌더러 load함수에 있는거 가져다 쓰면됨
 
 		Vector2 resolution = Vector2(application.GetWidth(), application.GetHeight());
 
 		GameObject* camera = object::Instantiate<GameObject>(enums::eLayerType::None, Vector2(resolution.x,resolution.y ));
 		mCameraComp = camera->AddComponent<Camera>();
+		mCameraComp->SetMapTotalWidth(3424.0f);
 
 		renderer::mainCamera = mCameraComp;
 		

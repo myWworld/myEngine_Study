@@ -23,7 +23,7 @@ namespace ME
 
 		void SetTarget(GameObject* target) { mTarget = target; }
 
-		
+		void SetMapTotalWidth(float width) { mapTotalWidth = width; }
 
 	private:
 
@@ -35,6 +35,8 @@ namespace ME
 		Vector2 mLookPosition;
 		
 		GameObject* mTarget;
+
+		float mapTotalWidth;
 	
 	};
 
